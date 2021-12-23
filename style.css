@@ -1,17 +1,25 @@
 button{
-  width : 80px;
-  height: 80px;
+  width : 63px;
+  height: 63px;
   background-color: #9f77c3;
   color: #fff;
-  box-shadow: 0 4px 16px #9f77c34d;
+  box-shadow: 3px 3px 16px #9f77c34d;
   border-radius: 10px;
   border: 0;
+  transition: 0.3s;
+}
+button:active{
+  background-color: #ffffff00;
+  border: 2px;
 }
 button:focus{
   outline: 0;
 }
 button:hover{
-  background-color: #fff;
-  border: 10px solid #9f77c3;
   cursor: pointer;
+  box-shadow: 1px 1px 4px #a077c3d8;
+}
+button::after{
+  background-color: #ffffff00;
+  border: 5px;
 }
