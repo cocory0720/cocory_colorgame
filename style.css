@@ -1,3 +1,14 @@
+.board {
+  margin-top: 100px;
+  transition: 0.25s;
+}
+
+@media (max-width: 600px) {
+  .board {
+    margin-top: 500px;
+  }
+}
+
 .input_color {
   position: relative;
 }
@@ -24,8 +35,8 @@ user-select: none;
 .input_color input[type="checkbox"] + label:before {
 content: ' ';
 display: inline-block;
-width : 63px;
-height: 63px;
+width : 42px;
+height: 42px;
 line-height: 18px;
 margin: -2px -2px 0 0;
 text-align: center;
