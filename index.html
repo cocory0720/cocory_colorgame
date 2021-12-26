@@ -31,87 +31,20 @@
     <main>
 
         <header>
-            <nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Eighth navbar example">
-                <div class="container">
-                    <a class="navbar-brand" href="#">Container</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarsExample07">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Link</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link disabled">Disabled</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown07">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
         </header>
 
-        <article id="main_page" class="container" style="display: block;">
-
-            <div class="row">
-                <p class="fs-3 text-center">컬러 테스트</p>
-            </div>
-
-            <div class="row">
-                <p class="text-center" style="font-size: 0.8rem">
-                    (내용이 들어가야 되는 곳입니다. 어떤 말을 쓰면 좋을까요? 다같이 고민해봅시다.)
-                </p>
-            </div>
-
-            <div class="row">
-                <button class="col align-self-center next">
-                    다음으로!
-                </button>
-            </div>
+        <article class="container" style="display: block;">
 
         </article>
 
-        <article id="wait_page" class="container">
-
-            <div class="row">
-                <p class="fs-3 text-center">곧 시작합니다</p>
-            </div>
-
-            <div class="row">
-                <p class="text-center" style="font-size: 1rem">
-                    (내용이 들어가야 되는 곳입니다. 어떤 말을 쓰면 좋을까요? 다같이 고민해봅시다.)
-                </p>
-            </div>
+        <article class="container">
 
         </article>
 
         <footer>
-
         </footer>
 
     </main>
-
-
-
-    <script>
-        $('.next').click(function() {
-            $(this).closest("article").fadeOut(600);
-            $(this).closest("article").next().fadeIn(1000);
-        })
-    </script>
-
 
 </body>
 

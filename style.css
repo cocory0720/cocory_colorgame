@@ -6,39 +6,3 @@ article {
     transform: translate(-50%, 0);
     /* border: 1px solid red; */
 }
-
-p {
-    padding: 3vh 0 1vh 0;
-}
-
-.next {
-    height: 2.5rem;
-    margin: 0 35vw 0 35vw;
-    background-color: #9f77c3;
-    color: #fff;
-    box-shadow: 3px 3px 16px #9f77c34d;
-    border-radius: 10px;
-    border: 0;
-    font-size: 0.2rem;
-    font-weight: bold;
-    transition: 0.1s;
-}
-
-.next:active {
-    background-color: #ffffff00;
-    border: 2px;
-}
-
-.next:focus {
-    outline: 0;
-}
-
-.next:hover {
-    cursor: pointer;
-    box-shadow: 1px 1px 4px #a077c3d8;
-}
-
-.next::after {
-    background-color: #ffffff00;
-    border: 5px;
-}
