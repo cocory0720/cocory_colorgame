@@ -11,9 +11,9 @@ p {
     padding: 3vh 0 1vh 0;
 }
 
-.next {
+button.next {
     height: 2.5rem;
-    margin: 0 35vw 0 35vw;
+    margin: 0 5rem 0 5rem;
     background-color: #9f77c3;
     color: #fff;
     box-shadow: 3px 3px 16px #9f77c34d;
@@ -24,21 +24,21 @@ p {
     transition: 0.1s;
 }
 
-.next:active {
+button.next:active {
     background-color: #ffffff00;
     border: 2px;
 }
 
-.next:focus {
+button.next:focus {
     outline: 0;
 }
 
-.next:hover {
+button.next:hover {
     cursor: pointer;
     box-shadow: 1px 1px 4px #a077c3d8;
 }
 
-.next::after {
+button.next::after {
     background-color: #ffffff00;
     border: 5px;
 }
