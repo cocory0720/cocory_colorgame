@@ -6,3 +6,7 @@ article {
     transform: translate(-50%, 0);
     /* border: 1px solid red; */
 }
+
+.initial {
+    display: block;
+}
