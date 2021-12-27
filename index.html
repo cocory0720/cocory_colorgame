@@ -110,20 +110,24 @@
             </div>
 
             <div class="row">
-                <p class="fs-6 text-center timer">
-
+                <p id="timer" class="fs-6 text-center py-0">
+                    0초
                 </p>
             </div>
 
             <div class="row">
-                <p class="text-center">
+                <p class="text-center py-0" style="font-size: 0.7rem;">
                     색상을 부드럽게 이어주세요
                 </p>
             </div>
 
             <div class="row">
+
+            </div>
+
+            <div class="row">
                 <button class="col align-self-center test_submit">
-                    색상 테스트 시작
+                    제출!
                 </button>
             </div>
 
@@ -148,10 +152,10 @@
             let start = new Date();
             var time = 0;
             var timer = setInterval(function() {
-                document.getElementsByClassName("timer").innerHTML = time;
                 time++;
+                document.getElementById("timer").innerHTML = time + "초";
             }, 1000);
-            console.log(start);
+            console.log(timer);
         });
     </script>
 
