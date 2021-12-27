@@ -63,10 +63,10 @@
             </nav>
         </header>
 
-        <article id="main_page" class="container" style="display: block;">
+        <article id="main_page" class="container py-2" style="display: block;">
 
             <div class="row">
-                <p class="fs-3 text-center">컬러 테스트</p>
+                <p class="fs-3 text-center">색채 판별력 테스트</p>
             </div>
 
             <div class="row">
@@ -83,16 +83,48 @@
 
         </article>
 
-        <article id="wait_page" class="container">
+        <article id="wait_page" class="container py-5" style="background-color: #ddd;">
 
             <div class="row">
-                <p class="fs-3 text-center">곧 시작합니다</p>
+                <p class="fs-3 text-center" style="padding-top: 10vh;">색상 테스트</p>
             </div>
 
             <div class="row">
-                <p class="text-center" style="font-size: 1rem">
+                <p class="fs-6 text-center">
                     (내용이 들어가야 되는 곳입니다. 어떤 말을 쓰면 좋을까요? 다같이 고민해봅시다.)
                 </p>
+            </div>
+
+            <div class="row">
+                <button class="col align-self-center next test_begin">
+                    색상 테스트 시작
+                </button>
+            </div>
+
+        </article>
+
+        <article id="hue_test" class="container">
+
+            <div class="row">
+                <p class="fs-5 text-center">색상 테스트</p>
+            </div>
+
+            <div class="row">
+                <p class="fs-6 text-center timer">
+
+                </p>
+            </div>
+
+            <div class="row">
+                <p class="text-center">
+                    색상을 부드럽게 이어주세요
+                </p>
+            </div>
+
+            <div class="row">
+                <button class="col align-self-center test_submit">
+                    색상 테스트 시작
+                </button>
             </div>
 
         </article>
@@ -107,9 +139,20 @@
 
     <script>
         $('.next').click(function() {
-            $(this).closest("article").fadeOut(600);
-            $(this).closest("article").next().fadeIn(1000);
-        })
+            clicked_article = $(this).closest("article");
+            clicked_article.fadeOut(500);
+            clicked_article.next().fadeIn(700);
+        });
+
+        $('.test_begin').click(function() {
+            let start = new Date();
+            var time = 0;
+            var timer = setInterval(function() {
+                document.getElementsByClassName("timer").innerHTML = time;
+                time++;
+            }, 1000);
+            console.log(start);
+        });
     </script>
 
 
