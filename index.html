@@ -75,12 +75,6 @@
                 </p>
             </div>
 
-            <div class="row">
-                <button class="col align-self-center next">
-                    다음으로!
-                </button>
-            </div>
-
         </article>
 
         <article id="wait_page" class="container py-5" style="background-color: #ddd;">
@@ -95,8 +89,15 @@
                 </p>
             </div>
 
+            <div class="color_wheel">
+                <div class="lollipop">
+                    <div class="pop"></div>
+                    <div class="lolli"></div>
+                </div>
+            </div>
+
             <div class="row">
-                <button class="col align-self-center next test_begin" onclick="genClrWheel()">
+                <button class="col align-self-center next test_begin">
                     색상 테스트 시작
                 </button>
             </div>
@@ -122,12 +123,6 @@
             </div>
 
             <div class="row g-0">
-                <div class="color_wheel">
-                    <div class="lollipop">
-                        <div class="pop"></div>
-                        <div class="lolli"></div>
-                    </div>
-                </div>
                 <div class="col color_box">
 
                 </div>
@@ -141,8 +136,10 @@
 
         </article>
 
-        <footer>
-
+        <footer class="container">
+            <button class="next" onclick="genClrWheel20()">
+                다음으로!
+            </button>
         </footer>
 
     </main>
@@ -169,23 +166,37 @@
         });
 
         // generate color wheel (20)
-        function genClrWheel() {
-            let index = 1;
+        function genClrWheel20() {
             let lollipops = new Array();
-            lollipops[index - 1] = $(".lollipop:first");
-            let loop = setInterval(function() {
+            lollipops[0] = $(".lollipop:first");
+            // let loop = setInterval(function() {
+            //     lollipops[index] = lollipops[index - 1].clone();
+            //     $(".color_wheel:first").append(lollipops[index]);
+            //     lollipops[index].css({
+            //         "transform": "rotate(" + (index * 18 - 90) + "deg)"
+            //     });
+            //     // if (index == 0) {
+            //     //     lollipops.firstChild.css("background", "#fe0000")[index];
+            //     // }
+            //     // if (index == 8) {
+            //     //     lollipops.firstChild.css("background", "#0511f1")[index];
+            //     // }
+            //     // if (index == 12) {
+            //     //     lollipops.firstChild.css("background", "#009900")[index];
+            //     // }
+            //     if (index >= 20) {
+            //         clearInterval(loop);
+            //     }
+            //     index++;
+            // }, 50)
+            for (let index = 1; index <= 20; index++) {
                 lollipops[index] = lollipops[index - 1].clone();
                 $(".color_wheel:first").append(lollipops[index]);
                 lollipops[index].css({
                     "transform": "rotate(" + (index * 18 - 90) + "deg)"
                 });
-
-                if (index >= 20) {
-                    clearInterval(loop);
-                }
-                index++;
-                console.log(lollipops);
-            }, 50)
+            }
+            $(".color_wheel:first").css("opacity", "1");
         }
     </script>
 

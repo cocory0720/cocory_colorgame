@@ -1,11 +1,11 @@
 :root {
-    --R_of-color_wheel: 40vw;
+    --R_of-color_wheel: 30vw;
 }
 
 article {
     display: none;
     position: absolute;
-    height: 90vh;
+    height: 50vh;
     left: 50%;
     transform: translate(-50%, 0);
     /* border: 1px solid red; */
@@ -35,18 +35,27 @@ p {
     background: #222;
     position: absolute;
     margin-top: calc(var(--R_of-color_wheel) * 0.157);
+    opacity: 0;
 }
 
 .lollipop {
     position: absolute;
-    margin: 20vh 0 0 -15vw;
+    margin: 20vh 0 0 45vw;
     transform-origin: left calc(var(--R_of-color_wheel) * 0.157);
-    transition: 0.3s;
+}
+
+.color_wheel {
+    opacity: 0;
+    transition: 0.25s;
 }
 
 .color_box {
     height: 65vh;
     max-height: 500px;
+}
+
+footer {
+    margin-top: 60vh;
 }
 
 button.next {
