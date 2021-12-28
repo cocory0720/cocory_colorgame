@@ -1,3 +1,7 @@
+:root {
+    --R_of-color_wheel: 40vw;
+}
+
 article {
     display: none;
     position: absolute;
@@ -9,6 +13,40 @@ article {
 
 p {
     padding: 3vh 0 1vh 0;
+}
+
+.in_game_text {
+    margin: 0;
+    padding: 1vh 0 0 0;
+}
+
+.pop {
+    width: calc(var(--R_of-color_wheel) * 0.314);
+    height: calc(var(--R_of-color_wheel) * 0.314);
+    border: 1px solid #222;
+    border-radius: 50%;
+    position: absolute;
+    margin-left: var(--R_of-color_wheel);
+}
+
+.lolli {
+    width: var(--R_of-color_wheel);
+    height: 1px;
+    background: #222;
+    position: absolute;
+    margin-top: calc(var(--R_of-color_wheel) * 0.157);
+}
+
+.lollipop {
+    position: absolute;
+    margin: 20vh 0 0 -15vw;
+    transform-origin: left calc(var(--R_of-color_wheel) * 0.157);
+    transition: 0.3s;
+}
+
+.color_box {
+    height: 65vh;
+    max-height: 500px;
 }
 
 button.next {

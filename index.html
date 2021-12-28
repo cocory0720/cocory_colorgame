@@ -96,7 +96,7 @@
             </div>
 
             <div class="row">
-                <button class="col align-self-center next test_begin">
+                <button class="col align-self-center next test_begin" onclick="genClrWheel()">
                     색상 테스트 시작
                 </button>
             </div>
@@ -106,23 +106,31 @@
         <article id="hue_test" class="container">
 
             <div class="row">
-                <p class="fs-5 text-center">색상 테스트</p>
+                <p class="fs-5 text-center in_game_text">색상 테스트</p>
             </div>
 
             <div class="row">
-                <p id="timer" class="fs-6 text-center py-0">
-                    0초
-                </p>
-            </div>
-
-            <div class="row">
-                <p class="text-center py-0" style="font-size: 0.7rem;">
+                <p class="text-center in_game_text" style="font-size: 0.7rem;">
                     색상을 부드럽게 이어주세요
                 </p>
             </div>
 
             <div class="row">
+                <p id="timer" class="fs-6 text-center in_game_text">
+                    0초
+                </p>
+            </div>
 
+            <div class="row g-0">
+                <div class="color_wheel">
+                    <div class="lollipop">
+                        <div class="pop"></div>
+                        <div class="lolli"></div>
+                    </div>
+                </div>
+                <div class="col color_box">
+
+                </div>
             </div>
 
             <div class="row">
@@ -142,21 +150,43 @@
 
 
     <script>
+        // next button
         $('.next').click(function() {
             clicked_article = $(this).closest("article");
             clicked_article.fadeOut(500);
             clicked_article.next().fadeIn(700);
         });
 
+        // timer start
+        let start;
         $('.test_begin').click(function() {
-            let start = new Date();
-            var time = 0;
-            var timer = setInterval(function() {
+            start = new Date();
+            let time = 0;
+            let timer = setInterval(function() {
                 time++;
                 document.getElementById("timer").innerHTML = time + "초";
             }, 1000);
-            console.log(timer);
         });
+
+        // generate color wheel (20)
+        function genClrWheel() {
+            let index = 1;
+            let lollipops = new Array();
+            lollipops[index - 1] = $(".lollipop:first");
+            let loop = setInterval(function() {
+                lollipops[index] = lollipops[index - 1].clone();
+                $(".color_wheel:first").append(lollipops[index]);
+                lollipops[index].css({
+                    "transform": "rotate(" + (index * 18 - 90) + "deg)"
+                });
+
+                if (index >= 20) {
+                    clearInterval(loop);
+                }
+                index++;
+                console.log(lollipops);
+            }, 50)
+        }
     </script>
 
 
