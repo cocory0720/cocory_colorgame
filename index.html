@@ -75,6 +75,12 @@
                 </p>
             </div>
 
+            <div class="row">
+                <button class="col align-self-center next" onclick="genClrWheel20()">
+                    다음으로!
+                </button>
+            </div>
+
         </article>
 
         <article id="wait_page" class="container py-5" style="background-color: #ddd;">
@@ -89,15 +95,8 @@
                 </p>
             </div>
 
-            <div class="color_wheel">
-                <div class="lollipop">
-                    <div class="pop"></div>
-                    <div class="lolli"></div>
-                </div>
-            </div>
-
             <div class="row">
-                <button class="col align-self-center next test_begin">
+                <button class="col align-self-center next test_begin" onclick="showClrWheel20()">
                     색상 테스트 시작
                 </button>
             </div>
@@ -122,8 +121,14 @@
                 </p>
             </div>
 
-            <div class="row g-0">
-                <div class="col color_box">
+            <div class="row">
+                <div class="col-5 color_wheel">
+                    <div class="lollipop">
+                        <div class="pop"></div>
+                        <div class="lolli"></div>
+                    </div>
+                </div>
+                <div class="col-7 color_box">
 
                 </div>
             </div>
@@ -136,10 +141,8 @@
 
         </article>
 
-        <footer class="container">
-            <button class="next" onclick="genClrWheel20()">
-                다음으로!
-            </button>
+        <footer>
+
         </footer>
 
     </main>
@@ -165,38 +168,45 @@
             }, 1000);
         });
 
-        // generate color wheel (20)
+        // generate n show color wheel (20)
+        let lollipops = new Array();
+
         function genClrWheel20() {
-            let lollipops = new Array();
-            lollipops[0] = $(".lollipop:first");
-            // let loop = setInterval(function() {
-            //     lollipops[index] = lollipops[index - 1].clone();
-            //     $(".color_wheel:first").append(lollipops[index]);
-            //     lollipops[index].css({
-            //         "transform": "rotate(" + (index * 18 - 90) + "deg)"
-            //     });
-            //     // if (index == 0) {
-            //     //     lollipops.firstChild.css("background", "#fe0000")[index];
-            //     // }
-            //     // if (index == 8) {
-            //     //     lollipops.firstChild.css("background", "#0511f1")[index];
-            //     // }
-            //     // if (index == 12) {
-            //     //     lollipops.firstChild.css("background", "#009900")[index];
-            //     // }
-            //     if (index >= 20) {
-            //         clearInterval(loop);
-            //     }
-            //     index++;
-            // }, 50)
+            lollipops[0] = $(".lollipop").eq(0);
             for (let index = 1; index <= 20; index++) {
-                lollipops[index] = lollipops[index - 1].clone();
+                lollipops[index] = lollipops[index - 1].clone(true);
                 $(".color_wheel:first").append(lollipops[index]);
                 lollipops[index].css({
-                    "transform": "rotate(" + (index * 18 - 90) + "deg)"
+                    "transform": "rotate(" + (index * 18 + 90) + "deg)"
                 });
             }
-            $(".color_wheel:first").css("opacity", "1");
+            lollipops[0].css("display", "none");
+        }
+
+        function showClrWheel20() {
+            let index = 1;
+            let loop = setInterval(function() {
+                lollipops[index].animate({
+                    opacity: 1
+                }, 80);
+                if (index == 1) {
+                    lollipops[index].find(".pop").css("background-color", "#fe0000");
+                }
+                if (index == 9) {
+                    lollipops[index].find(".pop").css("background-color", "#0511f1");
+                }
+                if (index == 13) {
+                    lollipops[index].find(".pop").css("background-color", "#009900");
+                }
+                if (index >= 20) {
+                    clearInterval(loop);
+                }
+                index++;
+            }, 50);
+
+            // rotate animation
+            console.log($(".color_wheel").eq(1));
+
         }
     </script>
 

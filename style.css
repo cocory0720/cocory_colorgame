@@ -2,10 +2,14 @@
     --R_of-color_wheel: 30vw;
 }
 
+header {
+    z-index: 9999;
+}
+
 article {
     display: none;
     position: absolute;
-    height: 50vh;
+    height: 95vh;
     left: 50%;
     transform: translate(-50%, 0);
     /* border: 1px solid red; */
@@ -21,9 +25,9 @@ p {
 }
 
 .pop {
-    width: calc(var(--R_of-color_wheel) * 0.314);
-    height: calc(var(--R_of-color_wheel) * 0.314);
-    border: 1px solid #222;
+    width: calc(var(--R_of-color_wheel) * 0.38);
+    height: calc(var(--R_of-color_wheel) * 0.38);
+    border: 2px solid #333;
     border-radius: 50%;
     position: absolute;
     margin-left: var(--R_of-color_wheel);
@@ -32,30 +36,23 @@ p {
 .lolli {
     width: var(--R_of-color_wheel);
     height: 1px;
-    background: #222;
+    background: #333;
     position: absolute;
-    margin-top: calc(var(--R_of-color_wheel) * 0.157);
-    opacity: 0;
+    margin-top: calc(var(--R_of-color_wheel) * 0.19);
 }
 
 .lollipop {
     position: absolute;
-    margin: 20vh 0 0 45vw;
-    transform-origin: left calc(var(--R_of-color_wheel) * 0.157);
-}
-
-.color_wheel {
+    z-index: -999;
+    transition: 0.4s;
+    transform-origin: left calc(var(--R_of-color_wheel) * 0.19);
+    margin: 40% 0 0 48%;
     opacity: 0;
-    transition: 0.25s;
 }
 
 .color_box {
     height: 65vh;
     max-height: 500px;
-}
-
-footer {
-    margin-top: 60vh;
 }
 
 button.next {
