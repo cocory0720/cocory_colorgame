@@ -1,12 +1,89 @@
+:root {
+    --R-color_wheel: 30vw;
+}
+
+header {
+    z-index: 9999;
+}
+
 article {
     display: none;
     position: absolute;
-    height: 90vh;
+    height: 95vh;
     left: 50%;
     transform: translate(-50%, 0);
     /* border: 1px solid red; */
 }
 
-.initial {
-    display: block;
+p {
+    padding: 3vh 0 1vh 0;
+}
+
+.in_game_text {
+    margin: 0;
+    padding: 1vh 0 0 0;
+}
+
+.pop {
+    width: calc(var(--R-color_wheel) * 0.38);
+    height: calc(var(--R-color_wheel) * 0.38);
+    border: 2px solid #333;
+    border-radius: 50%;
+    position: absolute;
+    margin-left: var(--R-color_wheel);
+}
+
+.lolli {
+    width: var(--R-color_wheel);
+    height: 1px;
+    background: #333;
+    position: absolute;
+    margin-top: calc(var(--R-color_wheel) * 0.19);
+}
+
+.lollipop {
+    position: absolute;
+    z-index: -999;
+    transition: 0.4s;
+    transition-timing-function: ease-out;
+    transform-origin: left calc(var(--R-color_wheel) * 0.19);
+    margin: 40% 0 0 48%;
+    opacity: 0;
+}
+
+.color_box {
+    height: 65vh;
+    max-height: 500px;
+}
+
+button.next {
+    height: 2.5rem;
+    margin: 3vh 5rem 0 5rem;
+    background-color: #9f77c3;
+    color: #fff;
+    box-shadow: 3px 3px 16px #9f77c34d;
+    border-radius: 10px;
+    border: 0;
+    font-size: 0.2rem;
+    font-weight: bold;
+    transition: 0.1s;
+}
+
+button.next:active {
+    background-color: #ffffff00;
+    border: 2px;
+}
+
+button.next:focus {
+    outline: 0;
+}
+
+button.next:hover {
+    cursor: pointer;
+    box-shadow: 1px 1px 4px #a077c3d8;
+}
+
+button.next::after {
+    background-color: #ffffff00;
+    border: 5px;
 }
