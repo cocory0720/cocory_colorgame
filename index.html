@@ -27,7 +27,8 @@
         <article id="hue-test" class="container">
             <p class="text-center">색상테스트</p>
             <p class="text-center">색상을 부드럽게 이어주세요</p>
-            <p id="timer" class="text-center">0초</p>
+            <p class="text-center timer">0초</p>
+            <canvas id="wheel-20"></canvas>
         </article>
 
     </main>
@@ -47,7 +48,8 @@
             let time = 0;
             let timer = setInterval(function() {
                 time++;
-                document.getElementById("timer").innerHTML = time + "초";
+                console.log(document.querySelector(".timer").innerHTML);
+                document.querySelector(".timer").innerHTML = time + "초";
             }, 1000);
         });
 
@@ -87,6 +89,8 @@
                 ctx.restore();
             }
         }
+
+        // color wheel - 20 colors
     </script>
 </body>
 
