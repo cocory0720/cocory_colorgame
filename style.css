@@ -1,0 +1,9 @@
+canvas {
+    width: 100vw;
+    height: 40vw;
+    position: absolute;
+    bottom: 0%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: #eee;
+}
