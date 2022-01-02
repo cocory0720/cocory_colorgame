@@ -1,9 +1,7 @@
 canvas {
-    width: 100vw;
-    height: 40vw;
     position: absolute;
-    bottom: 0%;
-    left: 50%;
-    transform: translate(-50%, 0);
+    z-index: -9999;
+    top: 0;
+    left: -0.2rem;
     background-color: #eee;
 }
