@@ -72,7 +72,7 @@
 
                 ctx.translate(this.x, this.y);
 
-                this.rotate += moveY * 0.02;
+                this.rotate += moveY * 0.01;
                 ctx.rotate(this.rotate);
 
                 for (let i = 0; i < this.sides; i++) {
@@ -93,18 +93,18 @@
 
         // color buttons
         const COLORS = [
-            "#111",
-            "#222",
-            "#333",
-            "#444",
-            "#555",
-            "#666",
-            "#777",
-            "#888",
-            "#999",
-            "#aaa",
-            "#bbb",
-            "#ccc"
+            "#111111",
+            "#222222",
+            "#333333",
+            "#444444",
+            "#555555",
+            "#666666",
+            "#777777",
+            "#888888",
+            "#999999",
+            "#aaaaaa",
+            "#bbbbbb",
+            "#cccccc"
         ]
         class ClrBtns {
             constructor(x1, x2, y, N) {
@@ -121,23 +121,22 @@
                 const col = (this.N <= 10) ? 4 : (this.N <= 20) ? 5 : 8;
                 const d = (1 - BDR_RATIO) * (this.x2 - this.x1) / row;
                 const bdr = (this.x2 - this.x1) * BDR_RATIO / (row - 1);
-                for (let n = 0; n < this.N; n++) {
-                    for (let i = 0; i < col; i++) {
-                        for (let j = 0; j < row; j++) {
-                            const x = this.x1 + (d + bdr) * j;
-                            const y = this.y + (d + bdr) * i;
-                            ctx.save();
-                            ctx.fillStyle = COLORS[n];
-                            ctx.beginPath();
-                            ctx.moveTo(x, y);
-                            ctx.lineTo(x, y + d);
-                            ctx.lineTo(x + d, y + d);
-                            ctx.lineTo(x + d, y);
-                            ctx.lineTo(x, y);
-                            ctx.fill();
-                            ctx.closePath();
-                            ctx.restore();
-                        }
+                for (let i = 0; i < col; i++) {
+                    for (let j = 0; j < row; j++) {
+                        const x = this.x1 + (d + bdr) * j;
+                        const y = this.y + (d + bdr) * i;
+                        ctx.save();
+                        ctx.fillStyle = COLORS[i * 3 + j];
+                        ctx.beginPath();
+                        ctx.moveTo(x, y);
+                        ctx.lineTo(x, y + d);
+                        ctx.lineTo(x + d, y + d);
+                        ctx.lineTo(x + d, y);
+                        ctx.lineTo(x, y);
+                        ctx.fill();
+                        ctx.closePath();
+                        ctx.restore();
+                        if (i * 3 + j == this.N - 1) break;
                     }
                 }
                 ctx.restore();
@@ -155,7 +154,7 @@
 
                 window.addEventListener("resize", this.resize.bind(this)(N), false);
                 this.resize(N);
-                this.isDown = false;
+                this.isDownOnWheel = false;
                 this.moveY = 0;
                 this.offsetY = 0;
 
@@ -183,7 +182,7 @@
                 this.ClrBtns = new ClrBtns(
                     this.stageWidth / 2,
                     this.stageWidth,
-                    this.stageHeight / 4,
+                    this.stageHeight / 6,
                     N
                 )
             }
@@ -198,25 +197,25 @@
             }
 
             onDown(e) {
-                this.isDown = true;
+                this.isDownOnWheel = true;
                 this.moveY = 0;
                 this.offsetY = e.clientY;
             }
 
             onMove(e) {
-                if (this.isDown) {
+                if (this.isDownOnWheel) {
                     this.moveY = e.clientY - this.offsetY;
                     this.offsetY = e.clientY;
                 }
             }
 
             onUp(e) {
-                this.isDown = false;
+                this.isDownOnWheel = false;
             }
         }
 
         window.onload = () => {
-            new Game(document.querySelector("#wheel-20"), 10);
+            new Game(document.querySelector("#wheel-20"), 40);
         }
     </script>
 </body>
