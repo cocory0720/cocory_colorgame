@@ -24,7 +24,7 @@
     </div>
     <main id="test-app">
 
-        <article id="hue-test20" class="container">
+        <article id="hue-test20">
             <p class="text-center">색상테스트</p>
             <p class="text-center">색상을 부드럽게 이어주세요</p>
             <p class="text-center timer">0초</p>
@@ -55,7 +55,7 @@
         // gen color wheel
         const PI2 = Math.PI * 2;
 
-        class Polygon {
+        class Wheel {
             constructor(x, y, rad, sides) {
                 this.x = x;
                 this.y = y;
@@ -91,9 +91,62 @@
             }
         }
 
+        // color buttons
+        const COLORS = [
+            "#111",
+            "#222",
+            "#333",
+            "#444",
+            "#555",
+            "#666",
+            "#777",
+            "#888",
+            "#999",
+            "#aaa",
+            "#bbb",
+            "#ccc"
+        ]
+        class ClrBtns {
+            constructor(x1, x2, y, N) {
+                this.y = y;
+                this.x1 = x1;
+                this.x2 = x2;
+                this.N = N;
+            }
+            genBtns(ctx) {
+                ctx.save();
+                ctx.translate(0, 0);
+                const BDR_RATIO = 0.2;
+                const row = (this.N <= 10) ? 3 : (this.N <= 20) ? 4 : 5;
+                const col = (this.N <= 10) ? 4 : (this.N <= 20) ? 5 : 8;
+                const d = (1 - BDR_RATIO) * (this.x2 - this.x1) / row;
+                const bdr = (this.x2 - this.x1) * BDR_RATIO / (row - 1);
+                for (let n = 0; n < this.N; n++) {
+                    for (let i = 0; i < col; i++) {
+                        for (let j = 0; j < row; j++) {
+                            const x = this.x1 + (d + bdr) * j;
+                            const y = this.y + (d + bdr) * i;
+                            ctx.save();
+                            ctx.fillStyle = COLORS[n];
+                            ctx.beginPath();
+                            ctx.moveTo(x, y);
+                            ctx.lineTo(x, y + d);
+                            ctx.lineTo(x + d, y + d);
+                            ctx.lineTo(x + d, y);
+                            ctx.lineTo(x, y);
+                            ctx.fill();
+                            ctx.closePath();
+                            ctx.restore();
+                        }
+                    }
+                }
+                ctx.restore();
+            }
+        }
+
         // color wheel - N colors
 
-        class Wheel {
+        class Game {
             constructor(query, N) {
                 this.canvas = query;
                 this.ctx = this.canvas.getContext("2d");
@@ -112,20 +165,27 @@
 
                 window.requestAnimationFrame(this.animate.bind(this));
             }
-            resize(n) {
+            resize(N) {
                 this.stageWidth = window.innerWidth;
-                this.stageHeight = window.innerHeight;
+                this.stageHeight = window.innerWidth * 1.2;
 
-                this.canvas.width = this.stageWidth;
-                this.canvas.height = this.stageHeight;
+                this.canvas.width = this.stageWidth * this.pixelRatio;
+                this.canvas.height = this.stageHeight * this.pixelRatio;
+                this.ctx.scale(this.pixelRatio, this.pixelRatio);
 
-                this.Polygon = new Polygon(
-                    0 - this.stageWidth / 4,
+                this.Polygon = new Wheel(
+                    0 - N * 2,
                     this.stageHeight / 2,
-                    this.stageHeight / 4.5 + n * 1.2,
-                    n
+                    this.stageHeight / 4.5 + N,
+                    N
                 )
                 console.log(this.Polygon);
+                this.ClrBtns = new ClrBtns(
+                    this.stageWidth / 2,
+                    this.stageWidth,
+                    this.stageHeight / 4,
+                    N
+                )
             }
             animate() {
                 window.requestAnimationFrame(this.animate.bind(this));
@@ -134,6 +194,7 @@
 
                 this.moveY *= 0.92;
                 this.Polygon.animate(this.ctx, this.moveY);
+                this.ClrBtns.genBtns(this.ctx);
             }
 
             onDown(e) {
@@ -155,7 +216,7 @@
         }
 
         window.onload = () => {
-            new Wheel(document.querySelector("#wheel-20"), 40);
+            new Game(document.querySelector("#wheel-20"), 10);
         }
     </script>
 </body>
