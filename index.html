@@ -91,21 +91,81 @@
             }
         }
 
-        // color buttons
-        const COLORS = [
-            "#111111",
-            "#222222",
-            "#333333",
-            "#444444",
-            "#555555",
-            "#666666",
-            "#777777",
-            "#888888",
-            "#999999",
-            "#aaaaaa",
-            "#bbbbbb",
-            "#cccccc"
+        // color DB: [10colors|20colors|40colors]
+        const COLORDB = [
+            "#ce303f",
+            "#f39a24",
+            "#f1cc00",
+            "#9ebf18",
+            "#00893f",
+            "#008789",
+            "#007ead",
+            "#437abe",
+            "#9e65a7",
+            "#cb4880", //End of 10colors
+            "#ce303f",
+            "#e6501c",
+            "#f39a24",
+            "#f0b107",
+            "#f1cc00",
+            "#dbd100",
+            "#9ebf18",
+            "#25a339",
+            "#00893f",
+            "#00886f",
+            "#008789",
+            "#0086a0",
+            "#007ead",
+            "#0079c4",
+            "#437abe",
+            "#8070b1",
+            "#9e65a7",
+            "#bd569c",
+            "#cb4880",
+            "#d83e68", //End of 20colors
+            "#c82d50",
+            "#ce303f",
+            "#e74132",
+            "#e6501c",
+            "#ee761f",
+            "#f39a24",
+            "#f6a92d",
+            "#f0b107",
+            "#fbc400",
+            "#f1cc00",
+            "#e6cd00",
+            "#dbd100",
+            "#cad500",
+            "#9ebf18",
+            "#89bc28",
+            "#25a339",
+            "#008e3b",
+            "#00893f",
+            "#008963",
+            "#00886f",
+            "#00877d",
+            "#008789",
+            "#008694",
+            "#0086a0",
+            "#0085a9",
+            "#007ead",
+            "#007dbb",
+            "#0079c4",
+            "#0075bf",
+            "#437abe",
+            "#6677b9",
+            "#8070b1",
+            "#8e6dae",
+            "#9e65a7",
+            "#ac5fa2",
+            "#bd569c",
+            "#c64b91",
+            "#cb4880",
+            "#d34175",
+            "#d83e68"
         ]
+
+        // color buttons
         class ClrBtns {
             constructor(x1, x2, y, N) {
                 this.y = y;
@@ -121,12 +181,14 @@
                 const col = (this.N <= 10) ? 4 : (this.N <= 20) ? 5 : 8;
                 const d = (1 - BDR_RATIO) * (this.x2 - this.x1) / row;
                 const bdr = (this.x2 - this.x1) * BDR_RATIO / (row - 1);
+                const index_offset = (this.N <= 10) ? 0 : (this.N <= 20) ? 10 : 30;
+                let index = 0;
                 for (let i = 0; i < col; i++) {
                     for (let j = 0; j < row; j++) {
                         const x = this.x1 + (d + bdr) * j;
                         const y = this.y + (d + bdr) * i;
                         ctx.save();
-                        ctx.fillStyle = COLORS[i * 3 + j];
+                        ctx.fillStyle = COLORDB[index + index_offset];
                         ctx.beginPath();
                         ctx.moveTo(x, y);
                         ctx.lineTo(x, y + d);
@@ -136,7 +198,8 @@
                         ctx.fill();
                         ctx.closePath();
                         ctx.restore();
-                        if (i * 3 + j == this.N - 1) break;
+                        index++;
+                        if (index >= this.N) break;
                     }
                 }
                 ctx.restore();
@@ -155,8 +218,12 @@
                 window.addEventListener("resize", this.resize.bind(this)(N), false);
                 this.resize(N);
                 this.isDownOnWheel = false;
-                this.moveY = 0;
+
+                this.offsetX = 0;
                 this.offsetY = 0;
+                this.moveX = 0;
+                this.moveY = 0;
+                this.rotateY = 0;
 
                 document.addEventListener("pointerdown", this.onDown.bind(this), false);
                 document.addEventListener("pointermove", this.onMove.bind(this), false);
@@ -172,13 +239,12 @@
                 this.canvas.height = this.stageHeight * this.pixelRatio;
                 this.ctx.scale(this.pixelRatio, this.pixelRatio);
 
-                this.Polygon = new Wheel(
+                this.Wheel = new Wheel(
                     0 - N * 2,
                     this.stageHeight / 2,
-                    this.stageHeight / 4.5 + N,
+                    this.stageHeight / 8 + N * 3,
                     N
                 )
-                console.log(this.Polygon);
                 this.ClrBtns = new ClrBtns(
                     this.stageWidth / 2,
                     this.stageWidth,
@@ -190,20 +256,32 @@
                 window.requestAnimationFrame(this.animate.bind(this));
 
                 this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight);
-
-                this.moveY *= 0.92;
-                this.Polygon.animate(this.ctx, this.moveY);
+                this.rotateY *= 0.82;
+                this.Wheel.animate(this.ctx, this.rotateY);
                 this.ClrBtns.genBtns(this.ctx);
             }
 
             onDown(e) {
-                this.isDownOnWheel = true;
-                this.moveY = 0;
-                this.offsetY = e.clientY;
+                if (e.offsetX < this.stageWidth / 2.3) {
+                    this.isDownOnWheel = true;
+                    this.rotateY = 0;
+                    this.offsetY = e.clientY;
+                    console.log(e.offsetX, this.stageWidth / 2.3);
+                } else {
+                    this.isDownOnBtn = true;
+                    const clicked_color = this.ctx.getImageData(e.offsetX, e.offsetY, 1, 1);
+                    console.log(clicked_color);
+                }
             }
 
             onMove(e) {
                 if (this.isDownOnWheel) {
+                    this.rotateY = e.clientY - this.offsetY;
+                    this.offsetY = e.clientY;
+                }
+                if (this.isDownOnBtn) {
+                    this.moveX = e.clientX - this.offsetX;
+                    this.offsetX = e.clientX;
                     this.moveY = e.clientY - this.offsetY;
                     this.offsetY = e.clientY;
                 }
@@ -211,6 +289,7 @@
 
             onUp(e) {
                 this.isDownOnWheel = false;
+                this.isDownOnBtn = false;
             }
         }
 
