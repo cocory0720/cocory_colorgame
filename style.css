@@ -1,3 +1,8 @@
+body {
+    overflow: hidden;
+    height: 100%;
+}
+
 canvas {
     position: absolute;
     z-index: -9999;
@@ -5,5 +10,4 @@ canvas {
     height: 120vw;
     top: 10%;
     background-color: #eee;
-    touch-action: none;
 }
