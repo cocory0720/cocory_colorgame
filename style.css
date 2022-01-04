@@ -5,4 +5,5 @@ canvas {
     height: 120vw;
     top: 10%;
     background-color: #eee;
+    touch-action: none;
 }

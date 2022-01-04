@@ -66,8 +66,8 @@
 
             animate(ctx, moveY) {
                 ctx.save();
-                ctx.strokeStyle = "#333";
-
+                ctx.strokeStyle = "#000";
+                ctx.lineWidth = 2;
                 const angle = PI2 / this.sides;
 
                 ctx.translate(this.x, this.y);
@@ -81,7 +81,10 @@
                     const r = this.rad * Math.sin(angle / 2);
                     ctx.beginPath();
                     ctx.moveTo(0, 0);
+                    ctx.save();
+                    ctx.strokeStyle = "#888";
                     ctx.lineTo(x * (1 - r / this.rad), y * (1 - r / this.rad));
+                    ctx.restore();
                     ctx.moveTo(x + r, y);
                     ctx.arc(x, y, r, 0, PI2, false);
                     ctx.stroke();
@@ -164,6 +167,15 @@
             "#d34175",
             "#d83e68"
         ]
+
+        // randDB(array, index_of_first_element_to_shuffle, index_of_last_element)
+        function shuffle(array, frst, last) {
+            let shuffled_array = new Array(frst - last + 1);
+            for (let index = last - frst; index > 0; index--) {
+                const randomPosition = Math.floor(Math.random() * (index + 1));
+
+            }
+        }
 
         // color buttons
         class ClrBtns {
