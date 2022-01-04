@@ -52,7 +52,118 @@
             }, 1000);
         });
 
-        // gen color wheel
+        /* 
+        colorDB > testDB > sectionDB > colors
+        testDB = 색상,명도,채도,색감
+        sectionDB = A_section, B_section, ...
+        colors = "#ce303f", "#f39a24", "#f1cc00", ...
+        */
+        const COLORDB = [
+            [ //색상테스트DB
+                ["#ce303f",
+                    "#f39a24",
+                    "#f1cc00",
+                    "#9ebf18",
+                    "#00893f",
+                    "#008789",
+                    "#007ead",
+                    "#437abe",
+                    "#9e65a7",
+                    "#cb4880"
+                ], //End of section_10color
+                ["#ce303f",
+                    "#e6501c",
+                    "#f39a24",
+                    "#f0b107",
+                    "#f1cc00",
+                    "#dbd100",
+                    "#9ebf18",
+                    "#25a339",
+                    "#00893f",
+                    "#00886f",
+                    "#008789",
+                    "#0086a0",
+                    "#007ead",
+                    "#0079c4",
+                    "#437abe",
+                    "#8070b1",
+                    "#9e65a7",
+                    "#bd569c",
+                    "#cb4880",
+                    "#d83e68"
+                ], //End of section_20colors
+                ["#c82d50",
+                    "#ce303f",
+                    "#e74132",
+                    "#e6501c",
+                    "#ee761f",
+                    "#f39a24",
+                    "#f6a92d",
+                    "#f0b107",
+                    "#fbc400",
+                    "#f1cc00",
+                    "#e6cd00",
+                    "#dbd100",
+                    "#cad500",
+                    "#9ebf18",
+                    "#89bc28",
+                    "#25a339",
+                    "#008e3b",
+                    "#00893f",
+                    "#008963",
+                    "#00886f",
+                    "#00877d",
+                    "#008789",
+                    "#008694",
+                    "#0086a0",
+                    "#0085a9",
+                    "#007ead",
+                    "#007dbb",
+                    "#0079c4",
+                    "#0075bf",
+                    "#437abe",
+                    "#6677b9",
+                    "#8070b1",
+                    "#8e6dae",
+                    "#9e65a7",
+                    "#ac5fa2",
+                    "#bd569c",
+                    "#c64b91",
+                    "#cb4880",
+                    "#d34175",
+                    "#d83e68"
+                ] //End of section_40colors
+            ],
+            [ //명도테스트DB
+                [],
+                [],
+                []
+            ],
+            [ //채도테스트DB
+                [],
+                [],
+                []
+            ],
+            [ //색감테스트DB
+                [],
+                [],
+                []
+            ]
+        ]
+
+        // shuffle all of data in DB
+        COLORDB.forEach((testDB) => {
+            testDB.forEach((sectionDB) => {
+                for (let index = sectionDB.length - 1; index > 0; index--) {
+                    const randomPosition = Math.floor(Math.random() * (index + 1));
+                    const temp = sectionDB[index];
+                    sectionDB[index] = sectionDB[randomPosition];
+                    sectionDB[randomPosition] = temp;
+                }
+            });
+        });
+
+        // color wheel
         const PI2 = Math.PI * 2;
 
         class Wheel {
@@ -94,89 +205,6 @@
             }
         }
 
-        // color DB: [10colors|20colors|40colors]
-        const COLORDB = [
-            "#ce303f",
-            "#f39a24",
-            "#f1cc00",
-            "#9ebf18",
-            "#00893f",
-            "#008789",
-            "#007ead",
-            "#437abe",
-            "#9e65a7",
-            "#cb4880", //End of 10colors
-            "#ce303f",
-            "#e6501c",
-            "#f39a24",
-            "#f0b107",
-            "#f1cc00",
-            "#dbd100",
-            "#9ebf18",
-            "#25a339",
-            "#00893f",
-            "#00886f",
-            "#008789",
-            "#0086a0",
-            "#007ead",
-            "#0079c4",
-            "#437abe",
-            "#8070b1",
-            "#9e65a7",
-            "#bd569c",
-            "#cb4880",
-            "#d83e68", //End of 20colors
-            "#c82d50",
-            "#ce303f",
-            "#e74132",
-            "#e6501c",
-            "#ee761f",
-            "#f39a24",
-            "#f6a92d",
-            "#f0b107",
-            "#fbc400",
-            "#f1cc00",
-            "#e6cd00",
-            "#dbd100",
-            "#cad500",
-            "#9ebf18",
-            "#89bc28",
-            "#25a339",
-            "#008e3b",
-            "#00893f",
-            "#008963",
-            "#00886f",
-            "#00877d",
-            "#008789",
-            "#008694",
-            "#0086a0",
-            "#0085a9",
-            "#007ead",
-            "#007dbb",
-            "#0079c4",
-            "#0075bf",
-            "#437abe",
-            "#6677b9",
-            "#8070b1",
-            "#8e6dae",
-            "#9e65a7",
-            "#ac5fa2",
-            "#bd569c",
-            "#c64b91",
-            "#cb4880",
-            "#d34175",
-            "#d83e68"
-        ]
-
-        // randDB(array, index_of_first_element_to_shuffle, index_of_last_element)
-        function shuffle(array, frst, last) {
-            let shuffled_array = new Array(frst - last + 1);
-            for (let index = last - frst; index > 0; index--) {
-                const randomPosition = Math.floor(Math.random() * (index + 1));
-
-            }
-        }
-
         // color buttons
         class ClrBtns {
             constructor(x1, x2, y, N) {
@@ -193,14 +221,13 @@
                 const col = (this.N <= 10) ? 4 : (this.N <= 20) ? 5 : 8;
                 const d = (1 - BDR_RATIO) * (this.x2 - this.x1) / row;
                 const bdr = (this.x2 - this.x1) * BDR_RATIO / (row - 1);
-                const index_offset = (this.N <= 10) ? 0 : (this.N <= 20) ? 10 : 30;
                 let index = 0;
                 for (let i = 0; i < col; i++) {
                     for (let j = 0; j < row; j++) {
                         const x = this.x1 + (d + bdr) * j;
                         const y = this.y + (d + bdr) * i;
                         ctx.save();
-                        ctx.fillStyle = COLORDB[index + index_offset];
+                        ctx.fillStyle = COLORDB[0][row - 3][index];
                         ctx.beginPath();
                         ctx.moveTo(x, y);
                         ctx.lineTo(x, y + d);
