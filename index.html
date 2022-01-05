@@ -296,11 +296,11 @@
         const PI2 = Math.PI * 2;
 
         class Wheel {
-            constructor(x, y, rad, sides) {
+            constructor(x, y, rad, N) {
                 this.x = x;
                 this.y = y;
                 this.rad = rad;
-                this.sides = sides;
+                this.N = N;
                 this.rotate = 0;
             }
 
@@ -308,14 +308,14 @@
                 ctx.save();
                 ctx.strokeStyle = "#000";
                 ctx.lineWidth = 2;
-                const angle = PI2 / this.sides;
-                const section_index = this.sides <= 10 ? 0 : this.sides <= 20 ? 1 : 2;
+                const angle = PI2 / this.N;
+                const section_index = this.N <= 10 ? 0 : this.N <= 20 ? 1 : 2;
                 ctx.translate(this.x, this.y);
 
                 this.rotate += moveY * 0.01;
                 ctx.rotate(this.rotate);
 
-                for (let i = 0; i < this.sides; i++) {
+                for (let i = 0; i < this.N; i++) {
                     const x = this.rad * Math.cos(angle * i);
                     const y = this.rad * Math.sin(angle * i);
                     const r = this.rad * Math.sin(angle / 2);
@@ -388,8 +388,7 @@
                 this.canvas = query;
                 this.ctx = this.canvas.getContext("2d");
 
-                this.pixelRatio = window.devicePixelRatio > 1 ? 2 : 1;
-
+                // this.pixelRatio = window.devicePixelRatio > 1 ? 2 : 1;
                 window.addEventListener("resize", this.resize.bind(this)(N), false);
                 this.resize(N);
                 this.isDownOnWheel = false;
@@ -398,7 +397,7 @@
                 this.offsetY = 0;
                 this.moveX = 0;
                 this.moveY = 0;
-                this.rotateY = 0;
+                this.rotate = 0;
 
                 document.addEventListener("pointerdown", this.onDown.bind(this), false);
                 document.addEventListener("pointermove", this.onMove.bind(this), false);
@@ -407,23 +406,23 @@
                 window.requestAnimationFrame(this.animate.bind(this));
             }
             resize(N) {
-                this.stageWidth = window.innerWidth;
-                this.stageHeight = window.innerWidth * 1.2;
+                this.stageWidth = window.innerWidth < 1600 ? window.innerWidth : 1600;
+                this.stageHeight = window.innerHeight < 900 ? window.innerHeight : 900;
+                this.canvas.width = this.stageWidth;
+                this.canvas.height = this.stageHeight;
+                const is_stage_wide = this.stageWidth > this.stageHeight ? 1 : 0;
 
-                this.canvas.width = this.stageWidth * this.pixelRatio;
-                this.canvas.height = this.stageHeight * this.pixelRatio;
-                this.ctx.scale(this.pixelRatio, this.pixelRatio);
-
-                this.Wheel = new Wheel(
-                    0 - N * 2,
+                this.Wheel = new Wheel( //(x, y, rad, N)
+                    this.stageWidth / 4 - N * 2,
                     this.stageHeight / 2,
                     this.stageHeight / 8 + N * 3,
                     N
                 )
-                this.ClrBtns = new ClrBtns(
+                const w = this.stageWidth > this.stageHeight ? this.stageHeight / 3 : this.stageWidth / 2.2;
+                this.ClrBtns = new ClrBtns( //(x1, x2 = x1 + w, y = center - w, N) (h /simeq 2w)
                     this.stageWidth / 2,
-                    this.stageWidth,
-                    this.stageHeight / 6,
+                    this.stageWidth / 2 + w,
+                    this.stageHeight / 2 - w,
                     N
                 )
             }
@@ -431,15 +430,16 @@
                 window.requestAnimationFrame(this.animate.bind(this));
 
                 this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight);
-                this.rotateY *= 0.82;
-                this.Wheel.animate(this.ctx, this.rotateY);
+                this.rotate *= 0.82;
+                this.Wheel.animate(this.ctx, this.rotate);
                 this.ClrBtns.genBtns(this.ctx);
             }
 
             onDown(e) {
                 if (e.offsetX < this.stageWidth / 2.3) {
                     this.isDownOnWheel = true;
-                    this.rotateY = 0;
+                    this.rotate = 0;
+                    this.offsetX = e.clientX;
                     this.offsetY = e.clientY;
                     console.log(e.offsetX, this.stageWidth / 2.3);
                 } else {
@@ -451,7 +451,7 @@
 
             onMove(e) {
                 if (this.isDownOnWheel) {
-                    this.rotateY = e.clientY - this.offsetY;
+                    this.rotate = e.clientY - this.offsetY;
                     this.offsetY = e.clientY;
                 }
                 if (this.isDownOnBtn) {
