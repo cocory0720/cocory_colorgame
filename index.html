@@ -280,8 +280,10 @@
         // shuffle data in DB
         COLORDB.forEach((testDB) => {
             testDB.forEach((sectionDB) => {
-                sectionDB[1].forEach((colors) => {
-                    sectionDB[2].push(colors);
+                sectionDB[1].forEach((colors, index) => {
+                    if (sectionDB[0][index] == 0) {
+                        sectionDB[2].push(colors);
+                    }
                 });
                 for (let index = sectionDB[2].length - 1; index > 0; index--) {
                     const randomPosition = Math.floor(Math.random() * (index + 1));
@@ -304,7 +306,7 @@
                 this.rotate = 0;
             }
 
-            animate(ctx, moveY) {
+            animate(ctx, rotate) {
                 ctx.save();
                 ctx.strokeStyle = "#000";
                 ctx.lineWidth = 2;
@@ -312,7 +314,7 @@
                 const section_index = this.N <= 10 ? 0 : this.N <= 20 ? 1 : 2;
                 ctx.translate(this.x, this.y);
 
-                this.rotate += moveY * 0.01;
+                this.rotate += rotate;
                 ctx.rotate(this.rotate);
 
                 for (let i = 0; i < this.N; i++) {
@@ -344,38 +346,33 @@
 
         // color buttons
         class ClrBtns {
-            constructor(x1, x2, y, N) {
-                this.y = y;
-                this.x1 = x1;
-                this.x2 = x2;
+            constructor(x, y1, y2, N) {
+                this.x = x;
+                this.y1 = y1;
+                this.y2 = y2;
                 this.N = N;
             }
             genBtns(ctx) {
                 ctx.save();
                 ctx.translate(0, 0);
                 const BDR_RATIO = 0.2;
-                const row = (this.N <= 10) ? 3 : (this.N <= 20) ? 4 : 5;
-                const col = (this.N <= 10) ? 4 : (this.N <= 20) ? 5 : 8;
-                const d = (1 - BDR_RATIO) * (this.x2 - this.x1) / row;
-                const bdr = (this.x2 - this.x1) * BDR_RATIO / (row - 1);
+                const row = (this.N <= 10) ? 2 : (this.N <= 20) ? 3 : 4;
+                const col = 2 * row;
+                const d = (1 - BDR_RATIO) * (this.y2 - this.y1) / col;
+                const bdr = (this.y2 - this.y1) * BDR_RATIO / (col - 1);
                 let index = 0;
-                for (let i = 0; i < col; i++) {
-                    for (let j = 0; j < row; j++) {
-                        const x = this.x1 + (d + bdr) * j;
-                        const y = this.y + (d + bdr) * i;
+                for (let i = 0; i < row; i++) {
+                    for (let j = 0; j < col; j++) {
+                        if (index >= COLORDB[0][row - 2][2].length) break;
+                        const x = this.x + (d + bdr) * i;
+                        const y = this.y1 + (d + bdr) * j;
                         ctx.save();
-                        ctx.fillStyle = COLORDB[0][row - 3][2][index];
+                        ctx.fillStyle = COLORDB[0][row - 2][2][index];
                         ctx.beginPath();
-                        ctx.moveTo(x, y);
-                        ctx.lineTo(x, y + d);
-                        ctx.lineTo(x + d, y + d);
-                        ctx.lineTo(x + d, y);
-                        ctx.lineTo(x, y);
-                        ctx.fill();
+                        ctx.fillRect(x, y, d, d);
                         ctx.closePath();
                         ctx.restore();
                         index++;
-                        if (index >= this.N) break;
                     }
                 }
                 ctx.restore();
@@ -392,7 +389,6 @@
                 window.addEventListener("resize", this.resize.bind(this)(N), false);
                 this.resize(N);
                 this.isDownOnWheel = false;
-
                 this.offsetX = 0;
                 this.offsetY = 0;
                 this.moveX = 0;
@@ -410,21 +406,25 @@
                 this.stageHeight = window.innerHeight < 900 ? window.innerHeight : 900;
                 this.canvas.width = this.stageWidth;
                 this.canvas.height = this.stageHeight;
-                const is_stage_wide = this.stageWidth > this.stageHeight ? 1 : 0;
 
+                this.ctx.save();
+                this.isWide = this.stageWidth > this.stageHeight ? 1 : 0;
+                const clrBtns_w = this.isWide == 1 ? this.stageHeight / 4 : this.stageWidth / 2 - N * 0.2;
+                this.cntrOfWheelX = this.isWide == 1 ? this.stageWidth / 3 : 0 - N * 3;
+                this.cntrOfWheelY = this.stageHeight / 2;
                 this.Wheel = new Wheel( //(x, y, rad, N)
-                    this.stageWidth / 4 - N * 2,
-                    this.stageHeight / 2,
-                    this.stageHeight / 8 + N * 3,
+                    this.cntrOfWheelX,
+                    this.cntrOfWheelY,
+                    this.stageHeight / 7.5 + N * 3.5,
                     N
                 )
-                const w = this.stageWidth > this.stageHeight ? this.stageHeight / 3 : this.stageWidth / 2.2;
-                this.ClrBtns = new ClrBtns( //(x1, x2 = x1 + w, y = center - w, N) (h /simeq 2w)
-                    this.stageWidth / 2,
-                    this.stageWidth / 2 + w,
-                    this.stageHeight / 2 - w,
+                this.ClrBtns = new ClrBtns( //(x = center, y1=center - w, y2 = center + w, N)
+                    this.isWide == 1 ? this.stageWidth * (1 / 2 + 1 / 8) : this.stageWidth / 2,
+                    this.stageHeight / 2 - clrBtns_w,
+                    this.stageHeight / 2 + clrBtns_w,
                     N
                 )
+                this.ctx.restore();
             }
             animate() {
                 window.requestAnimationFrame(this.animate.bind(this));
@@ -436,12 +436,12 @@
             }
 
             onDown(e) {
-                if (e.offsetX < this.stageWidth / 2.3) {
+                let wheelArea = this.isWide == 1 ? this.stageWidth / 1.75 : this.stageWidth;
+                if (e.offsetX < wheelArea) {
                     this.isDownOnWheel = true;
                     this.rotate = 0;
                     this.offsetX = e.clientX;
                     this.offsetY = e.clientY;
-                    console.log(e.offsetX, this.stageWidth / 2.3);
                 } else {
                     this.isDownOnBtn = true;
                     const clicked_color = this.ctx.getImageData(e.offsetX, e.offsetY, 1, 1);
@@ -451,7 +451,10 @@
 
             onMove(e) {
                 if (this.isDownOnWheel) {
-                    this.rotate = e.clientY - this.offsetY;
+                    this.rotate = Math.atan((e.clientY - this.cntrOfWheelY) / (e.clientX - this.cntrOfWheelX)) -
+                        Math.atan((this.offsetY - this.cntrOfWheelY) / (this.offsetX - this.cntrOfWheelX));
+                    console.log(this.rotate, Math.atan((e.clientY - this.cntrOfWheelY) / (e.clientX - this.cntrOfWheelX)), Math.atan((this.offsetY - this.cntrOfWheelY) / (this.offsetX - this.cntrOfWheelX)));
+                    this.offsetX = e.clientX;
                     this.offsetY = e.clientY;
                 }
                 if (this.isDownOnBtn) {
