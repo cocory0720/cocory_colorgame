@@ -58,7 +58,7 @@
         colorDB > testDB > sectionDB > colors
         colorDB = 0:색상테스트, 1:명도테스트, 2:채도테스트, 3:색감테스트
         testDB = 0:A_section, 1:B_section, ...
-        sectionDB = 0:제시될색깔(공백은 0 or false), 1:정답배열, 2:빈_배열(섞기 위함)
+        sectionDB = 0:제시될색깔(공백은 0 or false), 1:정답배열, 2:빈_배열(섞인 배열을 저장하기 위함)
         */
         const COLORDB = [
             [ //색상테스트DB
@@ -306,7 +306,7 @@
                 this.rotate = 0;
             }
 
-            animate(ctx, rotate) {
+            genWhl(ctx, rotate) {
                 ctx.save();
                 ctx.strokeStyle = "#000";
                 ctx.lineWidth = 2;
@@ -314,7 +314,7 @@
                 const section_index = this.N <= 10 ? 0 : this.N <= 20 ? 1 : 2;
                 ctx.translate(this.x, this.y);
 
-                this.rotate += rotate;
+                this.rotate += rotate * 8;
                 ctx.rotate(this.rotate);
 
                 for (let i = 0; i < this.N; i++) {
@@ -377,6 +377,11 @@
                 }
                 ctx.restore();
             }
+            isWhichPosition(offX, offY) {
+                let which = -1;
+
+                return which;
+            }
         }
 
         // Hue test canvas main script
@@ -385,15 +390,15 @@
                 this.canvas = query;
                 this.ctx = this.canvas.getContext("2d");
 
-                // this.pixelRatio = window.devicePixelRatio > 1 ? 2 : 1;
                 window.addEventListener("resize", this.resize.bind(this)(N), false);
                 this.resize(N);
                 this.isDownOnWheel = false;
-                this.offsetX = 0;
-                this.offsetY = 0;
-                this.moveX = 0;
-                this.moveY = 0;
+                this.pointerX = 0;
+                this.pointerY = 0;
                 this.rotate = 0;
+
+                this.clickedColor = 0;
+                this.currentSection = N <= 10 ? 0 : N <= 20 ? 1 : 2;
 
                 document.addEventListener("pointerdown", this.onDown.bind(this), false);
                 document.addEventListener("pointermove", this.onMove.bind(this), false);
@@ -431,43 +436,53 @@
 
                 this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight);
                 this.rotate *= 0.82;
-                this.Wheel.animate(this.ctx, this.rotate);
+                this.Wheel.genWhl(this.ctx, this.rotate);
                 this.ClrBtns.genBtns(this.ctx);
             }
 
             onDown(e) {
-                let wheelArea = this.isWide == 1 ? this.stageWidth / 1.75 : this.stageWidth;
-                if (e.offsetX < wheelArea) {
+                let wheelArea = this.isWide == 1 ? window.innerWidth / 1.7 : window.innerWidth / 2;
+                if (e.clientX < wheelArea) {
                     this.isDownOnWheel = true;
                     this.rotate = 0;
-                    this.offsetX = e.clientX;
-                    this.offsetY = e.clientY;
+                    this.pointerX = e.offsetX;
+                    this.pointerY = e.offsetY;
                 } else {
                     this.isDownOnBtn = true;
-                    const clicked_color = this.ctx.getImageData(e.offsetX, e.offsetY, 1, 1);
-                    console.log(clicked_color);
+                    this.clickedColor = 0;
+                    this.ctx.getImageData(e.offsetX, e.offsetY, 1, 1).data.slice(0, 3).forEach((RGBs, i) => {
+                        this.clickedColor += RGBs * Math.pow(256, 2 - i);
+                    });
+                    this.clickedColor = '#' + this.clickedColor.toString(16);
+                    console.log(this.clickedColor);
                 }
             }
 
             onMove(e) {
                 if (this.isDownOnWheel) {
-                    this.rotate = Math.atan((e.clientY - this.cntrOfWheelY) / (e.clientX - this.cntrOfWheelX)) -
-                        Math.atan((this.offsetY - this.cntrOfWheelY) / (this.offsetX - this.cntrOfWheelX));
-                    console.log(this.rotate, Math.atan((e.clientY - this.cntrOfWheelY) / (e.clientX - this.cntrOfWheelX)), Math.atan((this.offsetY - this.cntrOfWheelY) / (this.offsetX - this.cntrOfWheelX)));
-                    this.offsetX = e.clientX;
-                    this.offsetY = e.clientY;
+                    this.rotate = Math.atan2(e.offsetY - this.cntrOfWheelY, e.offsetX - this.cntrOfWheelX) -
+                        Math.atan2(this.pointerY - this.cntrOfWheelY, this.pointerX - this.cntrOfWheelX);
+                    this.pointerX = e.offsetX;
+                    this.pointerY = e.offsetY;
                 }
                 if (this.isDownOnBtn) {
-                    this.moveX = e.clientX - this.offsetX;
-                    this.offsetX = e.clientX;
-                    this.moveY = e.clientY - this.offsetY;
-                    this.offsetY = e.clientY;
+                    this.moveX = e.offsetX - this.pointerX;
+                    this.pointerX = e.offsetX;
+                    this.moveY = e.offsetY - this.pointerY;
+                    this.pointerY = e.offsetY;
                 }
             }
 
             onUp(e) {
+                // if (this.isDownOnBtn) {
+                //     const which = this.Wheel.isWhichPosition(e.offsetX, e.offsetY);
+                //     if (which != -1) {
+                //         COLORDB[0][this.currentSection][0][which] = this.clickedColor;
+                //     }
+                // }
                 this.isDownOnWheel = false;
                 this.isDownOnBtn = false;
+                this.clickedColor = 0;
             }
         }
 
