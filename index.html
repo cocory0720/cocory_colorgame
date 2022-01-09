@@ -35,7 +35,7 @@
 
     </main>
 
-    <script>
+    <script type="text/javascript">
         // class : next button
         $('.next').click(function() {
             clicked_article = $(this).closest("article");
@@ -440,9 +440,9 @@
                 this.clickedColor = 0; // colorcode in Decimal
                 this.currentSection = N <= 10 ? 0 : N <= 20 ? 1 : 2;
 
-                document.addEventListener("pointerdown", this.onDown.bind(this), false);
-                document.addEventListener("pointermove", this.onMove.bind(this), false);
-                document.addEventListener("pointerup", this.onUp.bind(this), false);
+                this.canvas.addEventListener("pointerdown", this.onDown.bind(this), false);
+                this.canvas.addEventListener("pointermove", this.onMove.bind(this), false);
+                this.canvas.addEventListener("pointerup", this.onUp.bind(this), false);
 
                 window.requestAnimationFrame(this.animate.bind(this));
             }
@@ -454,17 +454,18 @@
 
                 this.ctx.save();
                 // this.isWide = this.stageWidth > this.stageHeight ? 1 : 0;
-                const clrBtns_w = this.stageHeight / 4;
-                this.cntrOfWheelX = this.stageWidth / 2 - 160;
-                this.cntrOfWheelY = this.stageHeight / 2;
+                const clrBtns_w = (1 - (this.stageWidth - 280) / 1320) * this.stageWidth / 2 + (this.stageWidth - 280) / 1320 * this.stageWidth / 6;
+                this.centerOfWheelX = 0 - (1 - (this.stageWidth - 280) / 1320) * this.stageWidth / 4 + (this.stageWidth - 280) / 1320 * this.stageWidth / 3 + N;
+                this.centerOfWheelY = this.stageHeight / 2;
                 this.Wheel = new Wheel( //(x, y, rad, N)
-                    this.cntrOfWheelX,
-                    this.cntrOfWheelY,
-                    this.stageHeight / 7 + this.stageWidth / 12,
+                    this.centerOfWheelX,
+                    this.centerOfWheelY,
+                    clrBtns_w,
                     N
                 )
+                this.wheelAreaX = this.centerOfWheelX + clrBtns_w * 1.4;
                 this.ClrBtns = new ClrBtns( //(x = center, y1=center - w, y2 = center + w, N)
-                    this.isWide == 1 ? this.stageWidth * (1 / 2 + 1 / 8) : this.stageWidth / 2,
+                    (1 - (this.stageWidth - 280) / 1320) * this.stageWidth / 2 + (this.stageWidth - 280) / 1320 * this.stageWidth * 3 / 5,
                     this.stageHeight / 2 - clrBtns_w,
                     this.stageHeight / 2 + clrBtns_w,
                     N
@@ -483,8 +484,7 @@
             }
 
             onDown(e) {
-                let wheelArea = this.isWide == 1 ? window.innerWidth / 1.7 : window.innerWidth / 2;
-                if (e.clientX < wheelArea) {
+                if (e.offsetX < this.wheelAreaX) {
                     this.isDownOnWheel = true;
                     this.rotate = 0;
                     this.pointerX = e.offsetX;
@@ -502,8 +502,8 @@
 
             onMove(e) {
                 if (this.isDownOnWheel) {
-                    this.rotate = Math.atan2(e.offsetY - this.cntrOfWheelY, e.offsetX - this.cntrOfWheelX) -
-                        Math.atan2(this.pointerY - this.cntrOfWheelY, this.pointerX - this.cntrOfWheelX);
+                    this.rotate = Math.atan2(e.offsetY - this.centerOfWheelY, e.offsetX - this.centerOfWheelX) -
+                        Math.atan2(this.pointerY - this.centerOfWheelY, this.pointerX - this.centerOfWheelX);
                 }
                 if (this.isDownOnBtn) {}
                 this.pointerX = e.offsetX;
