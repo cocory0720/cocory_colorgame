@@ -307,41 +307,46 @@
             }
 
             genWhl(ctx, rotate) {
-                ctx.save();
-                ctx.strokeStyle = "#000";
-                ctx.lineWidth = 2;
-                const angle = PI2 / this.N;
-                const section_index = this.N <= 10 ? 0 : this.N <= 20 ? 1 : 2;
-                ctx.translate(this.x, this.y);
-
-                this.rotate += rotate * 8;
-                ctx.rotate(this.rotate);
-
-                for (let i = 0; i < this.N; i++) {
-                    const x = this.rad * Math.cos(angle * i);
-                    const y = this.rad * Math.sin(angle * i);
-                    const r = this.rad * Math.sin(angle / 2);
-                    ctx.beginPath();
-                    ctx.moveTo(0, 0);
                     ctx.save();
-                    ctx.strokeStyle = "#888";
-                    ctx.lineTo(x * (1 - r / this.rad), y * (1 - r / this.rad));
-                    ctx.stroke();
-                    ctx.restore();
-                    ctx.beginPath();
-                    ctx.moveTo(x + r, y);
-                    ctx.arc(x, y, r, 0, PI2, false);
-                    if (COLORDB[0][section_index][0][i] != 0) {
+                    ctx.strokeStyle = "#000";
+                    ctx.lineWidth = 2;
+                    const angle = PI2 / this.N;
+                    const section_index = this.N <= 10 ? 0 : this.N <= 20 ? 1 : 2;
+                    ctx.translate(this.x, this.y);
+
+                    this.rotate += rotate * 8;
+                    ctx.rotate(this.rotate);
+
+                    for (let i = 0; i < this.N; i++) {
+                        const x = this.rad * Math.cos(angle * i);
+                        const y = this.rad * Math.sin(angle * i);
+                        const r = this.rad * Math.sin(angle / 2);
+                        ctx.beginPath();
+                        ctx.moveTo(0, 0);
                         ctx.save();
-                        ctx.fillStyle = COLORDB[0][section_index][0][i];
-                        ctx.fill();
+                        ctx.strokeStyle = "#888";
+                        ctx.lineTo(x * (1 - r / this.rad), y * (1 - r / this.rad));
+                        ctx.stroke();
                         ctx.restore();
+                        ctx.beginPath();
+                        ctx.moveTo(x + r, y);
+                        ctx.arc(x, y, r, 0, PI2, false);
+                        if (COLORDB[0][section_index][0][i] != 0) {
+                            ctx.save();
+                            ctx.fillStyle = COLORDB[0][section_index][0][i];
+                            ctx.fill();
+                            ctx.restore();
+                        }
+                        ctx.stroke();
+                        ctx.closePath();
                     }
-                    ctx.stroke();
-                    ctx.closePath();
+                    ctx.restore();
                 }
-                ctx.restore();
-            }
+                // isWhichPosition(offX, offY) {
+                //     let which = -1;
+
+            //     return which;
+            // }
         }
 
         // color buttons
@@ -377,10 +382,42 @@
                 }
                 ctx.restore();
             }
-            isWhichPosition(offX, offY) {
-                let which = -1;
+        }
 
-                return which;
+        // picked color window with speech bubble
+        class Picker {
+            constructor(size) {
+                this.h = size / 100; //ratio
+            }
+            genBubl(ctx, posX, posY, pickedColor) {
+                if (pickedColor != 0) {
+                    const currentColor = '#' + ("00" + pickedColor.toString(16)).slice(-6);
+                    const bdr_h = 15 * this.h;
+                    const bbl_h = 70 * this.h;
+                    ctx.save();
+                    ctx.transform(1, 0, 0, -1, posX, posY);
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.bezierCurveTo(bdr_h, bdr_h / 2, bdr_h, bdr_h, bdr_h, bdr_h);
+                    ctx.bezierCurveTo(0, bdr_h, 0, bdr_h * 2, 0, bdr_h * 2);
+                    ctx.lineTo(0, bdr_h * 2 + bbl_h);
+                    ctx.bezierCurveTo(0, bdr_h * 3 + bbl_h, bdr_h, bdr_h * 3 + bbl_h, bdr_h, bdr_h * 3 + bbl_h);
+                    ctx.lineTo(bdr_h + bbl_h, bdr_h * 3 + bbl_h);
+                    ctx.bezierCurveTo(bdr_h * 2 + bbl_h, bdr_h * 3 + bbl_h, bdr_h * 2 + bbl_h, bdr_h * 2 + bbl_h, bdr_h * 2 + bbl_h, bdr_h * 2 + bbl_h);
+                    ctx.lineTo(bdr_h * 2 + bbl_h, bdr_h * 2);
+                    ctx.bezierCurveTo(bdr_h * 2 + bbl_h, bdr_h, bdr_h + bbl_h, bdr_h, bdr_h + bbl_h, bdr_h);
+                    ctx.lineTo(bdr_h * 2, bdr_h);
+                    ctx.bezierCurveTo(bdr_h * 3 / 2, 0, 0, 0, 0, 0);
+                    ctx.stroke();
+                    ctx.closePath();
+
+                    ctx.fillStyle = currentColor;
+                    ctx.beginPath();
+                    ctx.arc(bdr_h + bbl_h / 2, bdr_h * 2 + bbl_h / 2, bdr_h / 2 + bbl_h / 2, 0, PI2, false);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.restore();
+                }
             }
         }
 
@@ -397,7 +434,7 @@
                 this.pointerY = 0;
                 this.rotate = 0;
 
-                this.clickedColor = 0;
+                this.clickedColor = 0; // colorcode in Decimal
                 this.currentSection = N <= 10 ? 0 : N <= 20 ? 1 : 2;
 
                 document.addEventListener("pointerdown", this.onDown.bind(this), false);
@@ -429,6 +466,7 @@
                     this.stageHeight / 2 + clrBtns_w,
                     N
                 )
+                this.Picker = new Picker(clrBtns_w / 4);
                 this.ctx.restore();
             }
             animate() {
@@ -438,6 +476,7 @@
                 this.rotate *= 0.82;
                 this.Wheel.genWhl(this.ctx, this.rotate);
                 this.ClrBtns.genBtns(this.ctx);
+                this.Picker.genBubl(this.ctx, this.pointerX, this.pointerY, this.clickedColor);
             }
 
             onDown(e) {
@@ -453,8 +492,8 @@
                     this.ctx.getImageData(e.offsetX, e.offsetY, 1, 1).data.slice(0, 3).forEach((RGBs, i) => {
                         this.clickedColor += RGBs * Math.pow(256, 2 - i);
                     });
-                    this.clickedColor = '#' + this.clickedColor.toString(16);
-                    console.log(this.clickedColor);
+                    this.pointerX = e.offsetX;
+                    this.pointerY = e.offsetY;
                 }
             }
 
@@ -466,9 +505,7 @@
                     this.pointerY = e.offsetY;
                 }
                 if (this.isDownOnBtn) {
-                    this.moveX = e.offsetX - this.pointerX;
                     this.pointerX = e.offsetX;
-                    this.moveY = e.offsetY - this.pointerY;
                     this.pointerY = e.offsetY;
                 }
             }
