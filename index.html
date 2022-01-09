@@ -453,14 +453,14 @@
                 this.canvas.height = this.stageHeight;
 
                 this.ctx.save();
-                this.isWide = this.stageWidth > this.stageHeight ? 1 : 0;
-                const clrBtns_w = this.isWide == 1 ? this.stageHeight / 4 : this.stageWidth / 2 - N * 0.2;
-                this.cntrOfWheelX = this.isWide == 1 ? this.stageWidth / 3 : 0 - N * 3;
+                // this.isWide = this.stageWidth > this.stageHeight ? 1 : 0;
+                const clrBtns_w = this.stageHeight / 4;
+                this.cntrOfWheelX = this.stageWidth / 2 - 160;
                 this.cntrOfWheelY = this.stageHeight / 2;
                 this.Wheel = new Wheel( //(x, y, rad, N)
                     this.cntrOfWheelX,
                     this.cntrOfWheelY,
-                    this.stageHeight / 7.5 + N * 3.5,
+                    this.stageHeight / 7 + this.stageWidth / 12,
                     N
                 )
                 this.ClrBtns = new ClrBtns( //(x = center, y1=center - w, y2 = center + w, N)
