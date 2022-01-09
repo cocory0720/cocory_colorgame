@@ -427,7 +427,10 @@
                 this.canvas = query;
                 this.ctx = this.canvas.getContext("2d");
 
-                window.addEventListener("resize", this.resize.bind(this)(N), false);
+                // window.addEventListener("resize", this.resize.bind(this)(N), false);
+                window.onresize = () => {
+                    this.resize.bind(this)(N)
+                };
                 this.resize(N);
                 this.isDownOnWheel = false;
                 this.pointerX = 0;
@@ -501,13 +504,10 @@
                 if (this.isDownOnWheel) {
                     this.rotate = Math.atan2(e.offsetY - this.cntrOfWheelY, e.offsetX - this.cntrOfWheelX) -
                         Math.atan2(this.pointerY - this.cntrOfWheelY, this.pointerX - this.cntrOfWheelX);
-                    this.pointerX = e.offsetX;
-                    this.pointerY = e.offsetY;
                 }
-                if (this.isDownOnBtn) {
-                    this.pointerX = e.offsetX;
-                    this.pointerY = e.offsetY;
-                }
+                if (this.isDownOnBtn) {}
+                this.pointerX = e.offsetX;
+                this.pointerY = e.offsetY;
             }
 
             onUp(e) {
@@ -524,7 +524,7 @@
         }
 
         window.onload = () => {
-            new Game(document.querySelector("#wheel-20"), 40);
+            new Game(document.querySelector("#wheel-20"), 10);
         }
     </script>
 </body>
