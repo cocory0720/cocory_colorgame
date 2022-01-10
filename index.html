@@ -342,6 +342,7 @@
                 }
                 ctx.restore();
             }
+
             dropSelectedColor(posX, posY, color) {
                 const colorCode = '#' + ("00" + color.toString(16)).slice(-6); // color Decimal 2 Code
                 for (let i = 0; i < this.N; i++) {
@@ -350,14 +351,15 @@
                     const y = this.rad * Math.sin(targetAngle);
                     const relativeX = posX - this.x;
                     const relativeY = posY - this.y;
-                    console.log(Math.sqrt(Math.abs((x - relativeX) * (x - relativeX)) + Math.abs((y - relativeY) * (y - relativeY))), this.rad * Math.sin(this.angle / 2));
                     if (Math.sqrt(Math.abs((x - relativeX) * (x - relativeX)) + Math.abs((y - relativeY) * (y - relativeY))) < this.rad * Math.sin(this.angle / 2)) {
                         COLORDB[0][this.section_index][0][i] = colorCode;
-                        // COLORDB[0][this.section_index][0].find((el) => {
-                        //     if (el.name === colorCode) return true;
-                        // });
+                        COLORDB[0][this.section_index][2].splice(COLORDB[0][this.section_index][2].indexOf(colorCode), 1);
                     }
                 }
+            }
+
+            selectToCancel() {
+
             }
         }
         // color buttons
@@ -464,24 +466,23 @@
                 this.canvas.height = this.stageHeight;
 
                 this.ctx.save();
-                // this.isWide = this.stageWidth > this.stageHeight ? 1 : 0;
-                const clrBtns_w = (1 - (this.stageWidth - 280) / 1320) * this.stageWidth / 2 + (this.stageWidth - 280) / 1320 * this.stageWidth / 6;
+                this.radiusOfWheel = (1 - (this.stageWidth - 280) / 1320) * this.stageWidth / 2 + (this.stageWidth - 280) / 1320 * this.stageWidth / 6;
                 this.centerOfWheelX = 0 - (1 - (this.stageWidth - 280) / 1320) * this.stageWidth / 4 + (this.stageWidth - 280) / 1320 * this.stageWidth / 3 + N;
                 this.centerOfWheelY = this.stageHeight / 2;
                 this.Wheel = new Wheel( //(x, y, rad, N)
-                    this.centerOfWheelX,
-                    this.centerOfWheelY,
-                    clrBtns_w,
-                    N
-                )
-                this.wheelAreaX = this.centerOfWheelX + clrBtns_w * 1.4;
+                        this.centerOfWheelX,
+                        this.centerOfWheelY,
+                        this.radiusOfWheel,
+                        N
+                    )
+                    // this.wheelArea = this.centerOfWheelX + clrBtns_w * 1.4;
                 this.ClrBtns = new ClrBtns( //(x = center, y1=center - w, y2 = center + w, N)
                     (1 - (this.stageWidth - 280) / 1320) * this.stageWidth / 2 + (this.stageWidth - 280) / 1320 * this.stageWidth * 3 / 5,
-                    this.stageHeight / 2 - clrBtns_w,
-                    this.stageHeight / 2 + clrBtns_w,
+                    this.stageHeight / 2 - this.radiusOfWheel,
+                    this.stageHeight / 2 + this.radiusOfWheel,
                     N
                 )
-                this.Picker = new Picker(clrBtns_w / 3);
+                this.Picker = new Picker(this.radiusOfWheel / 3);
                 this.ctx.restore();
             }
             animate() {
@@ -495,13 +496,17 @@
             }
 
             onDown(e) {
-                if (e.offsetX < this.wheelAreaX) {
+                const distFromCenterOfWheel = Math.sqrt(
+                    Math.abs((e.offsetX - this.centerOfWheelX) * (e.offsetX - this.centerOfWheelX)) +
+                    Math.abs((e.offsetY - this.centerOfWheelY) * (e.offsetY - this.centerOfWheelY))
+                );
+                if (distFromCenterOfWheel < this.radiusOfWheel * 0.93) {
                     this.isDownOnWheel = true;
                     this.rotate = 0;
                     this.pointerX = e.offsetX;
                     this.pointerY = e.offsetY;
                 } else {
-                    this.isDownOnBtn = true;
+                    // this.isDownOnBtn = true;
                     this.clickedColor = 0;
                     this.ctx.getImageData(e.offsetX, e.offsetY, 1, 1).data.slice(0, 3).forEach((RGBs, i) => {
                         this.clickedColor += RGBs * Math.pow(256, 2 - i);
@@ -529,7 +534,7 @@
                     )
                 }
                 this.isDownOnWheel = false;
-                this.isDownOnBtn = false;
+                // this.isDownOnBtn = false;
                 this.clickedColor = 0;
             }
         }
