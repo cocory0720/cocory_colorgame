@@ -314,7 +314,7 @@
                     const section_index = this.N <= 10 ? 0 : this.N <= 20 ? 1 : 2;
                     ctx.translate(this.x, this.y);
 
-                    this.rotate += rotate * 8;
+                    this.rotate += rotate;
                     ctx.rotate(this.rotate);
 
                     for (let i = 0; i < this.N; i++) {
@@ -470,7 +470,7 @@
                     this.stageHeight / 2 + clrBtns_w,
                     N
                 )
-                this.Picker = new Picker(clrBtns_w / 4);
+                this.Picker = new Picker(clrBtns_w / 3);
                 this.ctx.restore();
             }
             animate() {
@@ -505,13 +505,13 @@
                     this.rotate = Math.atan2(e.offsetY - this.centerOfWheelY, e.offsetX - this.centerOfWheelX) -
                         Math.atan2(this.pointerY - this.centerOfWheelY, this.pointerX - this.centerOfWheelX);
                 }
-                if (this.isDownOnBtn) {}
+                // if (this.isDownOnBtn) {}
                 this.pointerX = e.offsetX;
                 this.pointerY = e.offsetY;
             }
 
             onUp(e) {
-                // if (this.isDownOnBtn) {
+                // if (this.isDownOnWheel && this.clickedColor) {
                 //     const which = this.Wheel.isWhichPosition(e.offsetX, e.offsetY);
                 //     if (which != -1) {
                 //         COLORDB[0][this.currentSection][0][which] = this.clickedColor;
@@ -524,7 +524,7 @@
         }
 
         window.onload = () => {
-            new Game(document.querySelector("#wheel-20"), 10);
+            new Game(document.querySelector("#wheel-20"), 40);
         }
     </script>
 </body>
