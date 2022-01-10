@@ -304,51 +304,62 @@
                 this.rad = rad;
                 this.N = N;
                 this.rotate = 0;
+                this.angle = PI2 / this.N;
+                this.section_index = this.N <= 10 ? 0 : this.N <= 20 ? 1 : 2;
+
             }
 
             genWhl(ctx, rotate) {
+                ctx.save();
+                ctx.strokeStyle = "#000";
+                ctx.lineWidth = 2;
+
+                ctx.translate(this.x, this.y);
+                this.rotate += rotate;
+                ctx.rotate(this.rotate);
+                for (let i = 0; i < this.N; i++) {
+                    const x = this.rad * Math.cos(this.angle * i);
+                    const y = this.rad * Math.sin(this.angle * i);
+                    const r = this.rad * Math.sin(this.angle / 2);
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
                     ctx.save();
-                    ctx.strokeStyle = "#000";
-                    ctx.lineWidth = 2;
-                    const angle = PI2 / this.N;
-                    const section_index = this.N <= 10 ? 0 : this.N <= 20 ? 1 : 2;
-                    ctx.translate(this.x, this.y);
-
-                    this.rotate += rotate;
-                    ctx.rotate(this.rotate);
-
-                    for (let i = 0; i < this.N; i++) {
-                        const x = this.rad * Math.cos(angle * i);
-                        const y = this.rad * Math.sin(angle * i);
-                        const r = this.rad * Math.sin(angle / 2);
-                        ctx.beginPath();
-                        ctx.moveTo(0, 0);
-                        ctx.save();
-                        ctx.strokeStyle = "#888";
-                        ctx.lineTo(x * (1 - r / this.rad), y * (1 - r / this.rad));
-                        ctx.stroke();
-                        ctx.restore();
-                        ctx.beginPath();
-                        ctx.moveTo(x + r, y);
-                        ctx.arc(x, y, r, 0, PI2, false);
-                        if (COLORDB[0][section_index][0][i] != 0) {
-                            ctx.save();
-                            ctx.fillStyle = COLORDB[0][section_index][0][i];
-                            ctx.fill();
-                            ctx.restore();
-                        }
-                        ctx.stroke();
-                        ctx.closePath();
-                    }
+                    ctx.strokeStyle = "#888";
+                    ctx.lineTo(x * (1 - r / this.rad), y * (1 - r / this.rad));
+                    ctx.stroke();
                     ctx.restore();
+                    ctx.beginPath();
+                    ctx.moveTo(x + r, y);
+                    ctx.arc(x, y, r, 0, PI2, false);
+                    if (COLORDB[0][this.section_index][0][i] != 0) {
+                        ctx.save();
+                        ctx.fillStyle = COLORDB[0][this.section_index][0][i];
+                        ctx.fill();
+                        ctx.restore();
+                    }
+                    ctx.stroke();
+                    ctx.closePath();
                 }
-                // isWhichPosition(offX, offY) {
-                //     let which = -1;
-
-            //     return which;
-            // }
+                ctx.restore();
+            }
+            dropSelectedColor(posX, posY, color) {
+                const colorCode = '#' + ("00" + color.toString(16)).slice(-6); // color Decimal 2 Code
+                for (let i = 0; i < this.N; i++) {
+                    const targetAngle = this.rotate + this.angle * i;
+                    const x = this.rad * Math.cos(targetAngle);
+                    const y = this.rad * Math.sin(targetAngle);
+                    const relativeX = posX - this.x;
+                    const relativeY = posY - this.y;
+                    console.log(Math.sqrt(Math.abs((x - relativeX) * (x - relativeX)) + Math.abs((y - relativeY) * (y - relativeY))), this.rad * Math.sin(this.angle / 2));
+                    if (Math.sqrt(Math.abs((x - relativeX) * (x - relativeX)) + Math.abs((y - relativeY) * (y - relativeY))) < this.rad * Math.sin(this.angle / 2)) {
+                        COLORDB[0][this.section_index][0][i] = colorCode;
+                        // COLORDB[0][this.section_index][0].find((el) => {
+                        //     if (el.name === colorCode) return true;
+                        // });
+                    }
+                }
+            }
         }
-
         // color buttons
         class ClrBtns {
             constructor(x, y1, y2, N) {
@@ -390,7 +401,7 @@
                 this.h = size / 100; //ratio
             }
             genBubl(ctx, posX, posY, pickedColor) {
-                if (pickedColor != 0) {
+                if (pickedColor) {
                     const currentColor = '#' + ("00" + pickedColor.toString(16)).slice(-6);
                     const bdr_h = 15 * this.h;
                     const bbl_h = 70 * this.h;
@@ -505,18 +516,18 @@
                     this.rotate = Math.atan2(e.offsetY - this.centerOfWheelY, e.offsetX - this.centerOfWheelX) -
                         Math.atan2(this.pointerY - this.centerOfWheelY, this.pointerX - this.centerOfWheelX);
                 }
-                // if (this.isDownOnBtn) {}
                 this.pointerX = e.offsetX;
                 this.pointerY = e.offsetY;
             }
 
             onUp(e) {
-                // if (this.isDownOnWheel && this.clickedColor) {
-                //     const which = this.Wheel.isWhichPosition(e.offsetX, e.offsetY);
-                //     if (which != -1) {
-                //         COLORDB[0][this.currentSection][0][which] = this.clickedColor;
-                //     }
-                // }
+                if (this.clickedColor) {
+                    this.Wheel.dropSelectedColor(
+                        e.offsetX,
+                        e.offsetY,
+                        this.clickedColor
+                    )
+                }
                 this.isDownOnWheel = false;
                 this.isDownOnBtn = false;
                 this.clickedColor = 0;
