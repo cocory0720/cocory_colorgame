@@ -26,12 +26,25 @@
     </div>
     <main id="test-app">
 
-        <article id="hue-test20">
+        <article id="main-page">
+
+        </article>
+
+        <article id="before-hue-test">
+
+        </article>
+
+        <article id="hue-test-1" style="display: block;">
             <p class="text-center">색상테스트</p>
             <p class="text-center">색상을 부드럽게 이어주세요</p>
             <p class="text-center timer">0초</p>
             <canvas id="wheel-20"></canvas>
         </article>
+
+        <article id="result-hue-1">
+
+        </article>
+
 
     </main>
 
@@ -306,7 +319,6 @@
                 this.rotate = 0;
                 this.angle = PI2 / this.N;
                 this.section_index = this.N <= 10 ? 0 : this.N <= 20 ? 1 : 2;
-
             }
 
             genWhl(ctx, rotate) {
@@ -351,15 +363,30 @@
                     const y = this.rad * Math.sin(targetAngle);
                     const relativeX = posX - this.x;
                     const relativeY = posY - this.y;
-                    if (Math.sqrt(Math.abs((x - relativeX) * (x - relativeX)) + Math.abs((y - relativeY) * (y - relativeY))) < this.rad * Math.sin(this.angle / 2)) {
-                        COLORDB[0][this.section_index][0][i] = colorCode;
-                        COLORDB[0][this.section_index][2].splice(COLORDB[0][this.section_index][2].indexOf(colorCode), 1);
+                    if (Math.sqrt(
+                            Math.abs((x - relativeX) * (x - relativeX)) +
+                            Math.abs((y - relativeY) * (y - relativeY))
+                        ) < this.rad * Math.sin(this.angle / 2)) {
+                        if (COLORDB[0][this.section_index][0][i] == false) {
+                            const isColorFromBtn = COLORDB[0][this.section_index][2].indexOf(colorCode);
+                            if (isColorFromBtn != -1) {
+                                COLORDB[0][this.section_index][2].splice(isColorFromBtn, 1);
+                            } else {
+                                const selectedToMove = COLORDB[0][this.section_index][0].indexOf(colorCode);
+                                delete COLORDB[0][this.section_index][0][selectedToMove];
+                                COLORDB[0][this.section_index][0][selectedToMove] = false;
+                            }
+                            COLORDB[0][this.section_index][0][i] = colorCode;
+                        }
+                        return;
                     }
                 }
-            }
-
-            selectToCancel() {
-
+                const isColorFromWheel = COLORDB[0][this.section_index][0].indexOf(colorCode);
+                if (isColorFromWheel != -1) {
+                    delete COLORDB[0][this.section_index][0][isColorFromWheel];
+                    COLORDB[0][this.section_index][0][isColorFromWheel] = false;
+                    COLORDB[0][this.section_index][2].push(colorCode);
+                }
             }
         }
         // color buttons

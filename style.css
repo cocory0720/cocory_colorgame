@@ -8,6 +8,10 @@ article {
     overflow: hidden;
 }
 
+article {
+    display: none;
+}
+
 canvas {
     position: absolute;
     z-index: -9999;
