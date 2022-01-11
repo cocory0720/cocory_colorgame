@@ -326,20 +326,23 @@
                 this.section_index = N <= 10 ? 0 : N <= 20 ? 1 : 2;
                 this.colorDB = COLORDB[0][this.section_index][0];
 
-                this.howBigIsFixed = 1.2;
-                this.fixedColors = [...COLORDB[0][this.section_index][0]];
-                let num = 0;
-                this.fixedColors.forEach((color) => {
-                    if (color) num++;
-                });
-                this.angles = new Array;
-                this.fixedColors.forEach((color) => {
-                    if (color) {
-                        this.angles.push(PI2 / (N + (this.howBigIsFixed - 1) * num) * (1 + this.howBigIsFixed) / 2);
-                    } else this.angles.push(PI2 / (N + (this.howBigIsFixed - 1) * num));
-                });
-                console.log(this.angles, num);
-                this.nowAngle = 0;
+                this.howBigIsFixed = 1.25;
+                this.fixedColors = [...this.colorDB];
+                this.anglesInEachSide = [0];
+                const num = this.fixedColors.filter((color) => color).length;
+                this.commonAngle = PI2 / (N + (this.howBigIsFixed - 1) * num);
+                for (let i = 0; i < N - 1; i++) {
+                    if ((this.fixedColors[i] ? 1 : 0) ^ (this.fixedColors[i + 1] ? 1 : 0)) {
+                        this.anglesInEachSide.push(this.commonAngle * (1 + this.howBigIsFixed) / 2);
+                    } else if ((this.fixedColors[i] ? 1 : 0) && (this.fixedColors[i + 1] ? 1 : 0)) {
+                        this.anglesInEachSide.push(this.commonAngle * this.howBigIsFixed);
+                    } else {
+                        this.anglesInEachSide.push(this.commonAngle);
+                    }
+                }
+                for (let i = this.anglesInEachSide.length; i > 0; i--) {
+                    for (let j = i - 1; j > 0; j--) this.anglesInEachSide[i - 1] += this.anglesInEachSide[j - 1];
+                }
             }
 
             genWhl(ctx, rotate) {
@@ -350,14 +353,11 @@
                 ctx.translate(this.x, this.y);
                 this.rotate += rotate;
                 ctx.rotate(this.rotate);
+
                 for (let i = 0; i < this.N; i++) {
-                    // const nowAngle = this.angle;
-                    // if (this.fixedColors[i - 1] ^ this.fixedColors[i]) nowAngle = this.angle * (1 + this.howBigIsFixed) / 2;
-                    // else if (this.fixedColors[i - 1] && this.fixedColors[i]) nowAngle = this.angle * this.howBigIsFixed;
-                    this.nowAngle += this.angles[i];
-                    const x = this.rad * Math.cos(this.nowAngle);
-                    const y = this.rad * Math.sin(this.nowAngle);
-                    const r = this.rad * Math.sin(this.angles[i] / 2);
+                    const x = this.rad * Math.cos(this.anglesInEachSide[i]);
+                    const y = this.rad * Math.sin(this.anglesInEachSide[i]);
+                    const r = this.rad * Math.sin(this.commonAngle / 2 * (this.fixedColors[i] ? this.howBigIsFixed : 1));
                     ctx.beginPath();
                     ctx.moveTo(0, 0);
                     ctx.save();
@@ -385,7 +385,7 @@
                 const colorCode = ColorD2X(color);
                 const sectionDB = COLORDB[0][this.section_index];
                 for (let i = 0; i < this.N; i++) {
-                    const targetAngle = this.rotate + this.nowAngle;
+                    const targetAngle = this.rotate + this.anglesInEachSide[i];
                     const x = this.rad * Math.cos(targetAngle);
                     const y = this.rad * Math.sin(targetAngle);
                     const relativeX = posX - this.x;
@@ -393,7 +393,7 @@
                     if (Math.sqrt(
                             Math.abs((x - relativeX) * (x - relativeX)) +
                             Math.abs((y - relativeY) * (y - relativeY))
-                        ) < this.rad * Math.sin(this.angles[i] / 2)) {
+                        ) < this.rad * Math.sin(this.commonAngle / 2 * (this.fixedColors[i] ? this.howBigIsFixed : 1))) {
                         const isColorFromBtn = sectionDB[2].indexOf(colorCode);
                         const beforeMove = sectionDB[0].indexOf(colorCode);
                         if (sectionDB[0][i] == false) { // if the area not already filled
@@ -410,7 +410,7 @@
                                 sectionDB[0][beforeMove] = temp;
                             }
                         }
-                        sectionDB[0][i] = colorCode;
+                        sectionDB[0][i] = colorCode; /***************************** hazard of color corruption detected *************************/
                         return;
                     }
                 }
