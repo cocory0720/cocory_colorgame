@@ -307,6 +307,11 @@
             });
         });
 
+        // color Decimal code 2 #Hex code
+        function ColorD2X(dec) {
+            return '#' + ("00" + dec.toString(16)).slice(-6);
+        };
+
         // color wheel
         const PI2 = Math.PI * 2;
 
@@ -317,8 +322,24 @@
                 this.rad = rad;
                 this.N = N;
                 this.rotate = 0;
-                this.angle = PI2 / this.N;
-                this.section_index = this.N <= 10 ? 0 : this.N <= 20 ? 1 : 2;
+
+                this.section_index = N <= 10 ? 0 : N <= 20 ? 1 : 2;
+                this.colorDB = COLORDB[0][this.section_index][0];
+
+                this.howBigIsFixed = 1.2;
+                this.fixedColors = [...COLORDB[0][this.section_index][0]];
+                let num = 0;
+                this.fixedColors.forEach((color) => {
+                    if (color) num++;
+                });
+                this.angles = new Array;
+                this.fixedColors.forEach((color) => {
+                    if (color) {
+                        this.angles.push(PI2 / (N + (this.howBigIsFixed - 1) * num) * (1 + this.howBigIsFixed) / 2);
+                    } else this.angles.push(PI2 / (N + (this.howBigIsFixed - 1) * num));
+                });
+                console.log(this.angles, num);
+                this.nowAngle = 0;
             }
 
             genWhl(ctx, rotate) {
@@ -330,9 +351,13 @@
                 this.rotate += rotate;
                 ctx.rotate(this.rotate);
                 for (let i = 0; i < this.N; i++) {
-                    const x = this.rad * Math.cos(this.angle * i);
-                    const y = this.rad * Math.sin(this.angle * i);
-                    const r = this.rad * Math.sin(this.angle / 2);
+                    // const nowAngle = this.angle;
+                    // if (this.fixedColors[i - 1] ^ this.fixedColors[i]) nowAngle = this.angle * (1 + this.howBigIsFixed) / 2;
+                    // else if (this.fixedColors[i - 1] && this.fixedColors[i]) nowAngle = this.angle * this.howBigIsFixed;
+                    this.nowAngle += this.angles[i];
+                    const x = this.rad * Math.cos(this.nowAngle);
+                    const y = this.rad * Math.sin(this.nowAngle);
+                    const r = this.rad * Math.sin(this.angles[i] / 2);
                     ctx.beginPath();
                     ctx.moveTo(0, 0);
                     ctx.save();
@@ -343,22 +368,24 @@
                     ctx.beginPath();
                     ctx.moveTo(x + r, y);
                     ctx.arc(x, y, r, 0, PI2, false);
-                    if (COLORDB[0][this.section_index][0][i] != 0) {
+                    if (this.colorDB[i]) {
                         ctx.save();
-                        ctx.fillStyle = COLORDB[0][this.section_index][0][i];
+                        ctx.fillStyle = this.colorDB[i];
                         ctx.fill();
                         ctx.restore();
+                    } else {
+                        ctx.stroke();
                     }
-                    ctx.stroke();
                     ctx.closePath();
                 }
                 ctx.restore();
             }
 
             dropSelectedColor(posX, posY, color) {
-                const colorCode = '#' + ("00" + color.toString(16)).slice(-6); // color Decimal 2 Code
+                const colorCode = ColorD2X(color);
+                const sectionDB = COLORDB[0][this.section_index];
                 for (let i = 0; i < this.N; i++) {
-                    const targetAngle = this.rotate + this.angle * i;
+                    const targetAngle = this.rotate + this.nowAngle;
                     const x = this.rad * Math.cos(targetAngle);
                     const y = this.rad * Math.sin(targetAngle);
                     const relativeX = posX - this.x;
@@ -366,26 +393,32 @@
                     if (Math.sqrt(
                             Math.abs((x - relativeX) * (x - relativeX)) +
                             Math.abs((y - relativeY) * (y - relativeY))
-                        ) < this.rad * Math.sin(this.angle / 2)) {
-                        if (COLORDB[0][this.section_index][0][i] == false) {
-                            const isColorFromBtn = COLORDB[0][this.section_index][2].indexOf(colorCode);
-                            if (isColorFromBtn != -1) {
-                                COLORDB[0][this.section_index][2].splice(isColorFromBtn, 1);
-                            } else {
-                                const selectedToMove = COLORDB[0][this.section_index][0].indexOf(colorCode);
-                                delete COLORDB[0][this.section_index][0][selectedToMove];
-                                COLORDB[0][this.section_index][0][selectedToMove] = false;
+                        ) < this.rad * Math.sin(this.angles[i] / 2)) {
+                        const isColorFromBtn = sectionDB[2].indexOf(colorCode);
+                        const beforeMove = sectionDB[0].indexOf(colorCode);
+                        if (sectionDB[0][i] == false) { // if the area not already filled
+                            if (isColorFromBtn != -1) { // if the color is from the button
+                                sectionDB[2].splice(isColorFromBtn, 1);
+                            } else { // if the color is from the other area of the wheel
+                                delete sectionDB[0][beforeMove];
+                                sectionDB[0][beforeMove] = false;
                             }
-                            COLORDB[0][this.section_index][0][i] = colorCode;
+                        } else { //if the area not already filled
+                            if (isColorFromBtn == -1) { //only if the color is from the other area of the wheel
+                                const temp = sectionDB[0][i];
+                                delete sectionDB[0][beforeMove];
+                                sectionDB[0][beforeMove] = temp;
+                            }
                         }
+                        sectionDB[0][i] = colorCode;
                         return;
                     }
                 }
-                const isColorFromWheel = COLORDB[0][this.section_index][0].indexOf(colorCode);
+                const isColorFromWheel = sectionDB[0].indexOf(colorCode);
                 if (isColorFromWheel != -1) {
-                    delete COLORDB[0][this.section_index][0][isColorFromWheel];
-                    COLORDB[0][this.section_index][0][isColorFromWheel] = false;
-                    COLORDB[0][this.section_index][2].push(colorCode);
+                    delete sectionDB[0][isColorFromWheel];
+                    sectionDB[0][isColorFromWheel] = false;
+                    sectionDB[2].push(colorCode);
                 }
             }
         }
@@ -431,7 +464,7 @@
             }
             genBubl(ctx, posX, posY, pickedColor) {
                 if (pickedColor) {
-                    const currentColor = '#' + ("00" + pickedColor.toString(16)).slice(-6);
+                    const currentColor = ColorD2X(pickedColor);
                     const bdr_h = 15 * this.h;
                     const bbl_h = 70 * this.h;
                     ctx.save();
@@ -479,6 +512,8 @@
 
                 this.clickedColor = 0; // colorcode in Decimal
                 this.currentSection = N <= 10 ? 0 : N <= 20 ? 1 : 2;
+
+                this.fixedColors = [...COLORDB[0][this.currentSection][0]]
 
                 this.canvas.addEventListener("pointerdown", this.onDown.bind(this), false);
                 this.canvas.addEventListener("pointermove", this.onMove.bind(this), false);
@@ -538,6 +573,10 @@
                     this.ctx.getImageData(e.offsetX, e.offsetY, 1, 1).data.slice(0, 3).forEach((RGBs, i) => {
                         this.clickedColor += RGBs * Math.pow(256, 2 - i);
                     });
+                    // refuse to select fixed color
+                    if (this.fixedColors.indexOf(ColorD2X(this.clickedColor)) != -1) {
+                        this.clickedColor = 0;
+                    }
                     this.pointerX = e.offsetX;
                     this.pointerY = e.offsetY;
                 }
@@ -564,6 +603,8 @@
                 // this.isDownOnBtn = false;
                 this.clickedColor = 0;
             }
+
+            // 전체보기
         }
 
         window.onload = () => {
