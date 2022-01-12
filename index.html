@@ -73,7 +73,7 @@
         testDB = 0:A_section, 1:B_section, ...
         sectionDB = 0:제시될색깔(공백은 0 or false), 1:정답배열, 2:빈_배열(섞인 배열을 저장하기 위함)
         */
-        const COLORDB = [
+        const GAMEINFO = [
             [ //색상테스트DB
                 [ //section_10color
                     [ //주어질 색상
@@ -291,7 +291,7 @@
         ]
 
         // shuffle data in DB
-        COLORDB.forEach((testDB) => {
+        GAMEINFO.forEach((testDB) => {
             testDB.forEach((sectionDB) => {
                 sectionDB[1].forEach((colors, index) => {
                     if (sectionDB[0][index] == 0) {
@@ -312,11 +312,12 @@
             return '#' + ("00" + dec.toString(16)).slice(-6);
         };
 
+
         // color wheel
         const PI2 = Math.PI * 2;
 
         class Wheel {
-            constructor(x, y, rad, N) {
+            constructor(x, y, rad, N, givenColors) {
                 this.x = x;
                 this.y = y;
                 this.rad = rad;
@@ -324,18 +325,21 @@
                 this.rotate = 0;
 
                 this.section_index = N <= 10 ? 0 : N <= 20 ? 1 : 2;
-                this.colorDB = COLORDB[0][this.section_index][0];
+                this.colorDB = GAMEINFO[0][this.section_index][0];
 
-                this.howBigIsFixed = 1.25;
-                this.fixedColors = [...this.colorDB];
+                this.givenColors = [...givenColors];
+                console.log(givenColors, this.givenColors);
+                this.howBigIsGiven = 1.25; // !important param : ratio of radius between fixed colors n unfixed ones
+                // this.fixedColors = [...this.colorDB];
+
                 this.anglesInEachSide = [0];
-                const num = this.fixedColors.filter((color) => color).length;
-                this.commonAngle = PI2 / (N + (this.howBigIsFixed - 1) * num);
+                const num = this.givenColors.filter((color) => color).length;
+                this.commonAngle = PI2 / (N + (this.howBigIsGiven - 1) * num);
                 for (let i = 0; i < N - 1; i++) {
-                    if ((this.fixedColors[i] ? 1 : 0) ^ (this.fixedColors[i + 1] ? 1 : 0)) {
-                        this.anglesInEachSide.push(this.commonAngle * (1 + this.howBigIsFixed) / 2);
-                    } else if ((this.fixedColors[i] ? 1 : 0) && (this.fixedColors[i + 1] ? 1 : 0)) {
-                        this.anglesInEachSide.push(this.commonAngle * this.howBigIsFixed);
+                    if ((this.givenColors[i] ? 1 : 0) ^ (this.givenColors[i + 1] ? 1 : 0)) {
+                        this.anglesInEachSide.push(this.commonAngle * (1 + this.howBigIsGiven) / 2);
+                    } else if ((this.givenColors[i] ? 1 : 0) && (this.givenColors[i + 1] ? 1 : 0)) {
+                        this.anglesInEachSide.push(this.commonAngle * this.howBigIsGiven);
                     } else {
                         this.anglesInEachSide.push(this.commonAngle);
                     }
@@ -357,7 +361,7 @@
                 for (let i = 0; i < this.N; i++) {
                     const x = this.rad * Math.cos(this.anglesInEachSide[i]);
                     const y = this.rad * Math.sin(this.anglesInEachSide[i]);
-                    const r = this.rad * Math.sin(this.commonAngle / 2 * (this.fixedColors[i] ? this.howBigIsFixed : 1));
+                    const r = this.rad * Math.sin(this.commonAngle / 2 * (this.givenColors[i] ? this.howBigIsGiven : 1));
                     ctx.beginPath();
                     ctx.moveTo(0, 0);
                     ctx.save();
@@ -381,9 +385,9 @@
                 ctx.restore();
             }
 
-            dropSelectedColor(posX, posY, color) {
-                const colorCode = ColorD2X(color);
-                const sectionDB = COLORDB[0][this.section_index];
+            dropSelectedColor(posX, posY, selectedColor) {
+                const selectedColorCode = ColorD2X(selectedColor);
+                const sectionDB = GAMEINFO[0][this.section_index];
                 for (let i = 0; i < this.N; i++) {
                     const targetAngle = this.rotate + this.anglesInEachSide[i];
                     const x = this.rad * Math.cos(targetAngle);
@@ -393,9 +397,9 @@
                     if (Math.sqrt(
                             Math.abs((x - relativeX) * (x - relativeX)) +
                             Math.abs((y - relativeY) * (y - relativeY))
-                        ) < this.rad * Math.sin(this.commonAngle / 2 * (this.fixedColors[i] ? this.howBigIsFixed : 1))) {
-                        const isColorFromBtn = sectionDB[2].indexOf(colorCode);
-                        const beforeMove = sectionDB[0].indexOf(colorCode);
+                        ) < this.rad * Math.sin(this.commonAngle / 2 * (this.givenColors[i] ? this.howBigIsGiven : 1))) {
+                        const isColorFromBtn = sectionDB[2].indexOf(selectedColorCode);
+                        const beforeMove = sectionDB[0].indexOf(selectedColorCode);
                         if (sectionDB[0][i] == false) { // if the area not already filled
                             if (isColorFromBtn != -1) { // if the color is from the button
                                 sectionDB[2].splice(isColorFromBtn, 1);
@@ -403,22 +407,24 @@
                                 delete sectionDB[0][beforeMove];
                                 sectionDB[0][beforeMove] = false;
                             }
-                        } else { //if the area not already filled
-                            if (isColorFromBtn == -1) { //only if the color is from the other area of the wheel
+                        } else { // if the area already filled
+                            if (this.givenColors.indexOf(sectionDB[0][i]) != -1) return;
+                            if (isColorFromBtn == -1) { // only if the color is from the other area of the wheel
                                 const temp = sectionDB[0][i];
                                 delete sectionDB[0][beforeMove];
                                 sectionDB[0][beforeMove] = temp;
                             }
                         }
-                        sectionDB[0][i] = colorCode; /***************************** hazard of color corruption detected *************************/
+                        sectionDB[0][i] = selectedColorCode; /***************************** hazard of color corruption detected *************************/
                         return;
                     }
                 }
-                const isColorFromWheel = sectionDB[0].indexOf(colorCode);
+                // if the color droped out of wheel
+                const isColorFromWheel = sectionDB[0].indexOf(selectedColorCode);
                 if (isColorFromWheel != -1) {
                     delete sectionDB[0][isColorFromWheel];
                     sectionDB[0][isColorFromWheel] = false;
-                    sectionDB[2].push(colorCode);
+                    sectionDB[2].push(selectedColorCode);
                 }
             }
         }
@@ -441,11 +447,11 @@
                 let index = 0;
                 for (let i = 0; i < row; i++) {
                     for (let j = 0; j < col; j++) {
-                        if (index >= COLORDB[0][row - 2][2].length) break;
+                        if (index >= GAMEINFO[0][row - 2][2].length) break;
                         const x = this.x + (d + bdr) * i;
                         const y = this.y1 + (d + bdr) * j;
                         ctx.save();
-                        ctx.fillStyle = COLORDB[0][row - 2][2][index];
+                        ctx.fillStyle = GAMEINFO[0][row - 2][2][index];
                         ctx.beginPath();
                         ctx.fillRect(x, y, d, d);
                         ctx.closePath();
@@ -513,8 +519,8 @@
                 this.clickedColor = 0; // colorcode in Decimal
                 this.currentSection = N <= 10 ? 0 : N <= 20 ? 1 : 2;
 
-                this.fixedColors = [...COLORDB[0][this.currentSection][0]]
-
+                this.givenColors = [...GAMEINFO[0][this.currentSection][0]]
+                console.log(this.givenColors);
                 this.canvas.addEventListener("pointerdown", this.onDown.bind(this), false);
                 this.canvas.addEventListener("pointermove", this.onMove.bind(this), false);
                 this.canvas.addEventListener("pointerup", this.onUp.bind(this), false);
@@ -531,13 +537,13 @@
                 this.radiusOfWheel = (1 - (this.stageWidth - 280) / 1320) * this.stageWidth / 2 + (this.stageWidth - 280) / 1320 * this.stageWidth / 6;
                 this.centerOfWheelX = 0 - (1 - (this.stageWidth - 280) / 1320) * this.stageWidth / 4 + (this.stageWidth - 280) / 1320 * this.stageWidth / 3 + N;
                 this.centerOfWheelY = this.stageHeight / 2;
-                this.Wheel = new Wheel( //(x, y, rad, N)
-                        this.centerOfWheelX,
-                        this.centerOfWheelY,
-                        this.radiusOfWheel,
-                        N
-                    )
-                    // this.wheelArea = this.centerOfWheelX + clrBtns_w * 1.4;
+                this.Wheel = new Wheel( //(x, y, rad, N, givenColorArr)
+                    this.centerOfWheelX,
+                    this.centerOfWheelY,
+                    this.radiusOfWheel,
+                    N,
+                    this.givenColors
+                )
                 this.ClrBtns = new ClrBtns( //(x = center, y1=center - w, y2 = center + w, N)
                     (1 - (this.stageWidth - 280) / 1320) * this.stageWidth / 2 + (this.stageWidth - 280) / 1320 * this.stageWidth * 3 / 5,
                     this.stageHeight / 2 - this.radiusOfWheel,
@@ -574,7 +580,7 @@
                         this.clickedColor += RGBs * Math.pow(256, 2 - i);
                     });
                     // refuse to select fixed color
-                    if (this.fixedColors.indexOf(ColorD2X(this.clickedColor)) != -1) {
+                    if (this.givenColors.indexOf(ColorD2X(this.clickedColor)) != -1) {
                         this.clickedColor = 0;
                     }
                     this.pointerX = e.offsetX;
@@ -604,7 +610,7 @@
                 this.clickedColor = 0;
             }
 
-            // 전체보기
+            // 색상 휠 전체보기 기능
         }
 
         window.onload = () => {
