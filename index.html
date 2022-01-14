@@ -227,7 +227,6 @@
             genWhl(ctx, rotate) {
                 ctx.save();
                 ctx.strokeStyle = "#000";
-                ctx.lineWidth = 2;
 
                 ctx.translate(this.x, this.y);
                 this.rotate += rotate;
@@ -288,7 +287,7 @@
                                 onWheelArr[colorFromWheel] = temp;
                             }
                         }
-                        onWheelArr[i] = selectedColorCode; /***************************** hazard of color corruption detected *************************/
+                        onWheelArr[i] = selectedColorCode;
                         return;
                     }
                 }
@@ -405,7 +404,7 @@
             get clickedColor() {
                 return this._clickedColor; // colorcode in Decimal
             }
-            set clickedColor(color) { // 
+            set clickedColor(color) { // color corruption hazard control
                 if ((color == 0) || (GAMEINFO.getAnswerArr.indexOf(ColorD2X(color)) != -1)) {
                     this._clickedColor = color;
                 } else {
@@ -419,24 +418,23 @@
                 this.canvas.width = this.stageWidth;
                 this.canvas.height = this.stageHeight;
 
-                this.ctx.save();
-                this.radiusOfWheel = (1 - (this.stageWidth - 280) / 1320) * this.stageWidth / 2 + (this.stageWidth - 280) / 1320 * this.stageWidth / 6;
-                this.centerOfWheelX = 0 - (1 - (this.stageWidth - 280) / 1320) * this.stageWidth / 4 + (this.stageWidth - 280) / 1320 * this.stageWidth / 3 + N;
+                const isWide = this.stageWidth / 9 > this.stageHeight / 16 ? 1 : 0;
+                this.radiusOfWheel = isWide ? this.stageHeight / 4.5 + N : this.stageWidth / 2.5 + N / 2;
+                this.centerOfWheelX = isWide ? this.stageWidth / 2.3 - 170 : 0 - this.stageWidth / 6 + N;
                 this.centerOfWheelY = this.stageHeight / 2;
-                this.Wheel = new Wheel( //(x, y, rad, N, givenColorArr)
+                this.Wheel = new Wheel( //(x, y, rad, N)
                     this.centerOfWheelX,
                     this.centerOfWheelY,
                     this.radiusOfWheel,
                     N
                 )
                 this.ClrBtns = new ClrBtns( //(x = center, y1=center - w, y2 = center + w, N)
-                    (1 - (this.stageWidth - 280) / 1320) * this.stageWidth / 2 + (this.stageWidth - 280) / 1320 * this.stageWidth * 3 / 5,
+                    isWide ? this.stageWidth * 3 / 5 : this.stageWidth / 2,
                     this.stageHeight / 2 - this.radiusOfWheel,
                     this.stageHeight / 2 + this.radiusOfWheel,
                     N
                 )
                 this.Picker = new Picker(this.radiusOfWheel / 3);
-                this.ctx.restore();
             }
             animate() {
                 window.requestAnimationFrame(this.animate.bind(this));
@@ -494,7 +492,7 @@
         }
 
         window.onload = () => {
-            new HueGame(document.querySelector("#wheel-20"), 40);
+            new HueGame(document.querySelector("#wheel-20"), 10);
         }
     </script>
 </body>
