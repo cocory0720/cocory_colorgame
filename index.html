@@ -32,6 +32,7 @@
         </article>
 
         <article id="hue-test-1" style="display: block;">
+            <button class="action-begin">test start</button>
             <p class="text-center">색상테스트</p>
             <p class="text-center">색상을 부드럽게 이어주세요</p>
             <p class="text-center timer">0초</p>
@@ -57,41 +58,58 @@
     <script src="game_dataset.js"></script>
     <script src="hue_test.js"></script>
     <script type="text/javascript">
+        /****important params****/
+        const SCORE_RATE_OF_UNDERTIME = 0.7;
+
         /****************************game action buttons****************************/
         // scoreing
-        let timeScore = 0;
+        let totScore = 0;
 
         // class = "next-button"
-        $('.next').click(function() {
+        $('.action-next').click(function() {
             clicked_article = $(this).closest("article");
             clicked_article.fadeOut(500);
             clicked_article.next().fadeIn(700);
         });
 
         // class = "timer" : showing how long has been taken
-        let time = 0;
-        $('.test_begin').click(function() {
-            let timer = setInterval(function() {
-                time++;
-                document.querySelector(".timer").innerHTML = time + "초";
+        // class = "test-begin" : button to start down-count time
+        let downTime;
+        let upTime;
+        let timer;
+        $('.action-begin').click(function() {
+            downTime = GAMEINFO.timeLimit + 1;
+            upTime = 0;
+            document.querySelector(".timer").innerHTML = downTime + "초";
+            timer = setInterval(function() {
+                downTime--;
+                upTime++;
+                document.querySelector(".timer").innerHTML = downTime + "초";
+                if (downTime <= 0) {
+                    clearInterval(timer);
+                    submit()
+                };
             }, 1000);
         });
 
         // submit
-        $('.action-submit').click(submit());
+        $(document).on("click", "button.action-submit", function() {
+            submit();
+        });
 
         function submit() {
+            console.log("!");
             if (GAMEINFO.selectedArr == GAMEINFO.answerArr) {
-                timeScore += time;
-                // clearInterval(timer);
-                time = 0;
+                totScore += downTime * SCORE_RATE_OF_UNDERTIME;
             } else {
-
-                // reset the color dosen't match
+                // 틀린 부분을 알려주기
             }
+            downTime = 0;
         }
 
-        // color Decimal code 2 #Hex code
+        /********************************************************/
+
+        // color Decimal code 2 "#Hex" code
         function ColorD2X(dec) {
             return '#' + ("00" + dec.toString(16)).slice(-6);
         };

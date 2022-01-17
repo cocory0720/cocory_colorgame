@@ -59,7 +59,6 @@ const GAMEINFO = {
         return this[this.curruntGame][this.curruntStage].timeLimit;
     },
 
-
     // (for every single stage) this._selectedArr, this._optionArr
     get selectedArr() {
         return this._selectedArr;
@@ -93,13 +92,13 @@ const GAMEINFO = {
 
     //*** only for the hue test ***/ 
     initColorWheelAngles(n) { // n colors wheel
-        const HOW_BIG_IS_GIVEN = 1.25;
+        const howBigisGiven = 1 + n / 150;
         this._angles = [0];
         const givens = this.givenArr;
         const num = givens.filter((color) => color).length;
-        const commonAngle = PI2 / (n + (HOW_BIG_IS_GIVEN - 1) * num);
-        const largeAngle = commonAngle * HOW_BIG_IS_GIVEN;
-        const midiumAngle = commonAngle * (1 + HOW_BIG_IS_GIVEN) / 2
+        const commonAngle = PI2 / (n + (howBigisGiven - 1) * num);
+        const largeAngle = commonAngle * howBigisGiven;
+        const midiumAngle = commonAngle * (1 + howBigisGiven) / 2
         for (let i = 0; i < n - 1; i++) {
             if ((givens[i] ? 1 : 0) ^ (givens[i + 1] ? 1 : 0)) {
                 this._angles.push(midiumAngle);
@@ -115,8 +114,8 @@ const GAMEINFO = {
             }
         }
         // console.log(this._angles);
-        this._commonCircle = PI2 / (10 + n * 3 / 4 + (HOW_BIG_IS_GIVEN - 1) * num);
-        this._largeCircle = this._commonCircle * HOW_BIG_IS_GIVEN;
+        this._commonCircle = PI2 / (10 + n * 3 / 4 + (howBigisGiven - 1) * num);
+        this._largeCircle = this._commonCircle * howBigisGiven;
     },
     get getColorWheelAngles() {
         return this._angles;
