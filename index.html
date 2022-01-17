@@ -56,12 +56,8 @@
     <script src="game_dataset.js"></script>
     <script src="hue_test.js"></script>
     <script type="text/javascript">
-        /****important params****/
-        const SCORE_RATE_FOR_UNDERTIME = 0.7;
-
         /****************************game action buttons****************************/
-        // scoreing
-        let totScore = 0;
+        let TOTAL_SCORE = 0.00; // TOTAL SCORE FOR ENTIRE GAME
 
         // class = "next-button"
         $('.action-next').click(function() {
@@ -73,19 +69,19 @@
         // class = "timer" : showing how long has been taken
         // class = "test-begin" : button to start down-count time
         let downTime;
-        let upTime;
+        //let upTime;
         let timer;
         $('.action-begin').click(function() {
             downTime = GAMEINFO.timeLimit + 1;
-            upTime = 0;
+            //upTime = 0;
             document.querySelector(".timer").innerHTML = downTime + "초";
             timer = setInterval(function() {
                 downTime--;
-                upTime++;
+                //upTime++;
                 document.querySelector(".timer").innerHTML = downTime + "초";
                 if (downTime <= 0) {
                     clearInterval(timer);
-                    submit()
+                    submit();
                 };
             }, 1000);
         });
@@ -96,11 +92,22 @@
         });
 
         function submit() {
-            console.log("!");
-            if (GAMEINFO.selectedArr == GAMEINFO.answerArr) {
-                totScore += downTime * SCORE_RATE_FOR_UNDERTIME;
-            } else {
-                // 틀린 부분을 알려주기
+            clearInterval(timer);
+            switch (GAMEINFO.currentGame) {
+                case "hue":
+                    console.log(hue.submitHueGame());
+                    console.log(TOTAL_SCORE);
+                    //if (hue.submitHueGame()) TOTAL_SCORE += downTime * GAMEINFO.undertimeScore;
+                    break;
+                case "value":
+                    break;
+                case "chroma":
+                    break;
+                case "fit":
+                    break;
+                default:
+                    alert("error from the submit function");
+                    break;
             }
             downTime = 0;
         }
@@ -119,8 +126,9 @@
 
         const PI2 = Math.PI * 2;
 
+        let hue
         window.onload = () => {
-            new HueGame(document.querySelector("#wheel-20"), 10);
+            hue = new HueGame(document.querySelector("#wheel-20"), 10);
         }
     </script>
 </body>

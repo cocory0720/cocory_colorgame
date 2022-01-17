@@ -91,6 +91,10 @@ class Wheel {
             GAMEINFO.optionArr.push(selectedColorCode);
         }
     }
+
+    showWhatWasWrong() {
+        console.log("showWhatWasWrong");
+    }
 }
 // color buttons
 class ClrBtns {
@@ -170,11 +174,11 @@ class Picker {
     }
 }
 
-// Hue test canvas main script
+// Hue game canvas main script
 class HueGame {
     constructor(query, N) {
-        this.currentStage = N <= 10 ? 0 : N <= 20 ? 1 : 2;
-        GAMEINFO.initCurrentGame("hue", this.currentStage + 1);
+        this.currentStage = N <= 10 ? 1 : N <= 20 ? 2 : 3;
+        GAMEINFO.initCurrentGame("hue", this.currentStage);
         GAMEINFO.initColorWheelAngles(N);
 
         this.canvas = query;
@@ -218,17 +222,17 @@ class HueGame {
         const isWide = this.stageWidth / 9 > this.stageHeight / 16 ? 1 : 0;
 
         this.centerOfWheelY = this.stageHeight / 2;
-        if (this.currentStage == 0) {
+        if (this.currentStage == 1) {
             this.widthOfBtns = this.stageHeight / 6;
             this.radiusOfWheel = this.widthOfBtns * 0.9;
             this.centerOfWheelX = this.stageWidth / 2 - this.radiusOfWheel - 30;
             this.btnAreaX = isWide ? this.stageWidth * 3 / 5 : this.stageWidth - this.widthOfBtns * 1.2;
-        } else if (this.currentStage == 1) {
+        } else if (this.currentStage == 2) {
             this.widthOfBtns = isWide ? this.stageHeight / 5 : this.stageWidth / 3;
             this.radiusOfWheel = this.widthOfBtns;
             this.centerOfWheelX = isWide ? this.stageWidth / 2.3 - 170 : this.stageWidth / 4 - 30;
             this.btnAreaX = isWide ? this.stageWidth * 3 / 5 + 40 : this.stageWidth - this.widthOfBtns * 1.2;
-        } else if (this.currentStage == 2) {
+        } else if (this.currentStage == 3) {
             this.widthOfBtns = isWide ? this.stageHeight / 4 : this.stageWidth / 2;
             this.radiusOfWheel = this.widthOfBtns * 1.2;
             this.centerOfWheelX = isWide ? this.stageWidth / 1.8 - 600 : 0 - this.stageWidth / 6;
@@ -301,4 +305,20 @@ class HueGame {
     }
 
     // 색상 휠 전체보기 기능
+
+    submitHueGame() {
+        let corrAns = 0;
+        GAMEINFO.selectedArr.forEach((el, i) => {
+            if (el == GAMEINFO.answerArr[i]) {
+                TOTAL_SCORE += GAMEINFO.eachHueScore;
+                console.log(TOTAL_SCORE);
+                corrAns += 1;
+            } else {
+                this.Wheel.showWhatWasWrong(i);
+            }
+            if (corrAns == (GAMEINFO.answerArr.length - GAMEINFO.givenArr.length)) {
+                return true;
+            }
+        });
+    }
 }

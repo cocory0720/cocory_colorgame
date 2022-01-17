@@ -1,29 +1,31 @@
 const GAMEINFO = {
-    // hue: {
-    //     1: {
-    //         answerArr: [],
-    //         givenArr: [],
-    //         timeLimit: 30,
-    //     },
-    //     2: {
-    //         answerArr: [],
-    //         givenArr: [],
-    //         timeLimit: 60,
-    //     },
-    //     3: {
-    //         answerArr: [],
-    //         givenArr: [],
-    //         timeLimit: 90,
-    //     },
-    // },
-    // value: {},
-    // chroma: {},
-    // fit: {},
+    SCORE_RATE_FOR_UNDERTIME: 0.7,
+    hue: {
+        SCORE_RATE_FOR_EACH_HUE_PROB: 1,
+        1: {
+            answerArr: [],
+            givenArr: [],
+            timeLimit: 30,
+        },
+        2: {
+            answerArr: [],
+            givenArr: [],
+            timeLimit: 60,
+        },
+        3: {
+            answerArr: [],
+            givenArr: [],
+            timeLimit: 90,
+        },
+    },
+    value: {},
+    chroma: {},
+    fit: {},
 
-    get curruntGame() {
+    get currentGame() {
         return this._curruntGame;
     },
-    set curruntGame(game) {
+    set currentGame(game) {
         const gameList = ["hue", "value", "chroma", "fit"];
         if (gameList.indexOf(game) == -1) {
             alert("bad request in setting currunt game");
@@ -31,35 +33,35 @@ const GAMEINFO = {
         }
         this._curruntGame = game;
     },
-    get curruntStage() {
+    get currentStage() {
         return this._curruntStage;
     },
-    set curruntStage(stage) {
+    set currentStage(stage) {
         this._curruntStage = stage;
     },
     get answerArr() {
-        if (this.curruntGame === undefined || this.curruntStage === undefined) {
+        if (this.currentGame === undefined || this.currentStage === undefined) {
             console.log("initialize currunt game n stage first");
             return;
         }
-        return this[this.curruntGame][this.curruntStage].answerArr;
+        return this[this.currentGame][this.currentStage].answerArr;
     },
     get givenArr() {
-        if (this.curruntGame === undefined || this.curruntStage === undefined) {
+        if (this.currentGame === undefined || this.currentStage === undefined) {
             console.log("initialize currunt game n stage first");
             return;
         }
-        return this[this.curruntGame][this.curruntStage].givenArr;
+        return this[this.currentGame][this.currentStage].givenArr;
     },
     get timeLimit() {
-        if (this.curruntGame === undefined || this.curruntStage === undefined) {
+        if (this.currentGame === undefined || this.currentStage === undefined) {
             console.log("initialize currunt game n stage first");
             return;
         }
-        return this[this.curruntGame][this.curruntStage].timeLimit;
+        return this[this.currentGame][this.currentStage].timeLimit;
     },
 
-    // (for every single stage) this._selectedArr, this._optionArr
+    // (for every single stage) generate "this._selectedArr" n "this._optionArr"
     get selectedArr() {
         return this._selectedArr;
     },
@@ -73,8 +75,8 @@ const GAMEINFO = {
         this._optionArr = arr;
     },
     initCurrentGame(game, stage) {
-        this.curruntGame = game;
-        this.curruntStage = stage;
+        this.currentGame = game;
+        this.currentStage = stage;
         this.selectedArr = [...this.givenArr];
         this.optionArr = [];
         this.answerArr.forEach((color, i) => {
@@ -88,6 +90,12 @@ const GAMEINFO = {
             this.optionArr[i] = this.optionArr[randomPosition];
             this.optionArr[randomPosition] = temp;
         }
+    },
+    get undertimeScore() {
+        return this.SCORE_RATE_FOR_UNDERTIME;
+    },
+    get eachHueScore() {
+        return this.hue.SCORE_RATE_FOR_EACH_HUE_PROB;
     },
 
     //*** only for the hue test ***/ 
@@ -144,7 +152,7 @@ $.ajax({
             for (let i = 3; i < currentRow.length; i++) {
                 const element = currentRow[i];
                 if (element == "ffffff") GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]].push(false);
-                else if (element.slice(-3) == "sec") GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]] = parseInt(element.slice(0, -3));
+                // else if (element.slice(-3) == "sec") GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]] = parseInt(element.slice(0, -3));
                 else GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]].push('#' + element);
             }
         }
