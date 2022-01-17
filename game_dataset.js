@@ -90,7 +90,8 @@ const GAMEINFO = {
             this.optionArr[randomPosition] = temp;
         }
     },
-    // only for hue test
+
+    //*** only for the hue test ***/ 
     initColorWheelAngles(n) { // n colors wheel
         const HOW_BIG_IS_GIVEN = 1.25;
         this._angles = [0];
@@ -133,7 +134,6 @@ $.ajax({
     dataType: "text",
     async: false,
 }).done((data) => {
-    console.log("!");
     let allRows = data.split(/\r?\n|\t/);
     for (let row = 0; row < allRows.length; row++) {
         if ((allRows[row].slice(0, 2) != "//") && (allRows[row]) ? 1 : 0) { // don't read the row contains '//' or empty
@@ -144,7 +144,8 @@ $.ajax({
             if (GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]] === undefined) GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]] = []; // the initial element is the key of data
             for (let i = 3; i < currentRow.length; i++) {
                 const element = currentRow[i];
-                if (element == "xxxxxx") GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]].push(false);
+                if (element == "ffffff") GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]].push(false);
+                else if (element.slice(-3) == "sec") GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]] = parseInt(element.slice(0, -3));
                 else GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]].push('#' + element);
             }
         }
