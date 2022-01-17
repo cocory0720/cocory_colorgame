@@ -51,15 +51,13 @@
         <article id="result-hue-1">
 
         </article>
-
-
     </main>
 
     <script src="game_dataset.js"></script>
     <script src="hue_test.js"></script>
     <script type="text/javascript">
         /****important params****/
-        const SCORE_RATE_OF_UNDERTIME = 0.7;
+        const SCORE_RATE_FOR_UNDERTIME = 0.7;
 
         /****************************game action buttons****************************/
         // scoreing
@@ -100,7 +98,7 @@
         function submit() {
             console.log("!");
             if (GAMEINFO.selectedArr == GAMEINFO.answerArr) {
-                totScore += downTime * SCORE_RATE_OF_UNDERTIME;
+                totScore += downTime * SCORE_RATE_FOR_UNDERTIME;
             } else {
                 // 틀린 부분을 알려주기
             }
