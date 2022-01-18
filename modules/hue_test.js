@@ -232,8 +232,8 @@ export default class HueGame {
             this.btnOffsetX = center[0] + this.radiusOfWheel / 2 + this.stageWidth / 12;
         } else {
             // center[0] -= 10;
-            this.radiusOfWheel = this.stageWidth / (3.5 - this.currentStage / 2);
-            this.widthOfBtns = this.radiusOfWheel * (1.3 - this.currentStage * 0.12);
+            this.radiusOfWheel = this.stageWidth / (3 - this.currentStage / 2);
+            this.widthOfBtns = this.radiusOfWheel * (1.1 - this.currentStage * 0.12);
             this.btnOffsetX = center[0] + this.stageWidth / 2 - this.widthOfBtns;
             this.centerOfWheelX = this.btnOffsetX - this.radiusOfWheel - 60;
         }
