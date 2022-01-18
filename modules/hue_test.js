@@ -1,3 +1,5 @@
+import GAMEINFO, { PI2, ColorD2X, dist } from "../game_dataset.js";
+
 class Wheel {
     constructor(x, y, rad, N) {
         this.x = x;
@@ -175,7 +177,7 @@ class Picker {
 }
 
 // Hue game canvas main script
-class HueGame {
+export default class HueGame {
     constructor(query, N) {
         this.currentStage = N <= 10 ? 1 : N <= 20 ? 2 : 3;
         GAMEINFO.initCurrentGame("hue", this.currentStage);
@@ -310,8 +312,8 @@ class HueGame {
         let corrAns = 0;
         GAMEINFO.selectedArr.forEach((el, i) => {
             if (el == GAMEINFO.answerArr[i]) {
-                TOTAL_SCORE += GAMEINFO.eachHueScore;
-                console.log(TOTAL_SCORE);
+                GAMEINFO.TOTAL_SCORE += GAMEINFO.eachHueScore;
+                console.log(GAMEINFO.TOTAL_SCORE);
                 corrAns += 1;
             } else {
                 this.Wheel.showWhatWasWrong(i);

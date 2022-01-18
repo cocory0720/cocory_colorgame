@@ -1,4 +1,17 @@
+const PI2 = Math.PI * 2;
+
+// color Decimal code 2 "#Hex" code
+function ColorD2X(dec) {
+    return '#' + ("00" + dec.toString(16)).slice(-6);
+};
+
+// compute distance
+function dist(x0, y0, x1, y1) {
+    return Math.sqrt(Math.abs((x0 - x1) * (x0 - x1)) + Math.abs((y0 - y1) * (y0 - y1)));
+}
+
 const GAMEINFO = {
+    TOTAL_SCORE: 0.00, // TOTAL SCORE FOR ENTIRE GAME
     SCORE_RATE_FOR_UNDERTIME: 0.7,
     hue: {
         SCORE_RATE_FOR_EACH_HUE_PROB: 1,
@@ -158,3 +171,6 @@ $.ajax({
         }
     }
 });
+
+export default GAMEINFO;
+export { PI2, ColorD2X, dist };
