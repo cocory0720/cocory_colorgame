@@ -52,6 +52,10 @@ function submit(timer, time) {
     time = 0;
 }
 
+$('.action-reset').click(function() {
+    hue = new HueGame(document.querySelector("#wheel-20"), 40);
+});
+
 /********************************************************/
 
 let hue

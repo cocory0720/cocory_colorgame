@@ -221,16 +221,19 @@ export default class HueGame {
         this.canvas.width = this.stageWidth;
         this.canvas.height = this.stageHeight;
 
+
         const isWide = this.stageWidth / 750 > this.stageHeight / 900 ? 1 : 0;
         let center = [this.stageWidth / 2, this.stageHeight / 2];
-        this.radiusOfWheel = this.stageHeight / (6 - this.currentStage / 2);
+        this.radiusOfWheel = this.stageHeight / (5 - this.currentStage / 2);
         this.centerOfWheelY = center[1];
         if (isWide) {
             this.widthOfBtns = this.radiusOfWheel * (1.3 - this.currentStage * 0.12);
             center[0] -= 80;
-            this.centerOfWheelX = center[0] - this.stageWidth / 12;
+            this.centerOfWheelX = center[0] - this.stageWidth / 12 - 40;
             this.btnOffsetX = center[0] + this.radiusOfWheel / 2 + this.stageWidth / 12;
         } else {
+            center[0] -= 10;
+            this.radiusOfWheel = (this.readiusOfWheel >= 450 ? this.radiusOfWheel : 450);
             this.widthOfBtns = this.radiusOfWheel * (1.2 - this.currentStage * 0.12);
             this.btnOffsetX = center[0] + this.stageWidth / 2 - this.widthOfBtns;
             this.centerOfWheelX = this.btnOffsetX - this.radiusOfWheel - 60;
