@@ -237,7 +237,7 @@ export default class HueGame {
         } else if (this.currentStage == 3) {
             this.widthOfBtns = isWide ? this.stageHeight / 4 : this.stageWidth / 2;
             this.radiusOfWheel = this.widthOfBtns * 1.2;
-            this.centerOfWheelX = isWide ? this.stageWidth / 1.8 - 600 : 0 - this.stageWidth / 6;
+            this.centerOfWheelX = isWide ? this.stageWidth / 1.6 - 600 : 0 - this.stageWidth / 6;
             this.btnAreaX = isWide ? this.stageWidth * 3 / 5 : this.stageWidth / 2;
         }
         this.Wheel = new Wheel( //(x, y, rad, N)
