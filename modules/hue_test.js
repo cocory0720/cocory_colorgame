@@ -221,25 +221,14 @@ export default class HueGame {
         this.canvas.width = this.stageWidth;
         this.canvas.height = this.stageHeight;
 
-        const isWide = this.stageWidth / 9 > this.stageHeight / 16 ? 1 : 0;
+        const isWide = this.stageWidth / 1 > this.stageHeight / 2 ? 1 : 0;
+        this.radiusOfWheel = this.stageHeight / (this.currentStage + 3);
+        this.widthOfBtns = this.radiusOfWheel * (1.4 - this.currentStage * 0.2);
+        let center = [this.stageWidth / 2, this.stageHeight / 2];
+        this.centerOfWheelX = center[0] - this.radiusOfWheel;
+        this.centerOfWheelY = center[1];
+        this.btnOffsetX = center[0] + this.radiusOfWheel / 2;
 
-        this.centerOfWheelY = this.stageHeight / 2;
-        if (this.currentStage == 1) {
-            this.widthOfBtns = this.stageHeight / 6;
-            this.radiusOfWheel = this.widthOfBtns * 0.9;
-            this.centerOfWheelX = this.stageWidth / 2 - this.radiusOfWheel - 30;
-            this.btnAreaX = isWide ? this.stageWidth * 3 / 5 : this.stageWidth - this.widthOfBtns * 1.2;
-        } else if (this.currentStage == 2) {
-            this.widthOfBtns = isWide ? this.stageHeight / 5 : this.stageWidth / 3;
-            this.radiusOfWheel = this.widthOfBtns;
-            this.centerOfWheelX = isWide ? this.stageWidth / 2.3 - 170 : this.stageWidth / 4 - 30;
-            this.btnAreaX = isWide ? this.stageWidth * 3 / 5 + 40 : this.stageWidth - this.widthOfBtns * 1.2;
-        } else if (this.currentStage == 3) {
-            this.widthOfBtns = isWide ? this.stageHeight / 4 : this.stageWidth / 2;
-            this.radiusOfWheel = this.widthOfBtns * 1.2;
-            this.centerOfWheelX = isWide ? this.stageWidth / 1.6 - 600 : 0 - this.stageWidth / 6;
-            this.btnAreaX = isWide ? this.stageWidth * 3 / 5 : this.stageWidth / 2;
-        }
         this.Wheel = new Wheel( //(x, y, rad, N)
             this.centerOfWheelX,
             this.centerOfWheelY,
@@ -247,7 +236,7 @@ export default class HueGame {
             N
         )
         this.ClrBtns = new ClrBtns( //(x, y1=center - w, y2 = center + w, N)
-            this.btnAreaX,
+            this.btnOffsetX,
             this.stageHeight / 2 - this.widthOfBtns,
             this.stageHeight / 2 + this.widthOfBtns,
             N
