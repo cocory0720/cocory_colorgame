@@ -12,34 +12,32 @@ $('.action-next').click(function() {
 
 // class = "timer" : showing how long has been taken
 // class = "test-begin" : button to start down-count time
-let downTime;
-//let upTime;
-let timer;
 $('.action-begin').click(function() {
-    downTime = GAMEINFO.timeLimit + 1;
-    //upTime = 0;
+    let downTime = GAMEINFO.timeLimit + 1;
     document.querySelector(".timer").innerHTML = downTime + "초";
-    timer = setInterval(function() {
+    let timer = setInterval(function() {
         downTime--;
-        //upTime++;
         document.querySelector(".timer").innerHTML = downTime + "초";
         if (downTime <= 0) {
             clearInterval(timer);
-            submit();
+            submit(timer, 0);
         };
     }, 1000);
+    $(document).on("click", "button.action-submit", function() {
+        submit(timer, downTime);
+    });
 });
 
-// submit
-$(document).on("click", "button.action-submit", function() {
-    submit();
-});
-
-function submit() {
+function submit(timer, time) {
     clearInterval(timer);
     switch (GAMEINFO.currentGame) {
         case "hue":
-            if (hue.submitHueGame()) GAMEINFO.TOTAL_SCORE += downTime * GAMEINFO.undertimeScore;
+            if (hue.submitHueGame()) {
+                console.log("perfect");
+                GAMEINFO.TOTAL_SCORE += time * GAMEINFO.undertimeScore;
+            }
+            console.log(time, GAMEINFO.undertimeScore);
+            console.log(GAMEINFO.TOTAL_SCORE);
             break;
         case "value":
             break;
@@ -51,12 +49,12 @@ function submit() {
             alert("error from the submit function");
             break;
     }
-    downTime = 0;
+    time = 0;
 }
 
 /********************************************************/
 
 let hue
 window.onload = () => {
-    hue = new HueGame(document.querySelector("#wheel-20"), 10);
+    hue = new HueGame(document.querySelector("#wheel-20"), 40);
 }

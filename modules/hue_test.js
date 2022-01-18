@@ -311,16 +311,17 @@ export default class HueGame {
     submitHueGame() {
         let corrAns = 0;
         GAMEINFO.selectedArr.forEach((el, i) => {
-            if (el == GAMEINFO.answerArr[i]) {
-                GAMEINFO.TOTAL_SCORE += GAMEINFO.eachHueScore;
-                console.log(GAMEINFO.TOTAL_SCORE);
-                corrAns += 1;
-            } else {
-                this.Wheel.showWhatWasWrong(i);
-            }
-            if (corrAns == (GAMEINFO.answerArr.length - GAMEINFO.givenArr.length)) {
-                return true;
+            if (el != GAMEINFO.givenArr[i]) {
+                if (el == GAMEINFO.answerArr[i]) {
+                    GAMEINFO.TOTAL_SCORE += GAMEINFO.eachHueScore;
+                    console.log(GAMEINFO.TOTAL_SCORE);
+                    corrAns += 1;
+                } else {
+                    this.Wheel.showWhatWasWrong(i);
+                }
             }
         });
+        if (corrAns == (GAMEINFO.answerArr.length - GAMEINFO.givenArr.filter(el => el != false).length)) return true;
+        else return false;
     }
 }
