@@ -1,4 +1,4 @@
-import GAMEINFO, { PI2, ColorD2X, dist } from "../game_dataset.js";
+import GAMEINFO, { PI2, ColorD2X, ColorX2RGBA, dist } from "../game_dataset.js";
 
 class Wheel {
     constructor(x, y, rad, N) {
@@ -7,6 +7,8 @@ class Wheel {
         this.rad = rad;
         this.N = N;
         this.rotate = 0;
+        this.fadeAnimation = {};
+
     }
 
     genWhl(ctx, rotate) {
@@ -23,14 +25,13 @@ class Wheel {
         for (let i = 0; i < this.N; i++) {
             const x = this.rad * Math.cos(GAMEINFO.getColorWheelAngles[i]);
             const y = this.rad * Math.sin(GAMEINFO.getColorWheelAngles[i]);
-            this.r = this.rad * Math.sin(GAMEINFO.givenArr[i] ? GAMEINFO.getLargeCircle / 2 : GAMEINFO.getCommonCircle / 2);
+            const r = this.rad * Math.sin(GAMEINFO.givenArr[i] ? GAMEINFO.getLargeCircle / 2 : GAMEINFO.getCommonCircle / 2);
             ctx.beginPath();
             ctx.moveTo(0, 0);
-            ctx.lineTo(x * (1 - this.r / this.rad), y * (1 - this.r / this.rad));
+            ctx.lineTo(x * (1 - r / this.rad), y * (1 - r / this.rad));
             ctx.stroke();
             ctx.beginPath();
-            ctx.moveTo(x + this.r, y);
-            ctx.arc(x, y, this.r, 0, PI2, false);
+            ctx.arc(x, y, r, 0, PI2, false);
             if (GAMEINFO.selectedArr[i]) {
                 ctx.save();
                 ctx.fillStyle = GAMEINFO.selectedArr[i];
@@ -40,7 +41,6 @@ class Wheel {
                 ctx.save();
                 ctx.fillStyle = "#eee";
                 ctx.fill();
-                ctx.stroke();
                 ctx.restore();
                 ctx.stroke();
             }
@@ -55,9 +55,10 @@ class Wheel {
             const targetAngle = this.rotate + GAMEINFO.getColorWheelAngles[i];
             const x = this.rad * Math.cos(targetAngle);
             const y = this.rad * Math.sin(targetAngle);
+            const r = this.rad * Math.sin(GAMEINFO.givenArr[i] ? GAMEINFO.getLargeCircle / 2 : GAMEINFO.getCommonCircle / 2);
             const relativeX = posX - this.x;
             const relativeY = posY - this.y;
-            if (dist(x, y, relativeX, relativeY) < this.r) { //this area has index of i
+            if (dist(x, y, relativeX, relativeY) < r) { //this area has index of i
                 const onBtnArr = GAMEINFO.optionArr;
                 const onWheelArr = GAMEINFO.selectedArr;
                 const colorFromBtn = onBtnArr.indexOf(selectedColorCode);
@@ -94,8 +95,33 @@ class Wheel {
         }
     }
 
-    showWhatWasWrong() {
-        console.log("showWhatWasWrong");
+    showWhatWasWrong(ctx, indexes) {
+        const FADE_VALOCITY = 8;
+        indexes.forEach(index => {
+            if (this.fadeAnimation[index] == undefined) this.fadeAnimation[index] = 1;
+            const targetAngle = this.rotate + GAMEINFO.getColorWheelAngles[index];
+            const x = this.rad * Math.cos(targetAngle);
+            const y = this.rad * Math.sin(targetAngle);
+            const r = this.rad * Math.sin(GAMEINFO.givenArr[index] ? GAMEINFO.getLargeCircle / 2 : GAMEINFO.getCommonCircle / 2);
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.shadowColor = "rgba(0,0,0,0.6)";
+            ctx.shadowBlur = 7;
+            ctx.strokeStyle = ColorX2RGBA(GAMEINFO.answerArr[index]) + `${this.fadeAnimation[index]/255}`;
+            ctx.lineWidth = 8;
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(x * (1 - r / this.rad), y * (1 - r / this.rad));
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(x, y, r, 0, PI2, false);
+            ctx.stroke();
+            ctx.closePath();
+            ctx.restore();
+            if (this.fadeAnimation[index] < 255) this.fadeAnimation[index] += FADE_VALOCITY;
+            console.log(this.fadeAnimation);
+
+        });
     }
 }
 // color buttons
@@ -132,11 +158,6 @@ class ClrBtns {
         }
         ctx.restore();
     }
-
-    // submitBtnFunc() {
-    //     let submitBtn = document.querySelector(`button.submit-hue-${this.currentStage}`);
-
-    // }
 }
 
 // picked color window with speech bubble
@@ -224,15 +245,15 @@ export default class HueGame {
         const isWide = this.stageWidth / 750 > this.stageHeight / 900 ? 1 : 0;
         let center = [this.stageWidth / 2, this.stageHeight / 2];
         this.centerOfWheelY = center[1];
-        if (isWide) {
+        if (isWide) { // PC
             this.radiusOfWheel = this.stageHeight / (5 - this.currentStage / 2);
             this.widthOfBtns = this.radiusOfWheel * (1.3 - this.currentStage * 0.12);
             center[0] -= 80;
             this.centerOfWheelX = center[0] - this.stageWidth / 12 - 40;
             this.btnOffsetX = center[0] + this.radiusOfWheel / 2 + this.stageWidth / 12;
-        } else {
+        } else { // Mobile
             // center[0] -= 10;
-            this.radiusOfWheel = this.stageWidth / (3 - this.currentStage / 2);
+            this.radiusOfWheel = this.stageWidth / (2.84 - this.currentStage / 2);
             this.widthOfBtns = this.radiusOfWheel * (1.1 - this.currentStage * 0.12);
             this.btnOffsetX = center[0] + this.stageWidth / 2 - this.widthOfBtns;
             this.centerOfWheelX = this.btnOffsetX - this.radiusOfWheel - 60;
@@ -260,6 +281,7 @@ export default class HueGame {
         this.Wheel.genWhl(this.ctx, this.rotate);
         this.ClrBtns.genBtns(this.ctx);
         this.Picker.genBubl(this.ctx, this.pointerX, this.pointerY, this.clickedColor);
+        if (this.wrongIndex != undefined) this.Wheel.showWhatWasWrong(this.ctx, this.wrongIndex);
     }
 
     onDown(e) {
@@ -308,7 +330,8 @@ export default class HueGame {
 
     }
 
-    submitHueGame() {
+    gradeHueGame() {
+        this.wrongIndex = [];
         let corrAns = 0;
         GAMEINFO.selectedArr.forEach((el, i) => {
             if (el != GAMEINFO.givenArr[i]) {
@@ -316,8 +339,9 @@ export default class HueGame {
                     GAMEINFO.TOTAL_SCORE += GAMEINFO.eachHueScore;
                     console.log(GAMEINFO.TOTAL_SCORE);
                     corrAns += 1;
-                } else {
-                    this.Wheel.showWhatWasWrong(i);
+                } else if (el != false) {
+                    console.log("wrong");
+                    this.wrongIndex.push(i);
                 }
             }
         });

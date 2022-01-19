@@ -10,6 +10,14 @@ function dist(x0, y0, x1, y1) {
     return Math.sqrt(Math.abs((x0 - x1) * (x0 - x1)) + Math.abs((y0 - y1) * (y0 - y1)));
 }
 
+function ColorX2RGBA(hex) {
+    const x = parseInt(hex.slice(-6), 16);
+    const b = x % 256;
+    const g = parseInt(x / 256) % 256;
+    const r = parseInt(x / 256 / 256);
+    return `rgba(${r},${g}, ${b},`;
+}
+
 const GAMEINFO = {
     TOTAL_SCORE: 0.00, // TOTAL SCORE FOR ENTIRE GAME
     SCORE_RATE_FOR_UNDERTIME: 0.7,
@@ -173,4 +181,4 @@ $.ajax({
 });
 
 export default GAMEINFO;
-export { PI2, ColorD2X, dist };
+export { PI2, ColorD2X, ColorX2RGBA, dist };

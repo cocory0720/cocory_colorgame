@@ -32,7 +32,7 @@ function submit(timer, time) {
     clearInterval(timer);
     switch (GAMEINFO.currentGame) {
         case "hue":
-            if (hue.submitHueGame()) {
+            if (hue.gradeHueGame()) {
                 console.log("perfect");
                 GAMEINFO.TOTAL_SCORE += time * GAMEINFO.undertimeScore;
             }
