@@ -119,8 +119,6 @@ class Wheel {
             ctx.closePath();
             ctx.restore();
             if (this.fadeAnimation[index] < 255) this.fadeAnimation[index] += FADE_VALOCITY;
-            console.log(this.fadeAnimation);
-
         });
     }
 }
@@ -203,15 +201,13 @@ export default class HueGame {
         this.currentStage = N <= 10 ? 1 : N <= 20 ? 2 : 3;
         GAMEINFO.initCurrentGame("hue", this.currentStage);
         GAMEINFO.initColorWheelAngles(N);
+        this.n = N;
 
         this.canvas = query;
         this.ctx = this.canvas.getContext("2d");
 
-        // window.addEventListener("resize", this.resize.bind(this)(N), false);
-        window.onresize = () => {
-            this.resize.bind(this)(N)
-        };
-        this.resize(N);
+        window.addEventListener("resize", this.resize.bind(this), false);
+        this.resize();
 
         this.pointerX = 0;
         this.pointerY = 0;
@@ -223,7 +219,9 @@ export default class HueGame {
         this.canvas.addEventListener("pointerup", this.onUp.bind(this), false);
 
         window.requestAnimationFrame(this.animate.bind(this));
-        this.isBtnEmpty = false;
+
+        this.isViewAll = 0;
+        this.t_veiwAll = 0;
     }
     get clickedColor() {
         return this._clickedColor; // colorcode in Decimal
@@ -236,7 +234,7 @@ export default class HueGame {
             return;
         }
     }
-    resize(N) {
+    resize() {
         this.stageWidth = 2 * (window.innerWidth < 1600 ? window.innerWidth : 1600);
         this.stageHeight = 2 * (window.innerHeight < 900 ? window.innerHeight : 900);
         this.canvas.width = this.stageWidth;
@@ -252,7 +250,6 @@ export default class HueGame {
             this.centerOfWheelX = center[0] - this.stageWidth / 12 - 40;
             this.btnOffsetX = center[0] + this.radiusOfWheel / 2 + this.stageWidth / 12;
         } else { // Mobile
-            // center[0] -= 10;
             this.radiusOfWheel = this.stageWidth / (2.84 - this.currentStage / 2);
             this.widthOfBtns = this.radiusOfWheel * (1.1 - this.currentStage * 0.12);
             this.btnOffsetX = center[0] + this.stageWidth / 2 - this.widthOfBtns;
@@ -263,25 +260,26 @@ export default class HueGame {
             this.centerOfWheelX,
             this.centerOfWheelY,
             this.radiusOfWheel,
-            N
+            this.n,
         )
         this.ClrBtns = new ClrBtns( //(x, y1=center - w, y2 = center + w, N)
             this.btnOffsetX,
             this.stageHeight / 2 - this.widthOfBtns,
             this.stageHeight / 2 + this.widthOfBtns,
-            N
+            this.n
         )
         this.Picker = new Picker(this.widthOfBtns / 3);
     }
     animate() {
         window.requestAnimationFrame(this.animate.bind(this));
-
         this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight);
         this.rotate *= 0.82;
+
         this.Wheel.genWhl(this.ctx, this.rotate);
         this.ClrBtns.genBtns(this.ctx);
         this.Picker.genBubl(this.ctx, this.pointerX, this.pointerY, this.clickedColor);
         if (this.wrongIndex != undefined) this.Wheel.showWhatWasWrong(this.ctx, this.wrongIndex);
+        if (this.isViewAll) window.requestAnimationFrame(this.viewAllAnimate.bind(this));
     }
 
     onDown(e) {
@@ -327,6 +325,57 @@ export default class HueGame {
     }
 
     viewAll() {
+        const viewBtn = $(`article#hue-test-${this.currentStage} button.action-veiw`);
+        const resetSubmitBtn = $(`article#hue-test-${this.currentStage} div.menu > div:last-child`);
+        this.isViewAll += 1;
+        // console.log(viewBtn, resetSubmitBtn);
+        if (this.isViewAll % 2 == 1) {
+            window.removeEventListener("resize", this.resize.bind(this), false);
+            viewBtn.text("돌아오기");
+            resetSubmitBtn.fadeOut('slow');
+        } else {
+            window.addEventListener("resize", this.resize.bind(this), false);
+            viewBtn.text("전체보기");
+            resetSubmitBtn.fadeIn('slow');
+        }
+    }
+
+    viewAllAnimate() {
+        const VALOCITY = 1;
+        this.t_veiwAll = (this.t_veiwAll >= 30) ? 30 :
+            (this.t_veiwAll >= 0) ? this.t_veiwAll : 0;
+        const curve = 1 + (this.t_veiwAll - 30) * (this.t_veiwAll - 30) * (this.t_veiwAll - 30) / 27000; // 0~1
+        const curveInverse = this.t_veiwAll * this.t_veiwAll * this.t_veiwAll / 27000;
+        // console.log(curve);
+        if (this.isViewAll % 2 == 1) {
+            this.t_veiwAll += VALOCITY;
+            this.Wheel = new Wheel( //(x, y, rad, N)
+                this.centerOfWheelX * (1 - curve) + this.stageWidth / 2 * curve,
+                this.centerOfWheelY,
+                this.radiusOfWheel * (1 - curve) + (this.stageWidth / 2 - 100) * curve,
+                this.n,
+            )
+            this.ClrBtns = new ClrBtns( //(x, y1=center - w, y2 = center + w, N)
+                this.btnOffsetX * (1 - curve) + this.stageWidth * curve,
+                this.stageHeight / 2 - this.widthOfBtns,
+                this.stageHeight / 2 + this.widthOfBtns,
+                this.n
+            )
+        } else {
+            this.t_veiwAll -= VALOCITY;
+            this.Wheel = new Wheel( //(x, y, rad, N)
+                this.centerOfWheelX * (1 - curveInverse) + this.stageWidth / 2 * curveInverse,
+                this.centerOfWheelY,
+                this.radiusOfWheel * (1 - curveInverse) + (this.stageWidth / 2 - 100) * curveInverse,
+                this.n,
+            )
+            this.ClrBtns = new ClrBtns( //(x, y1=center - w, y2 = center + w, N)
+                this.btnOffsetX * (1 - curveInverse) + this.stageWidth * curveInverse,
+                this.stageHeight / 2 - this.widthOfBtns,
+                this.stageHeight / 2 + this.widthOfBtns,
+                this.n
+            )
+        }
 
     }
 

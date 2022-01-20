@@ -14,10 +14,10 @@ $('.action-next').click(function() {
 // class = "test-begin" : button to start down-count time
 $('.action-begin').click(function() {
     let downTime = GAMEINFO.timeLimit + 1;
-    document.querySelector(".timer").innerHTML = downTime + "초";
+    document.querySelector(".timer").textContent = downTime + "초";
     let timer = setInterval(function() {
         downTime--;
-        document.querySelector(".timer").innerHTML = downTime + "초";
+        document.querySelector(".timer").textContent = downTime + "초";
         if (downTime <= 0) {
             clearInterval(timer);
             submit(timer, 0);
@@ -55,6 +55,7 @@ function submit(timer, time) {
 $('.action-reset').click(function() {
     hue = new HueGame(document.querySelector("#wheel-20"), 40);
 });
+
 
 $('.action-veiw').click(function() {
     hue.viewAll();
