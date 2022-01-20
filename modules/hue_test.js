@@ -255,7 +255,6 @@ export default class HueGame {
             this.btnOffsetX = center[0] + this.stageWidth / 2 - this.widthOfBtns;
             this.centerOfWheelX = this.btnOffsetX - this.radiusOfWheel - 60;
         }
-
         this.Wheel = new Wheel( //(x, y, rad, N)
             this.centerOfWheelX,
             this.centerOfWheelY,
@@ -279,7 +278,6 @@ export default class HueGame {
         this.ClrBtns.genBtns(this.ctx);
         this.Picker.genBubl(this.ctx, this.pointerX, this.pointerY, this.clickedColor);
         if (this.wrongIndex != undefined) this.Wheel.showWhatWasWrong(this.ctx, this.wrongIndex);
-        if (this.isViewAll) window.requestAnimationFrame(this.viewAllAnimate.bind(this));
     }
 
     onDown(e) {
@@ -329,21 +327,27 @@ export default class HueGame {
         const resetSubmitBtn = $(`article#hue-test-${this.currentStage} div.menu > div:last-child`);
         this.isViewAll += 1;
         // console.log(viewBtn, resetSubmitBtn);
-        if (this.isViewAll % 2 == 1) {
-            window.removeEventListener("resize", this.resize.bind(this), false);
-            viewBtn.text("돌아오기");
-            resetSubmitBtn.fadeOut('slow');
-        } else {
-            window.addEventListener("resize", this.resize.bind(this), false);
-            viewBtn.text("전체보기");
-            resetSubmitBtn.fadeIn('slow');
+        switch (this.isViewAll % 2) {
+            case 1:
+                window.requestAnimationFrame(this.viewAllAnimate.bind(this));
+                window.removeEventListener("resize", this.resize.bind(this), false);
+                viewBtn.text("돌아오기");
+                resetSubmitBtn.fadeOut('slow');
+                break;
+            case 0:
+                window.requestAnimationFrame(this.viewAllAnimate.bind(this));
+                window.addEventListener("resize", this.resize.bind(this), false);
+                viewBtn.text("전체보기");
+                resetSubmitBtn.fadeIn('slow');
+                break;
+            default:
+                break;
         }
     }
 
     viewAllAnimate() {
+        const req = window.requestAnimationFrame(this.viewAllAnimate.bind(this));
         const VALOCITY = 1;
-        this.t_veiwAll = (this.t_veiwAll >= 30) ? 30 :
-            (this.t_veiwAll >= 0) ? this.t_veiwAll : 0;
         const curve = 1 + (this.t_veiwAll - 30) * (this.t_veiwAll - 30) * (this.t_veiwAll - 30) / 27000; // 0~1
         const curveInverse = this.t_veiwAll * this.t_veiwAll * this.t_veiwAll / 27000;
         // console.log(curve);
@@ -376,7 +380,10 @@ export default class HueGame {
                 this.n
             )
         }
-
+        this.t_veiwAll = (this.t_veiwAll >= 30) ? 30 :
+            (this.t_veiwAll >= 0) ? this.t_veiwAll : 0;
+        if (this.t_veiwAll == 0) window.cancelAnimationFrame(req);
+        console.log(this.t_veiwAll);
     }
 
     gradeHueGame() {

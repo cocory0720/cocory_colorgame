@@ -57,7 +57,7 @@ $('.action-reset').click(function() {
 });
 
 
-$('.action-veiw').click(function() {
+$('.action-veiw').off("click").on('click', function(e) {
     hue.viewAll();
 });
 
