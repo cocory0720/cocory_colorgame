@@ -36,24 +36,31 @@ function showNextArticle(node) {
 
 // class = "timer" : Show remaining time
 // class = "action-submit" : Score current result
+let remainTime = 0; /****** 남은 시간 ******/
 function startGame() {
-    let downTime;
-    downTime = GAMEINFO.timeLimit + 1;
-    document.querySelector(".timer").textContent = downTime + "초";
+    showRemainTime();
+    remainTime = 0;
+    remainTime += GAMEINFO.timeLimit + FADE_IN_TIME / 1000;
     let timer = setInterval(function() {
-        downTime--;
-        document.querySelector(".timer").textContent = downTime + "초";
-        if (downTime <= 0) {
-            submit(timer, 0);
+        remainTime -= 0.01;
+        if (remainTime <= 0) {
+            submit(0);
+            clearInterval(timer);
         };
-    }, 1000);
-    $(document).on("click", ".action-submit", function() {
-        submit(timer, downTime);
+    }, 10);
+    $(document).off("click").on("click", ".action-submit", function() {
+        submit(remainTime);
+        clearInterval(timer);
     });
 }
 
-function submit(timer, time) {
-    clearInterval(timer);
+function showRemainTime() {
+    setInterval(() => {
+        $(`#test-${GAMEINFO.currentGame}-${GAMEINFO.currentStage} .timer`).text(`${remainTime}초`.slice(0, 5));
+    }, 10);
+}
+
+function submit(time) {
     switch (GAMEINFO.currentGame) {
         case "hue":
             if (currentCanvasContext.gradeHueGame()) {
@@ -75,6 +82,8 @@ function submit(timer, time) {
     showNextArticle(currentCanvasContext.canvas);
 }
 
-$('.action-reset').click((e) => currentCanvasContext.reset(e.target));
+$('.action-reset').off("click").click((e) => currentCanvasContext.reset(e.target));
 
-$('.action-view').click((e) => currentCanvasContext.viewAll(e.target));
+$('.action-view').off("click").click((e) => currentCanvasContext.viewAll(e.target));
+
+export { FADE_OUT_TIME };

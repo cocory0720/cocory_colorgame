@@ -1,4 +1,5 @@
 import GAMEINFO, { PI2, ColorD2X, ColorX2RGBA, dist } from "../game_dataset.js";
+import { FADE_OUT_TIME } from "../main.js";
 
 class Wheel {
     constructor(x, y, rad, N) {
@@ -7,8 +8,7 @@ class Wheel {
         this.rad = rad;
         this.N = N;
         this.rotate = 0;
-        this.fadeAnimation = {};
-
+        this.fadeAnimation = { delay: 0 };
     }
 
     genWhl(ctx, rotate) {
@@ -96,7 +96,10 @@ class Wheel {
     }
 
     showWhatWasWrong(ctx, indexes) {
+        const req = window.requestAnimationFrame(this.showWhatWasWrong.bind(this, ctx, indexes));
+        console.log("showing what was wrong");
         const FADE_VALOCITY = 8;
+        this.fadeAnimation["delay"] += 8;
         indexes.forEach(index => {
             if (this.fadeAnimation[index] == undefined) this.fadeAnimation[index] = 1;
             const targetAngle = this.rotate + GAMEINFO.getColorWheelAngles[index];
@@ -120,6 +123,7 @@ class Wheel {
             ctx.restore();
             if (this.fadeAnimation[index] < 255) this.fadeAnimation[index] += FADE_VALOCITY;
         });
+        if (this.fadeAnimation["delay"] >= FADE_OUT_TIME) window.cancelAnimationFrame(req);
     }
 }
 // color buttons
@@ -208,6 +212,7 @@ export default class HueGame {
 
         window.addEventListener("resize", this.resize.bind(this), false);
         this.resize();
+        document.documentElement.style.setProperty("--vh", `${window.innerHeight}px`);
 
         this.pointerX = 0;
         this.pointerY = 0;
@@ -278,7 +283,6 @@ export default class HueGame {
         this.Wheel.genWhl(this.ctx, this.rotate);
         this.ClrBtns.genBtns(this.ctx);
         this.Picker.genBubl(this.ctx, this.pointerX, this.pointerY, this.clickedColor);
-        if (this.wrongIndex != undefined) this.Wheel.showWhatWasWrong(this.ctx, this.wrongIndex);
     }
 
     onDown(e) {
@@ -403,13 +407,13 @@ export default class HueGame {
             if (el != GAMEINFO.givenArr[i]) {
                 if (el == GAMEINFO.answerArr[i]) {
                     GAMEINFO.TOTAL_SCORE += GAMEINFO.eachHueScore;
-                    console.log(GAMEINFO.TOTAL_SCORE);
                     corrAns += 1;
                 } else if (el != false) {
                     this.wrongIndex.push(i);
                 }
             }
         });
+        this.Wheel.showWhatWasWrong(this.ctx, this.wrongIndex);
         if (corrAns == (GAMEINFO.answerArr.length - GAMEINFO.givenArr.filter(el => el != false).length)) return true;
         else return false;
     }
