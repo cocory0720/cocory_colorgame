@@ -3,34 +3,35 @@ import HueGame from "./modules/hue_test.js";
 
 let currentCanvasContext;
 const FADE_OUT_TIME = 700;
-const FADE_IN_TIME = 800;
+const FADE_IN_TIME = 600;
 
 // class = "next-button"
 $('.action-next').off("click").click((e) => showNextArticle(e.target));
 
 function showNextArticle(node) {
     const clickedArticle = $(node).closest("article");
-    clickedArticle.fadeOut(FADE_OUT_TIME, function() {
-        clickedArticle.next().fadeIn(FADE_IN_TIME);
-    });
+    const isTestNow = clickedArticle.attr("id").slice(0, 4) == "test" ? 600 : 0;
     setTimeout(() => {
-        switch (clickedArticle.next().attr("id")) {
-            case "test-hue-1":
-                currentCanvasContext = new HueGame(document.querySelector("#wheel-10"), 10);
-                startGame();
-                break;
-            case "test-hue-2":
-                currentCanvasContext = new HueGame(document.querySelector("#wheel-20"), 20);
-                startGame();
-                break;
-            case "test-hue-3":
-                currentCanvasContext = new HueGame(document.querySelector("#wheel-40"), 40);
-                startGame();
-                break;
-            default:
-                break;
-        }
-    }, FADE_OUT_TIME);
+        clickedArticle.fadeOut(FADE_OUT_TIME, function() {
+            switch (clickedArticle.next().attr("id")) {
+                case "test-hue-1":
+                    currentCanvasContext = new HueGame(document.querySelector("#wheel-10"), 10);
+                    startGame();
+                    break;
+                case "test-hue-2":
+                    currentCanvasContext = new HueGame(document.querySelector("#wheel-20"), 20);
+                    startGame();
+                    break;
+                case "test-hue-3":
+                    currentCanvasContext = new HueGame(document.querySelector("#wheel-40"), 40);
+                    startGame();
+                    break;
+                default:
+                    break;
+            }
+            clickedArticle.next().fadeIn(FADE_IN_TIME);
+        });
+    }, isTestNow);
 };
 
 // class = "timer" : Show remaining time
@@ -46,17 +47,16 @@ function startGame() {
             submit(timer, 0);
         };
     }, 1000);
+    $(document).on("click", ".action-submit", function() {
+        submit(timer, downTime);
+    });
 }
-$(document).on("click", "button.action-submit", function() {
-    submit(timer, downTime);
-});
 
 function submit(timer, time) {
     clearInterval(timer);
     switch (GAMEINFO.currentGame) {
         case "hue":
             if (currentCanvasContext.gradeHueGame()) {
-                console.log("perfect");
                 GAMEINFO.TOTAL_SCORE += time * GAMEINFO.undertimeScore;
             }
             console.log(GAMEINFO.TOTAL_SCORE);

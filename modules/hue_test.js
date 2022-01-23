@@ -406,7 +406,6 @@ export default class HueGame {
                     console.log(GAMEINFO.TOTAL_SCORE);
                     corrAns += 1;
                 } else if (el != false) {
-                    console.log("wrong");
                     this.wrongIndex.push(i);
                 }
             }

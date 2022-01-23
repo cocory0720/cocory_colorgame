@@ -30,14 +30,8 @@ canvas {
     background-color: #eee;
 }
 
-button {
+div.btn {
     pointer-events: auto;
-    z-index: 1000;
-}
-
-button.option-css {
-    width: 100%;
-    height: 100%;
 }
 
 .menu {
