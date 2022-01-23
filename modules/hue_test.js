@@ -323,8 +323,8 @@ export default class HueGame {
     }
 
     viewAll() {
-        const viewBtn = $(`article#hue-test-${this.currentStage} button.action-veiw`);
-        const resetSubmitBtn = $(`article#hue-test-${this.currentStage} div.menu > div:last-child`);
+        const viewBtn = $(`article#test-hue-${this.currentStage} button.action-veiw`);
+        const resetSubmitBtn = $(`article#test-hue-${this.currentStage} div.menu > div:last-child`);
         this.isViewAll += 1;
         // console.log(viewBtn, resetSubmitBtn);
         switch (this.isViewAll % 2) {
@@ -383,6 +383,10 @@ export default class HueGame {
         this.t_veiwAll = (this.t_veiwAll >= 30) ? 30 :
             (this.t_veiwAll >= 0) ? this.t_veiwAll : 0;
         if (this.t_veiwAll == 0) window.cancelAnimationFrame(req);
+    }
+
+    reset() {
+        // reset function
     }
 
     gradeHueGame() {

@@ -23,34 +23,77 @@
     </div>
     <main id="test-app">
 
-        <article id="main-page">
+        <article id="main-page" style="display: block;">
+            <h1 class="display-1">메인 페이지</h1>
 
+
+            <button id="start-main-btn" class="action-next"></button>
         </article>
 
         <article id="before-hue-test">
+            <h1 class="display-3">색상 테스트 시작 전</h1>
 
+
+            <button id="start-hue-btn" class="action-next action-begin"></button>
         </article>
 
-        <article id="hue-test-3" style="display: block;">
-            <button class="action-begin">test start</button>
+        <article id="test-hue-1">
+            <p class="text-center">색상테스트</p>
+            <p class="text-center">색상을 부드럽게 이어주세요</p>
+            <p class="text-center timer">0초</p>
+            <canvas id="wheel-10"></canvas>
+            <div class="container menu">
+                <div class="row justify-content-center">
+                    <div class="col-12"><button class="option-css action-submit">제출하기!</button></div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-5"><button class="option-css action-reset">리셋</button></div>
+                    <div class="col-7"><button class="option-css action-view">전체보기</button></div>
+                </div>
+            </div>
+        </article>
+        <article id="test-hue-2">
             <p class="text-center">색상테스트</p>
             <p class="text-center">색상을 부드럽게 이어주세요</p>
             <p class="text-center timer">0초</p>
             <canvas id="wheel-20"></canvas>
             <div class="container menu">
                 <div class="row justify-content-center">
-                    <div class="col-12"><button class="option-css action-view">전체보기</button></div>
+                    <div class="col-12"><button class="option-css action-submit">제출하기!</button></div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-5"><button class="option-css action-reset">리셋</button></div>
-                    <div class="col-7"><button class="option-css action-submit">제출하기!</button></div>
+                    <div class="col-7"><button class="option-css action-view">전체보기</button></div>
+                </div>
+            </div>
+        </article>
+        <article id="test-hue-3">
+            <p class="text-center">색상테스트</p>
+            <p class="text-center">색상을 부드럽게 이어주세요</p>
+            <p class="text-center timer">0초</p>
+            <canvas id="wheel-40"></canvas>
+            <div class="container menu">
+                <div class="row justify-content-center">
+                    <div class="col-12"><button class="option-css action-submit">제출하기!</button></div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-5"><button class="option-css action-reset">리셋</button></div>
+                    <div class="col-7"><button class="option-css action-view">전체보기</button></div>
                 </div>
             </div>
         </article>
 
-        <article id="result-hue-1">
+        <article id="before-value-test">
+            <h1 class="display-3">명도 테스트 시작 전</h1>
 
+            <button id="start-value-btn" class="action-next"></button>
         </article>
+
+        <article id="test-value-1"></article>
+        <article id="test-value-2"></article>
+        <article id="test-value-3"></article>
+
+
     </main>
 
     <script type="module" src="main.js"></script>
