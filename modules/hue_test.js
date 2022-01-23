@@ -222,6 +222,7 @@ export default class HueGame {
 
         this.isViewAll = 0;
         this.t_veiwAll = 0;
+        this.sure4Reset = 0;
     }
     get clickedColor() {
         return this._clickedColor; // colorcode in Decimal
@@ -322,23 +323,18 @@ export default class HueGame {
         this.clickedColor = 0;
     }
 
-    viewAll() {
-        const viewBtn = $(`article#test-hue-${this.currentStage} button.action-veiw`);
-        const resetSubmitBtn = $(`article#test-hue-${this.currentStage} div.menu > div:last-child`);
+    viewAll(btn) {
         this.isViewAll += 1;
-        // console.log(viewBtn, resetSubmitBtn);
         switch (this.isViewAll % 2) {
             case 1:
                 window.requestAnimationFrame(this.viewAllAnimate.bind(this));
                 window.removeEventListener("resize", this.resize.bind(this), false);
-                viewBtn.text("돌아오기");
-                resetSubmitBtn.fadeOut('slow');
+                $(btn).text("돌아오기");
                 break;
             case 0:
                 window.requestAnimationFrame(this.viewAllAnimate.bind(this));
                 window.addEventListener("resize", this.resize.bind(this), false);
-                viewBtn.text("전체보기");
-                resetSubmitBtn.fadeIn('slow');
+                $(btn).text("전체보기");
                 break;
             default:
                 break;
@@ -385,8 +381,19 @@ export default class HueGame {
         if (this.t_veiwAll == 0) window.cancelAnimationFrame(req);
     }
 
-    reset() {
-        // reset function
+    reset(btn) {
+        this.sure4Reset += 1;
+        switch (this.sure4Reset % 2) {
+            case 1:
+                $(btn).text("정말 리셋할까요?");
+                break;
+            case 0:
+                GAMEINFO.initCurrentGame("hue", this.currentStage);
+                $(btn).text("리셋");
+                break;
+            default:
+                break;
+        }
     }
 
     gradeHueGame() {

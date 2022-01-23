@@ -6,7 +6,7 @@ const FADE_OUT_TIME = 700;
 const FADE_IN_TIME = 800;
 
 // class = "next-button"
-$('.action-next').click((e) => showNextArticle(e.target));
+$('.action-next').off("click").click((e) => showNextArticle(e.target));
 
 function showNextArticle(node) {
     const clickedArticle = $(node).closest("article");
@@ -75,10 +75,6 @@ function submit(timer, time) {
     showNextArticle(currentCanvasContext.canvas);
 }
 
-$('.action-reset').click(function() {
-    // currentCanvasContext.reset();
-});
+$('.action-reset').click((e) => currentCanvasContext.reset(e.target));
 
-$('.action-view').off("click").on('click', function(e) {
-    currentCanvasContext.viewAll();
-});
+$('.action-view').click((e) => currentCanvasContext.viewAll(e.target));
