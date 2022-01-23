@@ -212,7 +212,6 @@ export default class HueGame {
 
         window.addEventListener("resize", this.resize.bind(this), false);
         this.resize();
-        document.documentElement.style.setProperty("--vh", `${window.innerHeight}px`);
 
         this.pointerX = 0;
         this.pointerY = 0;
@@ -255,6 +254,11 @@ export default class HueGame {
             center[0] -= 80;
             this.centerOfWheelX = center[0] - this.stageWidth / 12 - 40;
             this.btnOffsetX = center[0] + this.radiusOfWheel / 2 + this.stageWidth / 12;
+
+            const viewBtn = $(`#test-${GAMEINFO.currentGame}-${GAMEINFO.currentStage} .action-view`);
+            viewBtn.css("display", "none");
+            viewBtn.prev().toggleClass("col-5");
+            viewBtn.prev().toggleClass("col-7");
         } else { // Mobile
             this.radiusOfWheel = this.stageWidth / (2.84 - this.currentStage / 2);
             this.widthOfBtns = this.radiusOfWheel * (1.1 - this.currentStage * 0.12);
@@ -274,6 +278,8 @@ export default class HueGame {
             this.n
         )
         this.Picker = new Picker(this.widthOfBtns / 3);
+
+
     }
     animate() {
         window.requestAnimationFrame(this.animate.bind(this));
@@ -333,11 +339,13 @@ export default class HueGame {
             case 1:
                 window.requestAnimationFrame(this.viewAllAnimate.bind(this));
                 window.removeEventListener("resize", this.resize.bind(this), false);
+                this.canvas.removeEventListener("pointerdown", this.onDown.bind(this), false);
                 $(btn).text("돌아오기");
                 break;
             case 0:
                 window.requestAnimationFrame(this.viewAllAnimate.bind(this));
                 window.addEventListener("resize", this.resize.bind(this), false);
+                this.canvas.addEventListener("pointerdown", this.onDown.bind(this), false);
                 $(btn).text("전체보기");
                 break;
             default:

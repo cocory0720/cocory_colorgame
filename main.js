@@ -30,6 +30,7 @@ function showNextArticle(node) {
                     break;
             }
             clickedArticle.next().fadeIn(FADE_IN_TIME);
+            document.documentElement.style.setProperty("--vh", `${window.innerHeight}px`);
         });
     }, isTestNow);
 };
