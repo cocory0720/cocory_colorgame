@@ -245,10 +245,10 @@ export default class HueGame {
         this.canvas.width = this.stageWidth;
         this.canvas.height = this.stageHeight;
 
-        const isWide = this.stageWidth / 750 > this.stageHeight / 900 ? 1 : 0;
+        this.isWide = this.stageWidth / 750 > this.stageHeight / 900 ? 1 : 0;
         let center = [this.stageWidth / 2, this.stageHeight / 2];
         this.centerOfWheelY = center[1];
-        if (isWide) { // PC
+        if (this.isWide) { // PC
             this.radiusOfWheel = this.stageHeight / (5 - this.currentStage / 2);
             this.widthOfBtns = this.radiusOfWheel * (1.3 - this.currentStage * 0.12);
             center[0] -= 80;
@@ -356,37 +356,19 @@ export default class HueGame {
     viewAllAnimate() {
         const req = window.requestAnimationFrame(this.viewAllAnimate.bind(this));
         const VALOCITY = 1;
+        console.log("running");
         const curve = 1 + (this.t_veiwAll - 30) * (this.t_veiwAll - 30) * (this.t_veiwAll - 30) / 27000; // 0~1
         const curveInverse = this.t_veiwAll * this.t_veiwAll * this.t_veiwAll / 27000;
-        // console.log(curve);
         if (this.isViewAll % 2 == 1) {
             this.t_veiwAll += VALOCITY;
-            this.Wheel = new Wheel( //(x, y, rad, N)
-                this.centerOfWheelX * (1 - curve) + this.stageWidth / 2 * curve,
-                this.centerOfWheelY,
-                this.radiusOfWheel * (1 - curve) + (this.stageWidth / 2 - 100) * curve,
-                this.n,
-            )
-            this.ClrBtns = new ClrBtns( //(x, y1=center - w, y2 = center + w, N)
-                this.btnOffsetX * (1 - curve) + this.stageWidth * curve,
-                this.stageHeight / 2 - this.widthOfBtns,
-                this.stageHeight / 2 + this.widthOfBtns,
-                this.n
-            )
+            this.Wheel.x = this.centerOfWheelX * (1 - curve) + this.stageWidth / 2 * curve;
+            this.Wheel.rad = this.radiusOfWheel * (1 - curve) + (this.stageWidth / 2 - 100) * curve;
+            this.ClrBtns.x = this.btnOffsetX * (1 - curve) + this.stageWidth * curve;
         } else {
             this.t_veiwAll -= VALOCITY;
-            this.Wheel = new Wheel( //(x, y, rad, N)
-                this.centerOfWheelX * (1 - curveInverse) + this.stageWidth / 2 * curveInverse,
-                this.centerOfWheelY,
-                this.radiusOfWheel * (1 - curveInverse) + (this.stageWidth / 2 - 100) * curveInverse,
-                this.n,
-            )
-            this.ClrBtns = new ClrBtns( //(x, y1=center - w, y2 = center + w, N)
-                this.btnOffsetX * (1 - curveInverse) + this.stageWidth * curveInverse,
-                this.stageHeight / 2 - this.widthOfBtns,
-                this.stageHeight / 2 + this.widthOfBtns,
-                this.n
-            )
+            this.Wheel.x = this.centerOfWheelX * (1 - curveInverse) + this.stageWidth / 2 * curveInverse;
+            this.Wheel.rad = this.radiusOfWheel * (1 - curveInverse) + (this.stageWidth / 2 - 100) * curveInverse;
+            this.ClrBtns.x = this.btnOffsetX * (1 - curveInverse) + this.stageWidth * curveInverse;
         }
         this.t_veiwAll = (this.t_veiwAll >= 30) ? 30 :
             (this.t_veiwAll >= 0) ? this.t_veiwAll : 0;
@@ -409,6 +391,11 @@ export default class HueGame {
     }
 
     gradeHueGame() {
+        if (!this.isWide && !this.isViewAll) {
+            $(`#test-${GAMEINFO.currentGame}-${GAMEINFO.currentStage} .menu`)
+                .fadeOut(120);
+            this.viewAll();
+        }
         this.wrongIndex = [];
         let corrAns = 0;
         GAMEINFO.selectedArr.forEach((el, i) => {

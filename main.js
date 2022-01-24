@@ -43,11 +43,11 @@ function startGame() {
     remainTime = 0;
     remainTime += GAMEINFO.timeLimit + FADE_IN_TIME / 1000;
     let timer = setInterval(function() {
-        remainTime -= 0.01;
-        if (remainTime <= 0) {
+        if (remainTime < 0.01) {
             submit(0);
             clearInterval(timer);
         };
+        remainTime -= 0.01;
     }, 10);
     $(document).off("click").on("click", ".action-submit", function() {
         submit(remainTime);
@@ -57,7 +57,7 @@ function startGame() {
 
 function showRemainTime() {
     setInterval(() => {
-        $(`#test-${GAMEINFO.currentGame}-${GAMEINFO.currentStage} .timer`).text(`${remainTime}초`.slice(0, 5));
+        $(`#test-${GAMEINFO.currentGame}-${GAMEINFO.currentStage} .timer`).text(`${remainTime.toFixed(2)}초`);
     }, 10);
 }
 
