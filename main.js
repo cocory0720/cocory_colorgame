@@ -1,7 +1,8 @@
 import GAMEINFO from "./game_dataset.js";
 import HueGame from "./modules/hue_test.js";
+import FitGame from "./modules/fit_test.js";
 
-let currentCanvasContext;
+let currentContext;
 const FADE_OUT_TIME = 700;
 const DELAY_FOR_SUBMITTING = 600;
 const FADE_IN_TIME = 600;
@@ -16,17 +17,19 @@ function showNextArticle(node) {
         clickedArticle.fadeOut(FADE_OUT_TIME, function() {
             switch (clickedArticle.next().attr("id")) {
                 case "test-hue-1":
-                    currentCanvasContext = new HueGame(document.querySelector("#wheel-10"), 10);
+                    currentContext = new HueGame(document.querySelector("#wheel-10"), 10);
                     startGame();
                     break;
                 case "test-hue-2":
-                    currentCanvasContext = new HueGame(document.querySelector("#wheel-20"), 20);
+                    currentContext = new HueGame(document.querySelector("#wheel-20"), 20);
                     startGame();
                     break;
                 case "test-hue-3":
-                    currentCanvasContext = new HueGame(document.querySelector("#wheel-40"), 40);
+                    currentContext = new HueGame(document.querySelector("#wheel-40"), 40);
                     startGame();
                     break;
+                case "test-fit-1":
+                    currentContext = new FitGame(document.querySelector("#fitgame-context"));
                 default:
                     break;
             }
@@ -65,7 +68,7 @@ function showRemainTime() {
 function submit(time) {
     switch (GAMEINFO.currentGame) {
         case "hue":
-            if (currentCanvasContext.gradeHueGame()) {
+            if (currentContext.gradeHueGame()) {
                 GAMEINFO.TOTAL_SCORE += time * GAMEINFO.undertimeScore;
             }
             break;
@@ -80,12 +83,17 @@ function submit(time) {
             break;
     }
     time = 0;
-    showNextArticle(currentCanvasContext.canvas);
+    showNextArticle(currentContext.canvas);
     console.log(GAMEINFO.TOTAL_SCORE);
 }
 
-$('.action-reset').off("click").click((e) => currentCanvasContext.reset(e.target));
+$('.action-reset').off("click").click((e) => currentContext.reset(e.target));
 
-$('.action-view').off("click").click((e) => currentCanvasContext.viewAll(e.target));
+$('.action-view').off("click").click((e) => currentContext.viewAll(e.target));
 
 export { FADE_OUT_TIME, DELAY_FOR_SUBMITTING };
+
+//test
+window.onload = () => {
+    currentContext = new FitGame(document.querySelector("#fitgame-context"));
+}

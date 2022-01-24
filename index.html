@@ -23,7 +23,7 @@
     </div>
     <main id="test-app">
 
-        <article id="main-page" style="display: block;">
+        <article id="main-page">
             <h1 class="display-1">메인 페이지</h1>
 
 
@@ -86,14 +86,51 @@
         <article id="before-value-test">
             <h1 class="display-3">명도 테스트 시작 전</h1>
 
-            <button id="start-value-btn" class="action-next"></button>
+
+            <div id="start-value-btn" class="btn action-next">다음</div>
         </article>
 
         <article id="test-value-1"></article>
         <article id="test-value-2"></article>
         <article id="test-value-3"></article>
 
+        <article id="before-chroma-test">
+            <h1 class="display-3">채도 테스트 시작 전</h1>
 
+
+            <div id="start-chroma-btn" class="btn action-next">다음</div>
+        </article>
+
+        <article id="test-chroma-1"></article>
+        <article id="test-chroma-2"></article>
+        <article id="test-chroma-3"></article>
+
+        <article id="before-fit-test">
+            <h1 class="display-3">색감 테스트 시작 전</h1>
+
+
+            <div id="start-fit-btn" class="btn action-next">다음</div>
+        </article>
+
+        <article id="test-fit-1" style="display: block;">
+            <p class="lead text-center">색감테스트</p>
+            <p class="text-center timer">0초</p>
+            <p class="text-center">위의 색과 같은 색을 선택하세요</p>
+            <div id="fitgame-context" class="container justify-content-center overflow-hidden">
+                <div id="fitgame-colors" class="row g-3">
+                    <!-- 
+                    <div class="col-12">
+                        <div class="color" style="background-color: #abcdef;"></div>
+                    </div> 
+                    <div class="col-6"></div>
+                    <div class="col-6"></div>
+                    <div class="col-6"></div>
+                    <div class="col-6"></div> 
+                    -->
+                </div>
+            </div>
+
+        </article>
     </main>
 
     <script type="module" src="main.js"></script>

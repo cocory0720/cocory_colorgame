@@ -58,6 +58,11 @@ const GAMEINFO = {
         return this._curruntStage;
     },
     set currentStage(stage) {
+        if (this.currentGame !== undefined) {
+            if (this[this.currentGame][stage] === undefined) {
+                throw "End Of Stage";
+            }
+        }
         this._curruntStage = stage;
     },
     get answerArr() {
@@ -171,14 +176,15 @@ $.ajax({
             if (GAMEINFO[currentRow[0]][currentRow[1]] === undefined) GAMEINFO[currentRow[0]][currentRow[1]] = {}; // the initial element is the key of difficulty
             if (GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]] === undefined) GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]] = []; // the initial element is the key of data
             for (let i = 3; i < currentRow.length; i++) {
-                const element = currentRow[i];
+                const element = currentRow[i].slice(0, 1) == '#' ? currentRow[i].slice(1) : currentRow[i];
                 if (element == "ffffff") GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]].push(false);
-                // else if (element.slice(-3) == "sec") GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]] = parseInt(element.slice(0, -3));
                 else GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]].push('#' + element);
             }
         }
     }
 });
+
+console.log(GAMEINFO);
 
 export default GAMEINFO;
 export { PI2, ColorD2X, ColorX2RGBA, dist };

@@ -1,9 +1,9 @@
 //
 // 본 데이터셋의 개요는 다음과 같습니다.
-// 게임종류 ,#번째 스테이지, 데이터의 종류, 데이터...
+// 게임종류 ,N번째 스테이지, 데이터의 종류, 데이터...
 // 
 // 게임종류 : 색상게임 = hue, 명도게임 = value, 채도게임 = chroma, 색감게임 = fit
-// 데이터의 종류 : answerArr = 정답의 순서, givenArr = 주어질 색상과 위치, timeLimit = 제한시간 [초]
+// 데이터의 종류 : answerArr = 정답의 순서, givenArr = 주어질 색상과 위치(화면 처음상태 기준!)
 //
 hue   ,1 ,answerArr ,ce303f,f39a24,f1cc00,9ebf18,00893f,008789,007ead,437abe,9e65a7,cb4880
 hue   ,1 ,givenArr  ,ce303f,ffffff,ffffff,ffffff,00893f,ffffff,007ead,ffffff,ffffff,ffffff
@@ -16,9 +16,49 @@ hue   ,3 ,givenArr  ,c82d50,ffffff,ffffff,ffffff,ffffff,ffffff,f6a92d,ffffff,fff
 //
 //
 //
+//
+//
+//
+fit   ,1 ,answerArr  ,ffffff,CEC62C,B0A347
+fit   ,1 ,givenArr   ,CEC62C,ffffff,ffffff
+//
+fit   ,2 ,answerArr  ,ffffff,717AC6,#658EAE
+fit   ,2 ,givenArr   ,717AC6,ffffff,ffffff
+//
+fit   ,3 ,answerArr  ,ffffff,DD7676,#DD8683
+fit   ,3 ,givenArr   ,DD7676,ffffff,ffffff
+//
+fit   ,4 ,answerArr  ,ffffff,DBB342,#D1B342
+fit   ,4 ,givenArr   ,DBB342,ffffff,ffffff
+//
+fit   ,5 ,answerArr  ,ffffff,3B833D,#3B933D
+fit   ,5 ,givenArr   ,3B833D,ffffff,ffffff
+//
+fit   ,6 ,answerArr  ,ffffff,CEDAFF,#CED3FF,#C5DAFF,#CEDEF7
+fit   ,6 ,givenArr   ,CEDAFF,ffffff,ffffff,ffffff,ffffff
+//
+fit   ,7 ,answerArr  ,ffffff,9A6D42,#9F6546,#A17B4A,#94663C
+fit   ,7 ,givenArr   ,9A6D42,ffffff,ffffff,ffffff,ffffff
+//
+fit   ,8 ,answerArr  ,ffffff,364D54,#2E454D,#3B4748,#424552
+fit   ,8 ,givenArr   ,364D54,ffffff,ffffff,ffffff,ffffff
+//
+fit   ,9 ,answerArr  ,ffffff,9B38A0,#A03DA5,#9B2DBF,#9A3DA5
+fit   ,9 ,givenArr   ,9B38A0,ffffff,ffffff,ffffff,ffffff
+//
+fit   ,10 ,answerArr  ,ffffff,FF43AF,#FF4DB9,#FF57AD,#FB3A9A
+fit   ,10 ,givenArr   ,FF43AF,ffffff,ffffff,ffffff,ffffff
+//
+//
 ////////////// 주의사항 //////////////
 // 각 데이터는 무조건 ','만으로 구분됩니다.
 // 띄어쓰기는 허용합니다.
 // tab("    ")은 사용할 수 없습니다.
 // 앞에 '//'가 들어간 행은 읽지 않습니다.
+// 샾(#)이 들어가도 되도록 만들었습니다.
 //
+/////////////// fit game 에 대하여
+// answerArr 의 첫 요소는 false
+// givenArr 의 첫 요소는 정답, 나머지 false
+// selectedArr 는 사용하지 않음
+// optionArr 가 주어진 문제 임.
