@@ -1,5 +1,5 @@
 import GAMEINFO, { PI2, ColorD2X, ColorX2RGBA, dist } from "../game_dataset.js";
-import { FADE_OUT_TIME } from "../main.js";
+import { FADE_OUT_TIME, DELAY_FOR_SUBMITTING } from "../main.js";
 
 class Wheel {
     constructor(x, y, rad, N) {
@@ -335,15 +335,14 @@ export default class HueGame {
 
     viewAll(btn) {
         this.isViewAll += 1;
+        window.requestAnimationFrame(this.viewAllAnimate.bind(this));
         switch (this.isViewAll % 2) {
             case 1:
-                window.requestAnimationFrame(this.viewAllAnimate.bind(this));
                 window.removeEventListener("resize", this.resize.bind(this), false);
                 this.canvas.removeEventListener("pointerdown", this.onDown.bind(this), false);
                 $(btn).text("돌아오기");
                 break;
             case 0:
-                window.requestAnimationFrame(this.viewAllAnimate.bind(this));
                 window.addEventListener("resize", this.resize.bind(this), false);
                 this.canvas.addEventListener("pointerdown", this.onDown.bind(this), false);
                 $(btn).text("전체보기");
@@ -356,7 +355,7 @@ export default class HueGame {
     viewAllAnimate() {
         const req = window.requestAnimationFrame(this.viewAllAnimate.bind(this));
         const VALOCITY = 1;
-        console.log("running");
+        console.log(this.t_veiwAll);
         const curve = 1 + (this.t_veiwAll - 30) * (this.t_veiwAll - 30) * (this.t_veiwAll - 30) / 27000; // 0~1
         const curveInverse = this.t_veiwAll * this.t_veiwAll * this.t_veiwAll / 27000;
         if (this.isViewAll % 2 == 1) {
@@ -391,10 +390,13 @@ export default class HueGame {
     }
 
     gradeHueGame() {
-        if (!this.isWide && !this.isViewAll) {
+        if (!this.isWide && !(this.isViewAll % 2)) {
             $(`#test-${GAMEINFO.currentGame}-${GAMEINFO.currentStage} .menu`)
                 .fadeOut(120);
             this.viewAll();
+            setTimeout(() => {
+                this.viewAll();
+            }, FADE_OUT_TIME + DELAY_FOR_SUBMITTING);
         }
         this.wrongIndex = [];
         let corrAns = 0;

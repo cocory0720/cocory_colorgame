@@ -3,6 +3,7 @@ import HueGame from "./modules/hue_test.js";
 
 let currentCanvasContext;
 const FADE_OUT_TIME = 700;
+const DELAY_FOR_SUBMITTING = 600;
 const FADE_IN_TIME = 600;
 
 // class = "next-button"
@@ -10,7 +11,7 @@ $('.action-next').off("click").click((e) => showNextArticle(e.target));
 
 function showNextArticle(node) {
     const clickedArticle = $(node).closest("article");
-    const isTestNow = clickedArticle.attr("id").slice(0, 4) == "test" ? 600 : 0;
+    const delayForSubmit = clickedArticle.attr("id").slice(0, 4) == "test" ? DELAY_FOR_SUBMITTING : 0;
     setTimeout(() => {
         clickedArticle.fadeOut(FADE_OUT_TIME, function() {
             switch (clickedArticle.next().attr("id")) {
@@ -32,7 +33,7 @@ function showNextArticle(node) {
             clickedArticle.next().fadeIn(FADE_IN_TIME);
             document.documentElement.style.setProperty("--vh", `${window.innerHeight}px`);
         });
-    }, isTestNow);
+    }, delayForSubmit);
 };
 
 // class = "timer" : Show remaining time
@@ -67,7 +68,6 @@ function submit(time) {
             if (currentCanvasContext.gradeHueGame()) {
                 GAMEINFO.TOTAL_SCORE += time * GAMEINFO.undertimeScore;
             }
-            console.log(GAMEINFO.TOTAL_SCORE);
             break;
         case "value":
             break;
@@ -81,10 +81,11 @@ function submit(time) {
     }
     time = 0;
     showNextArticle(currentCanvasContext.canvas);
+    console.log(GAMEINFO.TOTAL_SCORE);
 }
 
 $('.action-reset').off("click").click((e) => currentCanvasContext.reset(e.target));
 
 $('.action-view').off("click").click((e) => currentCanvasContext.viewAll(e.target));
 
-export { FADE_OUT_TIME };
+export { FADE_OUT_TIME, DELAY_FOR_SUBMITTING };
