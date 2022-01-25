@@ -29,7 +29,7 @@ function showNextArticle(node) {
                     startGame();
                     break;
                 case "test-fit-1":
-                    currentContext = new FitGame(document.querySelector("#fitgame-context"));
+                    currentContext = new FitGame(document.querySelector("#fit-app"));
                 default:
                     break;
             }
@@ -95,5 +95,5 @@ export { FADE_OUT_TIME, DELAY_FOR_SUBMITTING };
 
 //test
 window.onload = () => {
-    currentContext = new FitGame(document.querySelector("#fitgame-context"));
+    currentContext = new FitGame(document.querySelector("#fit-app"));
 }
