@@ -41,7 +41,9 @@ const GAMEINFO = {
     },
     value: {},
     chroma: {},
-    fit: {},
+    fit: {
+        SCORE_RATE_FOR_EACH_FIT_PROB: 1,
+    },
 
     get currentGame() {
         return this._curruntGame;
