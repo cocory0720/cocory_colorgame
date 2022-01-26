@@ -83,7 +83,9 @@ function submit(time) {
             break;
     }
     time = 0;
-    showNextArticle(currentContext.canvas);
+    try {
+        showNextArticle(currentContext.canvas);
+    } catch (_error) {}
     console.log(GAMEINFO.TOTAL_SCORE);
 }
 
