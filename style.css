@@ -48,15 +48,24 @@ canvas,
 } */
 
 div.color {
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 80%;
     border-radius: 7px;
+    flex-grow: 1;
+    transition: all 250ms ease;
+    cursor: pointer;
 }
 
-[id|=option],
+
+/* [id|=option],
 [class|=column] {
     flex-grow: 1;
-    transition: all 180ms ease;
+    transition: all 250ms ease;
+    cursor: pointer;
+} */
+
+div.color :hover {
+    transform: scale(1.1);
 }
 
 

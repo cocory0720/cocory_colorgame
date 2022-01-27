@@ -403,7 +403,7 @@ export default class HueGame {
         GAMEINFO.selectedArr.forEach((el, i) => {
             if (el != GAMEINFO.givenArr[i]) {
                 if (el == GAMEINFO.answerArr[i]) {
-                    GAMEINFO.TOTAL_SCORE += GAMEINFO.eachHueScore;
+                    GAMEINFO.TOTAL_SCORE += GAMEINFO.hue.SCORE_RATE_FOR_EACH_HUE_PROB;
                     corrAns += 1;
                 } else if (el != false) {
                     this.wrongIndex.push(i);

@@ -122,9 +122,6 @@ const GAMEINFO = {
     get undertimeScore() {
         return this.SCORE_RATE_FOR_UNDERTIME;
     },
-    get eachHueScore() {
-        return this.hue.SCORE_RATE_FOR_EACH_HUE_PROB;
-    },
 
     //*** only for the hue test ***/ 
     initColorWheelAngles(n) { // n colors wheel
@@ -149,7 +146,6 @@ const GAMEINFO = {
                 this._angles[i - 1] += this._angles[j - 1];
             }
         }
-        // console.log(this._angles);
         this._commonCircle = PI2 / (10 + n * 3 / 4 + (howBigisGiven - 1) * num);
         this._largeCircle = this._commonCircle * howBigisGiven;
     },
@@ -178,8 +174,9 @@ $.ajax({
             if (GAMEINFO[currentRow[0]][currentRow[1]] === undefined) GAMEINFO[currentRow[0]][currentRow[1]] = {}; // the initial element is the key of difficulty
             if (GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]] === undefined) GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]] = []; // the initial element is the key of data
             for (let i = 3; i < currentRow.length; i++) {
-                const element = currentRow[i].slice(0, 1) == '#' ? currentRow[i].slice(1) : currentRow[i];
+                const element = currentRow[i].slice(0, 1) == '#' ? currentRow[i].slice(1) : currentRow[i]; //if the element starts with '#', remove it
                 if (element == "ffffff") GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]].push(false);
+                else if (element.slice(-3) == "sec") GAMEINFO[currentRow[0]][currentRow[1]].timeLimit = parseInt(element.slice(0, -3));
                 else GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]].push('#' + element);
             }
         }
