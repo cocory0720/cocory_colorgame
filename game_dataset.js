@@ -1,8 +1,38 @@
 const PI2 = Math.PI * 2;
 
+/* export for Value Game */
+function distSpace(x0, y0, width, height, posX, posY) {
+    let check = false;
+    (posX > x0 && posX < x0 + width) && (posY > y0 && posY < y0 + height) ? check = true: check = false;
+    return check;
+}
+
+function distBtn(x0, y1, y2, width, posX, posY) {
+    let check = false;
+    (posX > x0 && posX < x0 + width) && (posY > y1 && posY < y2) ? check = true: check = false;
+    return check;
+}
+
+function isNoDropArea(x0, y0, width, height, posX, posY, idx) {
+    let check = false;
+    ( //white의 경우 + 기준색의 경우
+        ((posX > x0 && posX < x0 + width) &&
+            (posY > y0 && posY < y0 + height)) ||
+        (
+            (posX > x0 && posX < x0 + width) &&
+            (posY > y0 + idx * height && posY < y0 + (idx + 1) * height)
+        )
+    ) ?
+    check = true: check = false;
+    return check;
+}
+
+/* Value Game */
+
 // color Decimal code 2 "#Hex" code
 function ColorD2X(dec) {
-    return '#' + ("00" + dec.toString(16)).slice(-6);
+    if (dec != 0) return '#' + ("00" + dec.toString(16)).slice(-6);
+    return "#000000";
 };
 
 // compute distance
@@ -186,4 +216,4 @@ $.ajax({
 console.log(GAMEINFO);
 
 export default GAMEINFO;
-export { PI2, ColorD2X, ColorX2RGBA, dist };
+export { PI2, ColorD2X, ColorX2RGBA, dist, distSpace, distBtn, isNoDropArea };

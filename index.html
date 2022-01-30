@@ -23,7 +23,7 @@
     </div>
     <main id="test-app">
 
-        <article id="main-page">
+        <article id="main-page" style="display: block;">
             <h1 class="display-1">메인 페이지</h1>
 
 
@@ -112,19 +112,25 @@
             <div id="start-fit-btn" class="btn action-next">다음</div>
         </article>
 
-        <article id="test-fit-1" style="display: block;">
+        <article id="test-fit-1">
             <div id="fit-app" class="container overflow-hidden">
                 <p class="lead text-center">색감테스트</p>
                 <p class="text-center">다음의 색과 같은 색을 선택하세요</p>
-                <div class="downcount-bar row" style="height: 5%;">
-                    <div class="bar h-100 w-100"></div>
+                <div class="downcount-bar row g-0" style="height: 5%;">
+                    <div class="padding h-100" style="width: 5%;"></div>
+                    <div class="bar h-100"></div>
                 </div>
-                <div class="padding row" style="height: 5%;"></div>
+                <div class="padding row" style="height: 10%;"></div>
                 <div id="answer" class="row"></div>
                 <div class="padding row" style="height: 10%;"></div>
-                <!-- <div id="option-row-1" class="row row-cols-2"></div> -->
+                <div id="colorbox" class="row gy-3 px-4 justify-content-center" style="align-content: center;">
+                </div>
             </div>
+        </article>
 
+        <article id="before-fit-test">
+            <h1 class="display-3">테스트 완료</h1>
+            <h1 class="display-3">점수 보여주기 및 코멘트</h1>
         </article>
     </main>
 

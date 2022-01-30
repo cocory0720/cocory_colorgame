@@ -83,9 +83,7 @@ function submit(time) {
             break;
     }
     time = 0;
-    try {
-        showNextArticle(currentContext.canvas);
-    } catch (_error) {}
+    showNextArticle(currentContext.canvas);
     console.log(GAMEINFO.TOTAL_SCORE);
 }
 
@@ -94,8 +92,3 @@ $('.action-reset').off("click").click((e) => currentContext.reset(e.target));
 $('.action-view').off("click").click((e) => currentContext.viewAll(e.target));
 
 export { submit, remainTime, FADE_OUT_TIME, DELAY_FOR_SUBMITTING };
-
-//test
-window.onload = () => {
-    currentContext = new FitGame(document.querySelector("#fit-app"));
-}

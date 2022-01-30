@@ -1,76 +1,62 @@
-import GAMEINFO, { ColorD2X } from "../game_dataset.js";
+import GAMEINFO from "../game_dataset.js";
 import { submit, remainTime } from "../main.js";
 
 export default class FitGame {
     constructor(query) {
+        this.canvas = query;
+
         this.currentstage = 1;
         GAMEINFO.initCurrentGame("fit", this.currentstage);
+        this.laststage = Object.keys(GAMEINFO.fit).filter(key => key.search(/\d/) != -1).length;
 
         this.$container = $(query);
         this.$answerRow = $(query).children("#answer");
 
         this.initGame();
 
-        this.clickedQuery;
+        this.timer;
+        this.clickedQuery = undefined;
         this.perfectScore = 0;
         this.fitGameScore = 0;
+
+        window.requestAnimationFrame(this.animate.bind(this));
     }
     initGame() {
+        this.clickedQuery = undefined;
+        $(".bar").fadeIn(300, "swing");
         this.$answerRow.append(`<div class="col p-3">
-        <div class="color mx-auto my-auto" style="background-color: ${GAMEINFO.givenArr[0]}; display:none;"></div>
+        <div class="color answer mx-auto my-auto" style="background-color: ${GAMEINFO.givenArr[0]}; display:none;"></div>
         </div>`);
         const NumOfRow = parseInt(GAMEINFO.optionArr.length / 2);
-        for (let i = 0; i < NumOfRow; i++) {
-            this.$container.append(`<div id="option-row-${i}" class="row row-cols-2" style="height: ${NumOfRow==1?"20%":"15%"};"></div>`);
-        }
+        const NumOfCol = NumOfRow <= 2 ? 2 : 3;
+        $("#colorbox").css("height", `${15*NumOfRow}%`);
         GAMEINFO.optionArr.forEach((el, i) => {
-            $(`#option-row-${parseInt(i/2)}`).append(`<div class="column-${i%2} col p-2">
-            <div class="color mx-auto my-auto" style="background-color: ${el};  display:none;"></div>
+            $("#colorbox").append(`<div class="col-${parseInt(12/NumOfCol - 1)} g-0" style="height : ${100/NumOfRow}%;">
+            <div class="color option mx-auto" style="
+            background-color: ${el}; 
+            display:none;
+            box-shadow: 5px 5px 16px 3px ${el}55;
+            "></div>
             </div>`);
-            $(`#option-row-${parseInt(i/2)} > .column-${i%2} > .color`).off().on({
+            $(`.color.option`).off().on({
                 "pointerdown": this.onDown,
                 "pointerenter": this.onEnter,
                 "pointerleave": this.onLeave,
                 "pointerup": this.onUp
             }, null, {
                 app: this,
-                animateIn: (col) => {
-                    col.parent().attr("style", `height: ${NumOfRow==1?"23%":"17%"};`);
-                    col.parent().siblings("#option-row-0,#option-row-1,#option-row-2,#option-row-3").attr("style", "height: 11.5%;");
-                    const findClassOfCol = col.attr("class").indexOf("column-") + 7;
-                    const columnIndex = col.attr("class").slice(findClassOfCol, findClassOfCol + 1);
-                    if (columnIndex == '0') {
-                        $(".column-0").toggleClass("col col-7");
-                        $(".column-1").toggleClass("col col-5");
-                    } else {
-                        $(".column-1").toggleClass("col col-7");
-                        $(".column-0").toggleClass("col col-5");
-                    }
-                },
-                animateOut: (col) => {
-                    col.parent().attr("style", `height: ${NumOfRow==1?"20%":"15%"};`);
-                    col.parent().siblings("#option-row-0,#option-row-1,#option-row-2,#option-row-3").attr("style", `height: ${NumOfRow==1?"20%":"15%"};`);
-                    const findClassOfCol = col.attr("class").indexOf("column-") + 7;
-                    const columnIndex = col.attr("class").slice(findClassOfCol, findClassOfCol + 1);
-                    if (columnIndex == '0') {
-                        $(".column-0").toggleClass("col col-7");
-                        $(".column-1").toggleClass("col col-5");
-                    } else {
-                        $(".column-1").toggleClass("col col-7");
-                        $(".column-0").toggleClass("col col-5");
-                    }
-                },
             })
         });
         $(".color").fadeIn(300);
 
         this.fitRemainTime = GAMEINFO.timeLimit;
-        this.timer = setInterval(() => {
-            if (this.fitRemainTime < 0.01) {
-                this.scoreNnextGame();
+        this.isTimerOn = true;
+        this.timer = setInterval(function(app) {
+            app.fitRemainTime -= 0.01;
+            if (app.fitRemainTime < 0.01) {
+                app.scoreNnextGame(app.timer);
             }
-            this.fitRemainTime -= 0.01;
-        }, 10);
+        }, 10, this);
     }
 
     /* event handler jQuery code */
@@ -78,31 +64,35 @@ export default class FitGame {
         e.data.clickedQuery = e.target;
         if (e.pointerType == "mouse") { // pc: click the color
             e.data.app.clickedQuery = e.target;
-            e.data.app.scoreNnextGame();
+            e.data.app.scoreNnextGame(e.data.app.timer);
         }
     }
-    onEnter(e) {
-        const enteredCol = $(e.target).parent()
-        e.data.enteredCol = enteredCol;
-        e.data.animateIn(enteredCol);
-    }
+    onEnter(e) {}
     onLeave(e) {
-        const enteredCol = e.data.enteredCol;
-        e.data.animateOut(enteredCol);
         e.data.clickedQuery = undefined;
     }
     onUp(e) {
         if (e.data.clickedQuery == e.target) { // mobile: ondown n onup in the same color
             e.data.app.clickedQuery = e.target;
-            e.data.app.scoreNnextGame();
+            e.data.app.scoreNnextGame(e.data.app.timer);
         }
     }
 
     /* event handler jQuery code ends */
 
-    scoreNnextGame() {
-        clearInterval(this.timer);
-        $(".color").off();
+    animate() {
+        window.requestAnimationFrame(this.animate.bind(this));
+        $(".downcount-bar > .bar").attr("style", `
+        width : ${this.fitRemainTime / GAMEINFO.timeLimit * 95}%;
+        background-color : hsl(${this.fitRemainTime / GAMEINFO.timeLimit * 46},87%,66%);
+        `)
+    }
+
+    scoreNnextGame(timer) {
+        clearInterval(timer);
+        timer = null;
+        $(".color.option").off();
+        $(".bar").fadeOut(this.clickedQuery != undefined ? 250 : 800, "swing");
         this.perfectScore += GAMEINFO.optionArr.length / 2;
         if (this.clickedQuery != undefined) {
             const colorStyleIndex = $(this.clickedQuery).attr("style").indexOf("background-color:") + 18;
@@ -124,25 +114,23 @@ export default class FitGame {
                 GAMEINFO.TOTAL_SCORE += GAMEINFO.optionArr.length / 2 * GAMEINFO.fit.SCORE_RATE_FOR_EACH_FIT_PROB;
             }
         }
-        this.currentstage += 1;
-        try {
+        if (this.currentstage < this.laststage) {
+            this.currentstage += 1;
             GAMEINFO.initCurrentGame("fit", this.currentstage);
-            this.$answerRow.children().fadeOut(this.clickedQuery != undefined ? 250 : 600);
-            this.$container.children("#option-row-0,#option-row-1,#option-row-2,#option-row-3").fadeOut(250);
-            this.$answerRow.children().remove();
-            this.$container.children("#option-row-0,#option-row-1,#option-row-2,#option-row-3").remove();
-            this.initGame();
-        } catch (err) {
-            if (err == "End Of Stage") {
-                console.log("End Of Stage");
-                GAMEINFO.TOTAL_SCORE += this.fitGameScore;
-                if (this.perfectScore == this.fitGameScore) {
-                    GAMEINFO.TOTAL_SCORE += remainTime * GAMEINFO.undertimeScore;
-                }
-                this.$answerRow.children().fadeOut(250);
-                this.$container.children("#option-row-0,#option-row-1,#option-row-2,#option-row-3").fadeOut(250);
-                submit(remainTime);
+            this.$answerRow.children().fadeOut(250);
+            $("#colorbox").children().fadeOut(this.clickedQuery != undefined ? 250 : 800, "swing");
+            $("#colorbox").children().promise().done(() => {
+                this.$answerRow.children().remove();
+                $("#colorbox").children().remove();
+                this.initGame();
+            });
+        } else {
+            submit();
+            GAMEINFO.TOTAL_SCORE += this.fitGameScore;
+            if (this.perfectScore == this.fitGameScore) {
+                GAMEINFO.TOTAL_SCORE += remainTime * GAMEINFO.undertimeScore;
             }
+            $("#test-fit-1").children().fadeOut(250);
         }
     }
 }
