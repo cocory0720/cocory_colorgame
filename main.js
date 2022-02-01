@@ -28,6 +28,16 @@ function showNextArticle(node) {
                     currentContext = new HueGame(document.querySelector("#wheel-40"), 40);
                     startGame();
                     break;
+                case "test-value-1":
+                    changeBGColor();
+                    currentContext = new ValueGame(document.querySelector("#canvasValue1"), 10);
+                    startGame();
+                    break;
+                case "test-value-2":
+                    changeBGColor();
+                    currentContext = new ValueGame(document.querySelector("#canvasValue2"), 20);
+                    startGame();
+                    break;
                 case "test-fit-1":
                     currentContext = new FitGame(document.querySelector("#fit-app"));
                 default:
@@ -73,6 +83,10 @@ function submit(time) {
             }
             break;
         case "value":
+            if (currentContext.gradeValueGame()) { //만점자일 경우
+                GAMEINFO.TOTAL_SCORE += time * GAMEINFO.undertimeScore;
+                GAMEINFO.TOTAL_SCORE = GAMEINFO.TOTAL_SCORE.toFixed(2);
+            }
             break;
         case "chroma":
             break;
@@ -85,6 +99,14 @@ function submit(time) {
     time = 0;
     showNextArticle(currentContext.canvas);
     console.log(GAMEINFO.TOTAL_SCORE);
+}
+
+function changeBGColor() {
+    const htmlTag = document.querySelector('html');
+    const bodyTag = document.querySelector('body');
+
+    htmlTag.style.backgroundColor = "transparent";
+    bodyTag.style.backgroundColor = "transparent";
 }
 
 $('.action-reset').off("click").click((e) => currentContext.reset(e.target));

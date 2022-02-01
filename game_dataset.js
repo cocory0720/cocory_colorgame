@@ -27,7 +27,7 @@ function isNoDropArea(x0, y0, width, height, posX, posY, idx) {
     return check;
 }
 
-/* Value Game */
+/* Value Game Ends */
 
 // color Decimal code 2 "#Hex" code
 function ColorD2X(dec) {
