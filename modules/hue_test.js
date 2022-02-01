@@ -371,7 +371,7 @@ export default class HueGame {
         }
         this.t_veiwAll = (this.t_veiwAll >= 30) ? 30 :
             (this.t_veiwAll >= 0) ? this.t_veiwAll : 0;
-        if (this.t_veiwAll == 0) window.cancelAnimationFrame(req);
+        if (this.t_veiwAll == 0 || this.t_veiwAll == 30) window.cancelAnimationFrame(req);
     }
 
     reset(btn) {
