@@ -97,7 +97,6 @@ class Wheel {
 
     showWhatWasWrong(ctx, indexes) {
         const req = window.requestAnimationFrame(this.showWhatWasWrong.bind(this, ctx, indexes));
-        console.log("showing what was wrong");
         const FADE_VALOCITY = 8;
         this.fadeAnimation["delay"] += 8;
         indexes.forEach(index => {
@@ -235,7 +234,7 @@ export default class HueGame {
         if ((color == 0) || (GAMEINFO.answerArr.indexOf(ColorD2X(color)) != -1)) {
             this._clickedColor = color;
         } else {
-            console.log("detected color curruption");
+            // console.log("detected color curruption");
             return;
         }
     }
@@ -355,7 +354,6 @@ export default class HueGame {
     viewAllAnimate() {
         const req = window.requestAnimationFrame(this.viewAllAnimate.bind(this));
         const VALOCITY = 1;
-        console.log(this.t_veiwAll);
         const curve = 1 + (this.t_veiwAll - 30) * (this.t_veiwAll - 30) * (this.t_veiwAll - 30) / 27000; // 0~1
         const curveInverse = this.t_veiwAll * this.t_veiwAll * this.t_veiwAll / 27000;
         if (this.isViewAll % 2 == 1) {
