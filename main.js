@@ -1,5 +1,6 @@
 import GAMEINFO from "./game_dataset.js";
 import HueGame from "./modules/hue_test.js";
+import ValueGame from "./modules/value_test.js";
 import FitGame from "./modules/fit_test.js";
 
 let currentContext;
