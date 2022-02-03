@@ -1,51 +1,76 @@
 import GAMEINFO from "./game_dataset.js";
-import HueGame from "./modules/hue_test.js";
-import ValueGame from "./modules/value_test.js";
-import FitGame from "./modules/fit_test.js";
+import HueGame from "./modules/hue_app.js";
+import ValueGame from "./modules/value_app.js";
+import FitGame from "./modules/fit_app.js";
 
+const SERIES = ["main", "fit", "hue", "value", "chroma", "end"];
 let currentContext;
 const FADE_OUT_TIME = 700;
 const DELAY_FOR_SUBMITTING = 600;
 const FADE_IN_TIME = 600;
 
 // class = "next-button"
-$('.action-next').off("click").click((e) => showNextArticle(e.target));
+function initBtns() {
+    $('.action-next').off("click").click((e) => showNextArticle(e.target));
+    $('.action-reset').off("click").click((e) => currentContext.reset(e.target));
+    $('.action-view').off("click").click((e) => currentContext.viewAll(e.target));
+}
+initBtns();
 
 function showNextArticle(node) {
     const clickedArticle = $(node).closest("article");
     const delayForSubmit = clickedArticle.attr("id").slice(0, 4) == "test" ? DELAY_FOR_SUBMITTING : 0;
     setTimeout(() => {
         clickedArticle.fadeOut(FADE_OUT_TIME, function() {
-            switch (clickedArticle.next().attr("id")) {
-                case "test-hue-1":
-                    currentContext = new HueGame(document.querySelector("#wheel-10"), 10);
-                    startGame();
-                    break;
-                case "test-hue-2":
-                    currentContext = new HueGame(document.querySelector("#wheel-20"), 20);
-                    startGame();
-                    break;
-                case "test-hue-3":
-                    currentContext = new HueGame(document.querySelector("#wheel-40"), 40);
-                    startGame();
-                    break;
-                case "test-value-1":
-                    changeBGColor();
-                    currentContext = new ValueGame(document.querySelector("#canvasValue1"), 10);
-                    startGame();
-                    break;
-                case "test-value-2":
-                    changeBGColor();
-                    currentContext = new ValueGame(document.querySelector("#canvasValue2"), 20);
-                    startGame();
-                    break;
-                case "test-fit-1":
-                    currentContext = new FitGame(document.querySelector("#fit-app"));
-                default:
-                    break;
+            if (clickedArticle.next().length == 0) {
+                if (GAMEINFO.currentGame == undefined) {
+                    $("link[href = 'style.css']").remove();
+                    $('head').append($(`<link rel="stylesheet" href="./${SERIES[1]}/${SERIES[1]}_style.css">`));
+                    $("main").load(`./${SERIES[1]}/${SERIES[1]}_index.html #test-app article`, function() {
+                        $("article:first").fadeIn(FADE_IN_TIME);
+                        initBtns();
+                    });
+                } else {
+                    const currentSeriesIndex = SERIES.indexOf(GAMEINFO.currentGame);
+                    $(`link[href = "./${SERIES[currentSeriesIndex]}/${SERIES[currentSeriesIndex]}_style.css"]`).remove();
+                    $('head').append($(`<link rel="stylesheet" href="./${SERIES[currentSeriesIndex+1]}/${SERIES[currentSeriesIndex+1]}_style.css">`));
+                    $("main").load(`./${SERIES[currentSeriesIndex+1]}/${SERIES[currentSeriesIndex+1]}_index.html #test-app article`, function() {
+                        $("article:first").fadeIn(FADE_IN_TIME);
+                        initBtns();
+                    });
+                }
+            } else {
+                switch (clickedArticle.next().attr("id")) {
+                    case "test-hue-1":
+                        currentContext = new HueGame(document.querySelector("#wheel-10"), 10);
+                        startGame();
+                        break;
+                    case "test-hue-2":
+                        currentContext = new HueGame(document.querySelector("#wheel-20"), 20);
+                        startGame();
+                        break;
+                    case "test-hue-3":
+                        currentContext = new HueGame(document.querySelector("#wheel-40"), 40);
+                        startGame();
+                        break;
+                    case "test-value-1":
+                        changeBGColor();
+                        currentContext = new ValueGame(document.querySelector("#canvasValue1"), 10);
+                        startGame();
+                        break;
+                    case "test-value-2":
+                        changeBGColor();
+                        currentContext = new ValueGame(document.querySelector("#canvasValue2"), 20);
+                        startGame();
+                        break;
+                    case "test-fit-1":
+                        currentContext = new FitGame(document.querySelector("#fit-app"));
+                    default:
+                        break;
+                }
+                clickedArticle.next().fadeIn(FADE_IN_TIME);
             }
-            clickedArticle.next().fadeIn(FADE_IN_TIME);
-            document.documentElement.style.setProperty("--vh", `${window.innerHeight}px`);
+            document.documentElement.style.setProperty("--page-viewport-height", `${window.innerHeight}px`);
         });
     }, delayForSubmit);
 };
@@ -109,9 +134,5 @@ function changeBGColor() {
     htmlTag.style.backgroundColor = "transparent";
     bodyTag.style.backgroundColor = "transparent";
 }
-
-$('.action-reset').off("click").click((e) => currentContext.reset(e.target));
-
-$('.action-view').off("click").click((e) => currentContext.viewAll(e.target));
 
 export { submit, remainTime, FADE_OUT_TIME, DELAY_FOR_SUBMITTING };
