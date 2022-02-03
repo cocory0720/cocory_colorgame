@@ -1,4 +1,4 @@
-import GAMEINFO from "../game_dataset.js";
+import GAMEINFO, { ColorD2X } from "../game_dataset.js";
 import { submit, remainTime } from "../main.js";
 
 export default class FitGame {
@@ -109,7 +109,7 @@ export default class FitGame {
                         index += 1;
                     }
                 })
-            if (clickedColor == GAMEINFO.givenArr[0]) {
+            if (ColorD2X(clickedColor) == GAMEINFO.givenArr[0].toLowerCase()) {
                 this.fitGameScore += GAMEINFO.optionArr.length / 2;
                 GAMEINFO.TOTAL_SCORE += GAMEINFO.optionArr.length / 2 * GAMEINFO.fit.SCORE_RATE_FOR_EACH_FIT_PROB;
             }
@@ -125,12 +125,12 @@ export default class FitGame {
                 this.initGame();
             });
         } else {
-            submit();
             GAMEINFO.TOTAL_SCORE += this.fitGameScore;
             if (this.perfectScore == this.fitGameScore) {
                 GAMEINFO.TOTAL_SCORE += remainTime * GAMEINFO.undertimeScore;
             }
             $("#test-fit-1").children().fadeOut(250);
+            submit();
         }
     }
 }
