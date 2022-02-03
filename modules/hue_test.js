@@ -408,7 +408,7 @@ export default class HueGame {
                 }
             }
         });
-        this.Wheel.showWhatWasWrong(this.ctx, this.wrongIndex);
+        // this.Wheel.showWhatWasWrong(this.ctx, this.wrongIndex); //오답을 알려주지 않는 방향으로 게임 설계
         if (corrAns == (GAMEINFO.answerArr.length - GAMEINFO.givenArr.filter(el => el != false).length)) return true;
         else return false;
     }
