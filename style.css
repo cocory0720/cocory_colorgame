@@ -1,48 +1,3 @@
-:root {
-    /* Color */
-    --white-color: #fffeff;
-    --grey-color: #f5f5f5;
-    /* border */
-    --blue-green-color: #56a8a2;
-    /* background */
-    --start-color1: #c7e2e0;
-    --start-color2: #8ec5c1;
-    --start-color4: #39706c;
-    --start-color5: #1d3836;
-    --start-color6: black;
-    /* Background Color */
-    --value1-color: #e3e3e3;
-    --value2-color: #393939;
-    --value3-color: #1c1c1c;
-    --value4-color: #aaaaaa;
-    --value5-color: #717171;
-    --value6-color: #555555;
-    --value7-color: #c6c6c6;
-    --value8-color: #000000;
-    --value9-color: #8e8e8e;
-    --value10-color: #ffffff;
-    /* Padding - Margin - Border */
-    --padding-big: 1em;
-    /* using */
-    --padding-medium: 0.5em;
-    --body-width: 25.875em;
-    --title-margin: 3em;
-    /* Font Size */
-    --font-small: 0.5em;
-    /* btn - using */
-    --font-medium: 0.875em;
-    --font-big: 1.3em;
-    --font-biggest: 3em;
-    --font-title: 2em;
-    /* title size */
-    --font-btn: 1.5em;
-    --font-start-page: 4em;
-    /* start page */
-}
-
-
-/***************** Hue test *****************/
-
 html,
 body,
 main,
@@ -91,223 +46,34 @@ div.btn {
     max-width: 800px;
 }
 
-
-/***************** Hue test ends *****************/
-
-
-/***************** Value test *****************/
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Gugi", cursive;
+#fit-app {
+    max-width: 410px;
 }
 
-html,
-body {
-    /* 뭐 때문인지는 몰라도 body에서 width, height를 지정하면 pointer event 구현 x*/
-    background-color: var(--blue-green-color);
+#answer {
+    height: 15%;
+    background-color: #ddd;
 }
 
+div.color.option {
+    width: 112px;
+    height: 112px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: transform 230ms ease, box-shadow 230ms ease;
+}
 
-/* Start page */
-
-#start_page {
+.color.answer {
     width: 100%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    font-size: var(--font-start-page);
-    -webkit-text-stroke: 1px var(--grey-color);
 }
 
-.nextBtn {
-    /* margin-top: var(--padding-medium); */
-    border-radius: 10%;
-    padding: var(--padding-big);
-    border: 2px solid var(--white-color);
-    background-color: transparent;
-    color: var(--white-color);
-    font-size: var(--font-small);
-    /* 2em */
-    /* font-size: 1em; */
+div.color.option:hover {
+    transform: scale(0.92);
+    box-shadow: none !important;
 }
 
-.nextBtn:hover {
-    font-weight: bold;
-    cursor: pointer;
-    transform: scale(1.1);
-}
-
-.container1 {
-    margin: calc(var(--padding-medium) / 2) 0;
-}
-
-.container1 .text1 {
-    color: var(--white-color);
-}
-
-.container1 .text2 {
-    color: var(--start-color1);
-}
-
-.container1 .text3 {
-    color: var(--start-color2);
-}
-
-.container1 .text4 {
-    color: var(--blue-green-color);
-}
-
-.container1 .text5 {
-    color: var(--start-color4);
-}
-
-.container1 .text6 {
-    color: var(--start-color5);
-}
-
-.container1 .text7 {
-    color: var(--start-color6);
-}
-
-#startBtn {
-    margin: 0 0 calc((2) * var(--padding-medium)) 0;
-}
-
-
-/******************************************************************************Start Page */
-
-
-/* Info Page */
-
-#info_page {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
-
-.container2 {
-    padding: var(--padding-big);
-    margin: calc(var(--padding-big) * 3) 0;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-direction: column;
-    width: 90%;
-    height: 80%;
-    border: 5px solid var(--start-color4);
-    background-color: var(--white-color);
-    border-radius: 3px;
-}
-
-.container2 header h1 {
-    margin-bottom: var(--padding-medium);
-    font-size: var(--font-title);
-}
-
-.container2 .flex_box {
-    display: flex;
-    flex-direction: row;
-}
-
-.container2 .flex_box .image1 {
-    display: flex;
-    flex-direction: column;
-    padding-right: calc(var(--padding-big) * 2);
-}
-
-.container2 .flex_box .image1 .step {
-    width: 100px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 3px dashed var(--start-color2);
-    border-radius: 3px;
-    margin-bottom: 3px;
-}
-
-.container2 .flex_box .image2 {
-    display: flex;
-    flex-direction: column;
-    background-color: #cfcfcf;
-    border-radius: 3px;
-}
-
-.container2 .flex_box .image2 .color {
-    display: flex;
-    flex-direction: row;
-}
-
-.container2 .flex_box .image2 .color .row {
-    width: 70px;
-    height: 70px;
-    margin: 5px;
-    border: 3px dashed var(--start-color5);
-    border-radius: 3px;
-}
-
-.container2 .explain {
-    margin-top: var(--padding-big);
-    text-align: center;
-}
-
-#infoBtn {
-    font-size: calc((2) * var(--font-small));
-    margin: calc((-3) * var(--padding-medium)) 0 var(--padding-big) 0;
-}
-
-
-/***************************************************************************Info Page*/
-
-
-/* Test-Value-1 / Test-Value-2: canvas */
-
-#test-value-1,
-#test-value-2 {
-    text-align: center;
-}
-
-#test-value-1 .timer,
-#test-value-2 .timer {
-    color: var(--white-color);
-    margin-top: 5vh;
-}
-
-.action-submit:hover {
-    transform: scale(1.1);
-    cursor: pointer;
-}
-
-canvas {
-    position: absolute;
-    z-index: -9999;
-    width: 100%;
-    height: 100%;
-    max-width: 1600px;
-    max-height: 900px;
-    top: 0%;
-    left: 50%;
-    transform: translate(-50%, 0);
-    pointer-events: auto;
-}
-
-.action-submit {
-    border-radius: 10%;
-    padding: var(--padding-medium);
-    border: 2px solid var(--white-color);
-    background-color: transparent;
-    color: var(--white-color);
-    font-size: var(--font-small);
-    /* 2em */
-    width: 10vh;
-    position: absolute;
-    bottom: 5vh;
-}
-
-.btnDiv {
-    padding-right: 13vh;
+div.bar {
+    transition: width 60ms ease-in;
+    border-radius: 7px;
 }
