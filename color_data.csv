@@ -17,20 +17,28 @@ hue   ,3 ,givenArr  ,c82d50,ffffff,ffffff,ffffff,ffffff,ffffff,f6a92d,ffffff,fff
 //
 //
 value ,1     ,answerArr  ,ffffff,e3e3e3,c6c6c6,aaaaaa,8e8e8e,717171,555555,393939,1c1c1c,000000
-value ,1     ,givenArr   ,ffffff,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx
+value ,1     ,givenArr   ,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff
 //
 value ,2     ,answerArr  ,ffffff,f2f2f2,e4e4e4,d7d7d7,c9c9c9,bcbcbc,aeaeae,a1a1a1,949494,868686,797979,6b6b6b,5e5e5e,515151,434343,363636,282828,1b1b1b,0d0d0d,000000
-value ,2     ,givenArr   ,ffffff,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx
+value ,2     ,givenArr   ,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff
 //
 //
 //red
-chorma ,1    ,answerArr  ,727272,7F6567,8C595D,994C52,A63F47,B2333D,BF2632,CC1927,D90D1D,E60012
-chorma ,1    ,givenArr   ,727272,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,E60012
+chroma ,1    ,answerArr  ,727272,7f6567,8c595d,994c52,a63f47,b2333d,bf2632,cc1927,d90d1d,e60012
+chroma ,1    ,givenArr   ,727272,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,e60012
 //
 //
 //green
-chorma ,2    ,answerArr  ,7F7F7E,7F6567,8C595D,994C52,A63F47,B2333D,BF2632,CC1927,D90D1D,E60012
-chorma ,2    ,givenArr   ,727272,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,E60012
+chroma ,2    ,answerArr  ,7f7f7e,718177,638370,558569,478762,38895c,2a8b55,1c8d4e,0e8f47,009140
+chroma ,2    ,givenArr   ,7f7f7e,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,009140
+//
+//blue
+chroma ,3    ,answerArr  ,5c5c5c,545c63,4b5c6b,435c72,3b5c79,325c80,255984,215b8f,195b96,115b9d,085ba5,005bac
+chroma ,3    ,givenArr   ,5c5c5c,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,005bac
+//
+//yellow
+chroma ,4    ,answerArr  ,eeeeee,f0eed8,f1efc3,f3efad,f4ef97,f6ef82,f7f06c,f9f057,faf041,fcf02b,fdf116,fff100
+chroma ,4    ,givenArr   ,eeeeee,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,fff100
 //
 //
 //

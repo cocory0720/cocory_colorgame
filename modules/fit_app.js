@@ -83,7 +83,7 @@ export default class FitGame {
     animate() {
         window.requestAnimationFrame(this.animate.bind(this));
         $(".downcount-bar > .bar").attr("style", `
-        width : ${this.fitRemainTime / GAMEINFO.timeLimit * 95}%;
+        width : ${this.fitRemainTime / GAMEINFO.timeLimit * 92}%;
         background-color : hsl(${this.fitRemainTime / GAMEINFO.timeLimit * 46},87%,66%);
         `)
     }

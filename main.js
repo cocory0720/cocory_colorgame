@@ -109,12 +109,17 @@ function submit(time) {
             }
             break;
         case "value":
-            if (currentContext.gradeValueGame()) { //만점자일 경우
+            if (currentContext.gradeValueGame()) {
                 GAMEINFO.TOTAL_SCORE += time * GAMEINFO.undertimeScore;
             }
             break;
         case "chroma":
+            if (currentContext.gradeChromaGame()) {
+                GAMEINFO.TOTAL_SCORE += time * GAMEINFO.undertimeScore;
+                GAMEINFO.TOTAL_SCORE = GAMEINFO.TOTAL_SCORE;
+            }
             break;
+
         case "fit":
             break;
         default:

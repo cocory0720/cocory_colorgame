@@ -29,6 +29,21 @@ function isNoDropArea(x0, y0, width, height, posX, posY, idx) {
 
 /* Value Game Ends */
 
+/* export for Chroma Game */
+function isNoDropArea_Chroma(x0, y0, width, height, posX, posY, N) {
+    let check = false;
+    //제시색의 경우 + 제시색-회색의 경우
+    (posX > x0 && posX < x0 + width && posY > y0 && posY < y0 + height) ||
+    (posX > x0 &&
+        posX < x0 + width &&
+        posY > y0 + (N - 1) * height &&
+        posY < y0 + N * height) ?
+    (check = true) :
+    (check = false);
+    return check;
+}
+/* Chroma Game Ends */
+
 // color Decimal code 2 "#Hex" code
 function ColorD2X(dec) {
     if (dec != 0) return '#' + ("00" + dec.toString(16)).slice(-6);
@@ -224,4 +239,4 @@ $.ajax({
 console.log(GAMEINFO);
 
 export default GAMEINFO;
-export { PI2, ColorD2X, ColorX2RGBA, dist, distSpace, distBtn, isNoDropArea };
+export { PI2, ColorD2X, ColorX2RGBA, dist, distSpace, distBtn, isNoDropArea, isNoDropArea_Chroma };

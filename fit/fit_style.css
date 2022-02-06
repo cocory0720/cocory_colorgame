@@ -68,12 +68,16 @@ div.color.option {
     height: 100%;
 }
 
-div.color.option:hover {
-    transform: scale(0.92);
-    box-shadow: none !important;
+@media (hover: hover) {
+    div.color.option:hover {
+        transform: scale(1.08);
+        box-shadow: none !important;
+    }
 }
 
+div.color.option:active {}
+
 div.bar {
-    transition: width 60ms ease-in;
+    transition: width 25ms ease-in;
     border-radius: 7px;
 }
