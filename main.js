@@ -111,7 +111,6 @@ function submit(time) {
         case "value":
             if (currentContext.gradeValueGame()) { //만점자일 경우
                 GAMEINFO.TOTAL_SCORE += time * GAMEINFO.undertimeScore;
-                GAMEINFO.TOTAL_SCORE = GAMEINFO.TOTAL_SCORE.toFixed(2);
             }
             break;
         case "chroma":

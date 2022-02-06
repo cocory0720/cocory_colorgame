@@ -49,7 +49,7 @@ function ColorX2RGBA(hex) {
 }
 
 const GAMEINFO = {
-    TOTAL_SCORE: 0.00, // TOTAL SCORE FOR ENTIRE GAME
+    _TOTAL_SCORE: 0.00, // TOTAL SCORE FOR ENTIRE GAME
     SCORE_RATE_FOR_UNDERTIME: 0.7,
     hue: {
         SCORE_RATE_FOR_EACH_HUE_PROB: 1,
@@ -75,14 +75,22 @@ const GAMEINFO = {
         SCORE_RATE_FOR_EACH_FIT_PROB: 1,
     },
 
+    get TOTAL_SCORE() {
+        return this._TOTAL_SCORE;
+    },
+    set TOTAL_SCORE(score) {
+        if (typeof score != "number") {
+            throw "invalid valuetype for setting TOTAL_SCORE";
+        }
+        this._TOTAL_SCORE = parseFloat(score.toFixed(3));
+    },
     get currentGame() {
         return this._curruntGame;
     },
     set currentGame(game) {
         const gameList = ["hue", "value", "chroma", "fit"];
         if (gameList.indexOf(game) == -1) {
-            alert("bad request in setting currunt game");
-            return;
+            throw "bad request in setting currunt game";
         }
         this._curruntGame = game;
     },
