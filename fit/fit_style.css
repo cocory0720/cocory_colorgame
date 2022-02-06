@@ -55,6 +55,14 @@ div.btn {
     background-color: #ddd;
 }
 
+#colorbox {
+    display: flex;
+    align-content: center;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+}
+
 div.color.option {
     width: var(--fit-color-width, 100px);
     height: var(--fit-color-width, 100px);

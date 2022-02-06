@@ -6,71 +6,71 @@
 // 데이터의 종류 : answerArr = 정답의 순서, givenArr = 주어질 색상과 위치(화면 처음상태 기준!)
 //
 hue   ,1 ,answerArr ,ce303f,f39a24,f1cc00,9ebf18,00893f,008789,007ead,437abe,9e65a7,cb4880
-hue   ,1 ,givenArr  ,ce303f,ffffff,ffffff,ffffff,00893f,ffffff,007ead,ffffff,ffffff,ffffff,30sec
+hue   ,1 ,givenArr  ,ce303f,xxxxxx,xxxxxx,xxxxxx,00893f,xxxxxx,007ead,xxxxxx,xxxxxx,xxxxxx,30sec
 //
 hue   ,2 ,answerArr ,ce303f,e6501c,f39a24,f0b107,f1cc00,dbd100,9ebf18,25a339,00893f,00886f,008789,0086a0,007ead,0079c4,437abe,8070b1,9e65a7,bd569c,cb4880,d83e68
-hue   ,2 ,givenArr  ,ce303f,ffffff,ffffff,ffffff,f1cc00,ffffff,ffffff,ffffff,00893f,ffffff,ffffff,ffffff,007ead,ffffff,ffffff,ffffff,9e65a7,ffffff,ffffff,ffffff,60sec
+hue   ,2 ,givenArr  ,ce303f,xxxxxx,xxxxxx,xxxxxx,f1cc00,xxxxxx,xxxxxx,xxxxxx,00893f,xxxxxx,xxxxxx,xxxxxx,007ead,xxxxxx,xxxxxx,xxxxxx,9e65a7,xxxxxx,xxxxxx,xxxxxx,60sec
 //
 hue   ,3 ,answerArr ,c82d50,ce303f,e74132,e6501c,ee761f,f39a24,f6a92d,f0b107,fbc400,f1cc00,e6cd00,dbd100,cad500,9ebf18,89bc28,25a339,008e3b,00893f,008963,00886f,00877d,008789,008694,0086a0,0085a9,007ead,007dbb,0079c4,0075bf,437abe,6677b9,8070b1,8e6dae,9e65a7,ac5fa2,bd569c,c64b91,cb4880,d34175,d83e68
-hue   ,3 ,givenArr  ,c82d50,ffffff,ffffff,ffffff,ffffff,ffffff,f6a92d,ffffff,ffffff,f1cc00,ffffff,ffffff,ffffff,ffffff,89bc28,ffffff,ffffff,ffffff,ffffff,00886f,ffffff,ffffff,008694,ffffff,ffffff,ffffff,ffffff,0079c4,ffffff,ffffff,6677b9,ffffff,ffffff,9e65a7,ffffff,ffffff,ffffff,cb4880,ffffff,ffffff,90sec
+hue   ,3 ,givenArr  ,c82d50,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,f6a92d,xxxxxx,xxxxxx,f1cc00,xxxxxx,xxxxxx,xxxxxx,xxxxxx,89bc28,xxxxxx,xxxxxx,xxxxxx,xxxxxx,00886f,xxxxxx,xxxxxx,008694,xxxxxx,xxxxxx,xxxxxx,xxxxxx,0079c4,xxxxxx,xxxxxx,6677b9,xxxxxx,xxxxxx,9e65a7,xxxxxx,xxxxxx,xxxxxx,cb4880,xxxxxx,xxxxxx,90sec
 //
 //
 //
-value ,1     ,answerArr  ,ffffff,e3e3e3,c6c6c6,aaaaaa,8e8e8e,717171,555555,393939,1c1c1c,000000
-value ,1     ,givenArr   ,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff
+value ,1     ,answerArr  ,xxxxxx,e3e3e3,c6c6c6,aaaaaa,8e8e8e,717171,555555,393939,1c1c1c,000000
+value ,1     ,givenArr   ,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx
 //
-value ,2     ,answerArr  ,ffffff,f2f2f2,e4e4e4,d7d7d7,c9c9c9,bcbcbc,aeaeae,a1a1a1,949494,868686,797979,6b6b6b,5e5e5e,515151,434343,363636,282828,1b1b1b,0d0d0d,000000
-value ,2     ,givenArr   ,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff
+value ,2     ,answerArr  ,xxxxxx,f2f2f2,e4e4e4,d7d7d7,c9c9c9,bcbcbc,aeaeae,a1a1a1,949494,868686,797979,6b6b6b,5e5e5e,515151,434343,363636,282828,1b1b1b,0d0d0d,000000
+value ,2     ,givenArr   ,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx
 //
 //
 //red
 chroma ,1    ,answerArr  ,727272,7f6567,8c595d,994c52,a63f47,b2333d,bf2632,cc1927,d90d1d,e60012
-chroma ,1    ,givenArr   ,727272,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,e60012
+chroma ,1    ,givenArr   ,727272,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,e60012
 //
 //
 //green
 chroma ,2    ,answerArr  ,7f7f7e,718177,638370,558569,478762,38895c,2a8b55,1c8d4e,0e8f47,009140
-chroma ,2    ,givenArr   ,7f7f7e,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,009140
+chroma ,2    ,givenArr   ,7f7f7e,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,009140
 //
 //blue
 chroma ,3    ,answerArr  ,5c5c5c,545c63,4b5c6b,435c72,3b5c79,325c80,255984,215b8f,195b96,115b9d,085ba5,005bac
-chroma ,3    ,givenArr   ,5c5c5c,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,005bac
+chroma ,3    ,givenArr   ,5c5c5c,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,005bac
 //
 //yellow
 chroma ,4    ,answerArr  ,eeeeee,f0eed8,f1efc3,f3efad,f4ef97,f6ef82,f7f06c,f9f057,faf041,fcf02b,fdf116,fff100
-chroma ,4    ,givenArr   ,eeeeee,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,ffffff,fff100
+chroma ,4    ,givenArr   ,eeeeee,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,fff100
 //
 //
 //
-fit   ,1 ,answerArr  ,ffffff,CEC62C,B0A347
-fit   ,1 ,givenArr   ,CEC62C,ffffff,ffffff,5sec
+fit   ,1 ,answerArr  ,xxxxxx,CEC62C,B0A347
+fit   ,1 ,givenArr   ,CEC62C,xxxxxx,xxxxxx,100sec
 //
-fit   ,2 ,answerArr  ,ffffff,717AC6,#658EAE
-fit   ,2 ,givenArr   ,717AC6,ffffff,ffffff,4sec
+fit   ,2 ,answerArr  ,xxxxxx,717AC6,#658EAE
+fit   ,2 ,givenArr   ,717AC6,xxxxxx,xxxxxx,4sec
 //
-fit   ,3 ,answerArr  ,ffffff,DD7676,#DD8683
-fit   ,3 ,givenArr   ,DD7676,ffffff,ffffff,3sec
+fit   ,3 ,answerArr  ,xxxxxx,DD7676,#DD8683
+fit   ,3 ,givenArr   ,DD7676,xxxxxx,xxxxxx,3sec
 //
-fit   ,4 ,answerArr  ,ffffff,DBB342,#D1B342
-fit   ,4 ,givenArr   ,DBB342,ffffff,ffffff,2sec
+fit   ,4 ,answerArr  ,xxxxxx,DBB342,#D1B342
+fit   ,4 ,givenArr   ,DBB342,xxxxxx,xxxxxx,2sec
 //
-fit   ,5 ,answerArr  ,ffffff,3B833D,#3B933D
-fit   ,5 ,givenArr   ,3B833D,ffffff,ffffff,2sec
+fit   ,5 ,answerArr  ,xxxxxx,3B833D,#3B933D
+fit   ,5 ,givenArr   ,3B833D,xxxxxx,xxxxxx,2sec
 //
-fit   ,6 ,answerArr  ,ffffff,CEDAFF,#CED3FF,#C5DAFF,#CEDEF7
-fit   ,6 ,givenArr   ,CEDAFF,ffffff,ffffff,ffffff,ffffff,5sec
+fit   ,6 ,answerArr  ,xxxxxx,CEDAFF,#CED3FF,#C5DAFF,#CEDEF7
+fit   ,6 ,givenArr   ,CEDAFF,xxxxxx,xxxxxx,xxxxxx,xxxxxx,1000sec
 //
-fit   ,7 ,answerArr  ,ffffff,9A6D42,#9F6546,#A17B4A,#94663C
-fit   ,7 ,givenArr   ,9A6D42,ffffff,ffffff,ffffff,ffffff,5sec
+fit   ,7 ,answerArr  ,xxxxxx,9A6D42,#9F6546,#A17B4A,#94663C
+fit   ,7 ,givenArr   ,9A6D42,xxxxxx,xxxxxx,xxxxxx,xxxxxx,5sec
 //
-fit   ,8 ,answerArr  ,ffffff,364D54,#2E454D,#3B4748,#424552
-fit   ,8 ,givenArr   ,364D54,ffffff,ffffff,ffffff,ffffff,4sec
+fit   ,8 ,answerArr  ,xxxxxx,364D54,#2E454D,#3B4748,#424552
+fit   ,8 ,givenArr   ,364D54,xxxxxx,xxxxxx,xxxxxx,xxxxxx,4sec
 //
-fit   ,9 ,answerArr  ,ffffff,9B38A0,#A03DA5,#9B2DBF,#9A3DA5
-fit   ,9 ,givenArr   ,9B38A0,ffffff,ffffff,ffffff,ffffff,4sec
+fit   ,9 ,answerArr  ,xxxxxx,9B38A0,#A03DA5,#9B2DBF,#9A3DA5
+fit   ,9 ,givenArr   ,9B38A0,xxxxxx,xxxxxx,xxxxxx,xxxxxx,4sec
 //
-fit   ,10 ,answerArr  ,ffffff,FF43AF,#FF4DB9,#FF57AD,#FB3A9A
-fit   ,10 ,givenArr   ,FF43AF,ffffff,ffffff,ffffff,ffffff,3sec
+fit   ,10 ,answerArr  ,xxxxxx,FF43AF,#FF4DB9,#FF57AD,#FB3A9A
+fit   ,10 ,givenArr   ,FF43AF,xxxxxx,xxxxxx,xxxxxx,xxxxxx,3sec
 //
 //
 ////////////// 주의사항 //////////////

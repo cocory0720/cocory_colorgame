@@ -228,7 +228,7 @@ $.ajax({
             if (GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]] === undefined) GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]] = []; // the initial element is the key of data
             for (let i = 3; i < currentRow.length; i++) {
                 const element = currentRow[i].slice(0, 1) == '#' ? currentRow[i].slice(1) : currentRow[i]; //if the element starts with '#', remove it
-                if (element == "ffffff") GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]].push(false);
+                if (element == "xxxxxx") GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]].push(false);
                 else if (element.slice(-3) == "sec") GAMEINFO[currentRow[0]][currentRow[1]].timeLimit = parseInt(element.slice(0, -3));
                 else GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]].push('#' + element);
             }
