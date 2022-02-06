@@ -11,14 +11,14 @@ const FADE_IN_TIME = 600;
 
 // class = "next-button"
 function initBtns() {
-    $('.action-next').off("click").click((e) => showNextArticle(e.target));
-    $('.action-reset').off("click").click((e) => currentContext.reset(e.target));
-    $('.action-view').off("click").click((e) => currentContext.viewAll(e.target));
+    // $('.action-next').off("click").click((e) => showNextArticle(e.target));
+    $(document).off("click").one("click", ".action-next", showNextArticle)
+
 }
 initBtns();
 
-function showNextArticle(node) {
-    const clickedArticle = $(node).closest("article");
+function showNextArticle(e) {
+    const clickedArticle = $(e.target != undefined ? e.target : e).closest("article");
     const delayForSubmit = clickedArticle.attr("id").slice(0, 4) == "test" ? DELAY_FOR_SUBMITTING : 0;
     setTimeout(() => {
         clickedArticle.fadeOut(FADE_OUT_TIME, function() {
