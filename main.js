@@ -5,8 +5,8 @@ import FitGame from "./modules/fit_app.js";
 
 const SERIES = ["main", "fit", "hue", "value", "chroma", "end"];
 let currentContext;
-const FADE_OUT_TIME = 700;
-const DELAY_FOR_SUBMITTING = 600;
+const FADE_OUT_TIME = 300;
+const DELAY_FOR_SUBMITTING = 500;
 const FADE_IN_TIME = 600;
 
 // class = "next-button"
@@ -89,7 +89,7 @@ function startGame() {
         };
         remainTime -= 0.01;
     }, 10);
-    $(document).off("click").on("click", ".action-submit", function() {
+    $(document).off("click").one("click", ".action-submit", function() {
         submit(remainTime);
         clearInterval(timer);
     });

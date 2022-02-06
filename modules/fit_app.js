@@ -29,7 +29,8 @@ export default class FitGame {
         </div>`);
         const NumOfRow = parseInt(GAMEINFO.optionArr.length / 2);
         const NumOfCol = NumOfRow <= 2 ? 2 : 3;
-        $("#colorbox").css("height", `${15*NumOfRow}%`);
+        $("#colorbox").css("height", `${20*NumOfRow}%`);
+        document.documentElement.style.setProperty("--fit-color-width", `${window.innerWidth / 3}px`);
         GAMEINFO.optionArr.forEach((el, i) => {
             $("#colorbox").append(`<div class="col-${parseInt(12/NumOfCol - 1)} g-0" style="height : ${100/NumOfRow}%;">
             <div class="color option mx-auto" style="

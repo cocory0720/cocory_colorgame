@@ -56,8 +56,8 @@ div.btn {
 }
 
 div.color.option {
-    width: 112px;
-    height: 112px;
+    width: var(--fit-color-width, 100px);
+    height: var(--fit-color-width, 100px);
     border-radius: 7px;
     cursor: pointer;
     transition: transform 230ms ease, box-shadow 230ms ease;
@@ -75,7 +75,9 @@ div.color.option {
     }
 }
 
-div.color.option:active {}
+div.color.option:active {
+    transform: scale(0.88);
+}
 
 div.bar {
     transition: width 25ms ease-in;
