@@ -44,7 +44,11 @@ chroma ,4    ,givenArr   ,eeeeee,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxx
 //
 fit   ,1 ,answerArr  ,xxxxxx,CEC62C,B0A347
 <<<<<<< HEAD
+<<<<<<< HEAD
 fit   ,1 ,givenArr   ,CEC62C,xxxxxx,xxxxxx,100sec
+=======
+fit   ,1 ,givenArr   ,CEC62C,xxxxxx,xxxxxx,5sec
+>>>>>>> mia
 =======
 fit   ,1 ,givenArr   ,CEC62C,xxxxxx,xxxxxx,5sec
 >>>>>>> mia
@@ -63,7 +67,11 @@ fit   ,5 ,givenArr   ,3B833D,xxxxxx,xxxxxx,2sec
 //
 fit   ,6 ,answerArr  ,xxxxxx,CEDAFF,#CED3FF,#C5DAFF,#CEDEF7
 <<<<<<< HEAD
+<<<<<<< HEAD
 fit   ,6 ,givenArr   ,CEDAFF,xxxxxx,xxxxxx,xxxxxx,xxxxxx,1000sec
+=======
+fit   ,6 ,givenArr   ,CEDAFF,xxxxxx,xxxxxx,xxxxxx,xxxxxx,5sec
+>>>>>>> mia
 =======
 fit   ,6 ,givenArr   ,CEDAFF,xxxxxx,xxxxxx,xxxxxx,xxxxxx,5sec
 >>>>>>> mia

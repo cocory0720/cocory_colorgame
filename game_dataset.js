@@ -103,7 +103,6 @@ const GAMEINFO = {
         },
     },
     chroma: {
-        CHROMA_TOTAL_SCORE: 0.0, //chroma의 총 점수
         SCORE_RATE_FOR_EACH_CHROMA_PROB: 1,
         1: {
             answerArr: [],
