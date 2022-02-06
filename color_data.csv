@@ -4,7 +4,7 @@
 // 
 // 게임종류 : 색상게임 = hue, 명도게임 = value, 채도게임 = chroma, 색감게임 = fit
 // 데이터의 종류 : answerArr = 정답의 순서, givenArr = 주어질 색상과 위치(화면 처음상태 기준!)
-//
+// 
 hue   ,1 ,answerArr ,ce303f,f39a24,f1cc00,9ebf18,00893f,008789,007ead,437abe,9e65a7,cb4880
 hue   ,1 ,givenArr  ,ce303f,xxxxxx,xxxxxx,xxxxxx,00893f,xxxxxx,007ead,xxxxxx,xxxxxx,xxxxxx,30sec
 //
@@ -16,11 +16,19 @@ hue   ,3 ,givenArr  ,c82d50,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,f6a92d,xxxxxx,xxx
 //
 //
 //
+<<<<<<< HEAD
 value ,1     ,answerArr  ,xxxxxx,e3e3e3,c6c6c6,aaaaaa,8e8e8e,717171,555555,393939,1c1c1c,000000
 value ,1     ,givenArr   ,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx
 //
 value ,2     ,answerArr  ,xxxxxx,f2f2f2,e4e4e4,d7d7d7,c9c9c9,bcbcbc,aeaeae,a1a1a1,949494,868686,797979,6b6b6b,5e5e5e,515151,434343,363636,282828,1b1b1b,0d0d0d,000000
 value ,2     ,givenArr   ,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx
+=======
+value ,1     ,answerArr  ,ffffff,e3e3e3,c6c6c6,aaaaaa,8e8e8e,717171,555555,393939,1c1c1c,000000
+value ,1     ,givenArr   ,ffffff,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx
+//
+value ,2     ,answerArr  ,ffffff,f2f2f2,e4e4e4,d7d7d7,c9c9c9,bcbcbc,aeaeae,a1a1a1,949494,868686,797979,6b6b6b,5e5e5e,515151,434343,363636,282828,1b1b1b,0d0d0d,000000
+value ,2     ,givenArr   ,ffffff,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx
+>>>>>>> mia
 //
 //
 //red
@@ -43,7 +51,11 @@ chroma ,4    ,givenArr   ,eeeeee,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxx
 //
 //
 fit   ,1 ,answerArr  ,xxxxxx,CEC62C,B0A347
+<<<<<<< HEAD
 fit   ,1 ,givenArr   ,CEC62C,xxxxxx,xxxxxx,100sec
+=======
+fit   ,1 ,givenArr   ,CEC62C,xxxxxx,xxxxxx,5sec
+>>>>>>> mia
 //
 fit   ,2 ,answerArr  ,xxxxxx,717AC6,#658EAE
 fit   ,2 ,givenArr   ,717AC6,xxxxxx,xxxxxx,4sec
@@ -58,7 +70,11 @@ fit   ,5 ,answerArr  ,xxxxxx,3B833D,#3B933D
 fit   ,5 ,givenArr   ,3B833D,xxxxxx,xxxxxx,2sec
 //
 fit   ,6 ,answerArr  ,xxxxxx,CEDAFF,#CED3FF,#C5DAFF,#CEDEF7
+<<<<<<< HEAD
 fit   ,6 ,givenArr   ,CEDAFF,xxxxxx,xxxxxx,xxxxxx,xxxxxx,1000sec
+=======
+fit   ,6 ,givenArr   ,CEDAFF,xxxxxx,xxxxxx,xxxxxx,xxxxxx,5sec
+>>>>>>> mia
 //
 fit   ,7 ,answerArr  ,xxxxxx,9A6D42,#9F6546,#A17B4A,#94663C
 fit   ,7 ,givenArr   ,9A6D42,xxxxxx,xxxxxx,xxxxxx,xxxxxx,5sec

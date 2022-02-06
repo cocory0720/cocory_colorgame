@@ -8,7 +8,7 @@
     <title>코코리 채도테스트</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="./chroma_style.css">
 
     <!-- JS -->
     <script type="module" src="main.js" defer></script>
@@ -33,102 +33,104 @@
 </head>
 
 <body>
-    <article id="start_page_chroma">
-        <div class="title">
-            <div id="char1">채</div>
-            <div id="char2">도</div>
-            <div id="char3">테</div>
-            <div id="char4">스</div>
-            <div id="char5">트</div>
-        </div>
-        <button id="startBtn" class="nextBtn action-next">Start <i class="far fa-hand-point-right"></i></button>
-    </article>
-
-    <article id="info_page_chroma" style="display: none;">
-        <div class="container2">
-            <header>
-                <h1>- 게임방법 -</h1>
-            </header>
-            <div class="flex_box">
-                <div class="image1">
-                    <div class="step">제시색</div>
-                    <div class="step"></div>
-                    <div class="step"></div>
-                    <div class="step"></div>
-                    <div class="step"></div>
-                    <div class="step"></div>
-                    <div class="step"></div>
-                    <div class="step"></div>
-                    <div class="step"></div>
-                    <div class="step">제시색-회색</div>
+    <main id="test-app">
+        <article id="start_page_chroma">
+            <div class="title">
+                <div id="char1">채</div>
+                <div id="char2">도</div>
+                <div id="char3">테</div>
+                <div id="char4">스</div>
+                <div id="char5">트</div>
+            </div>
+            <button id="startBtn" class="nextBtn action-next">Start <i class="far fa-hand-point-right"></i></button>
+        </article>
+    
+        <article id="info_page_chroma" style="display: none;">
+            <div class="container2">
+                <header>
+                    <h1>- 게임방법 -</h1>
+                </header>
+                <div class="flex_box">
+                    <div class="image1">
+                        <div class="step">제시색</div>
+                        <div class="step"></div>
+                        <div class="step"></div>
+                        <div class="step"></div>
+                        <div class="step"></div>
+                        <div class="step"></div>
+                        <div class="step"></div>
+                        <div class="step"></div>
+                        <div class="step"></div>
+                        <div class="step">제시색-회색</div>
+                    </div>
+                    <div class="image2">
+                        <div class="color">
+                            <div class="row"></div>
+                            <div class="row"></div>
+                        </div>
+                        <div class="color">
+                            <div class="row"></div>
+                            <div class="row"></div>
+                        </div>
+                        <div class="color">
+                            <div class="row"></div>
+                            <div class="row"></div>
+                        </div>
+                        <div class="color">
+                            <div class="row"></div>
+                            <div class="row"></div>
+                        </div>
+                        <!-- <div class="color">
+                            <div class="row"></div>
+                            <div class="row"></div>
+                        </div> -->
+                    </div>
                 </div>
-                <div class="image2">
-                    <div class="color">
-                        <div class="row"></div>
-                        <div class="row"></div>
-                    </div>
-                    <div class="color">
-                        <div class="row"></div>
-                        <div class="row"></div>
-                    </div>
-                    <div class="color">
-                        <div class="row"></div>
-                        <div class="row"></div>
-                    </div>
-                    <div class="color">
-                        <div class="row"></div>
-                        <div class="row"></div>
-                    </div>
-                    <!-- <div class="color">
-                        <div class="row"></div>
-                        <div class="row"></div>
-                    </div> -->
+                <div class="explain">
+                    <p>오른쪽에 있는 컬러칩을 왼쪽에</p>
+                    <p>가져가 명도에 맞게 배치해보세요.</p>
+                    <p>[제시색-회색]은 [제시색]과 같은 명도입니다.</p>
                 </div>
             </div>
-            <div class="explain">
-                <p>오른쪽에 있는 컬러칩을 왼쪽에</p>
-                <p>가져가 명도에 맞게 배치해보세요.</p>
-                <p>[제시색-회색]은 [제시색]과 같은 명도입니다.</p>
+            <button id="infoBtn" class="nextBtn action-next">Start <i class="far fa-hand-point-right"></i></button>
+        </article>
+    
+        <article id="test-chroma-1" style="display: none;">
+            <p class="text-center timer">0초</p>
+            <canvas id="canvasChroma1" width=300 height=300></canvas>
+            <div class="btnDiv">
+                <button class="action-submit">Submit <i class="fas fa-arrow-right"></i></button>
             </div>
-        </div>
-        <button id="infoBtn" class="nextBtn action-next">Start <i class="far fa-hand-point-right"></i></button>
-    </article>
-
-    <article id="test-chroma-1" style="display: none;">
-        <p class="text-center timer">0초</p>
-        <canvas id="canvasChroma1" width=300 height=300></canvas>
-        <div class="btnDiv">
-            <button class="action-submit">Submit <i class="fas fa-arrow-right"></i></button>
-        </div>
-    </article>
-
-    <article id="test-chroma-2" style="display: none;">
-        <p class="text-center timer">0초</p>
-        <canvas id="canvasChroma2" width=300 height=300></canvas>
-        <div class="btnDiv">
-            <button class="action-submit">Submit <i class="fas fa-arrow-right"></i></button>
-        </div>
-    </article>
-
-    <article id="test-chroma-3" style="display: none;">
-        <p class="text-center timer">0초</p>
-        <canvas id="canvasChroma3" width=300 height=300></canvas>
-        <div class="btnDiv">
-            <button class="action-submit">Submit <i class="fas fa-arrow-right"></i></button>
-        </div>
-    </article>
-
-    <article id="test-chroma-4" style="display: none;">
-        <p class="text-center timer">0초</p>
-        <canvas id="canvasChroma4" width=300 height=300></canvas>
-        <div class="btnDiv">
-            <button class="action-submit">Submit <i class="fas fa-arrow-right"></i></button>
-        </div>
-    </article>
-
-    <article id="result-value" style="display: none;">
-        <div>결과 페이지입니다.</div>
-    </article>
+        </article>
+    
+        <article id="test-chroma-2" style="display: none;">
+            <p class="text-center timer">0초</p>
+            <canvas id="canvasChroma2" width=300 height=300></canvas>
+            <div class="btnDiv">
+                <button class="action-submit">Submit <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </article>
+    
+        <article id="test-chroma-3" style="display: none;">
+            <p class="text-center timer">0초</p>
+            <canvas id="canvasChroma3" width=300 height=300></canvas>
+            <div class="btnDiv">
+                <button class="action-submit">Submit <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </article>
+    
+        <article id="test-chroma-4" style="display: none;">
+            <p class="text-center timer">0초</p>
+            <canvas id="canvasChroma4" width=300 height=300></canvas>
+            <div class="btnDiv">
+                <button class="action-submit">Submit <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </article>
+    
+        <article id="result-value" style="display: none;">
+            <div>결과 페이지입니다.</div>
+        </article>
+    </main>
 </body>
 
 </html>

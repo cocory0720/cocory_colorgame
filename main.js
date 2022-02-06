@@ -11,9 +11,7 @@ const FADE_IN_TIME = 600;
 
 // class = "next-button"
 function initBtns() {
-    // $('.action-next').off("click").click((e) => showNextArticle(e.target));
     $(document).off("click").one("click", ".action-next", showNextArticle)
-
 }
 initBtns();
 
