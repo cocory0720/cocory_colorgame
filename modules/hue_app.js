@@ -223,8 +223,8 @@ export default class HueGame {
 
         window.requestAnimationFrame(this.animate.bind(this));
 
-        $('.action-reset').off("click").click((e) => currentContext.reset(e.target));
-        $('.action-view').off("click").click((e) => currentContext.viewAll(e.target));
+        $('.action-reset').off("click").click((e) => this.reset(e.target));
+        $('.action-view').off("click").click((e) => this.viewAll(e.target));
         this.isViewAll = 0;
         this.t_veiwAll = 0;
         this.sure4Reset = 0;

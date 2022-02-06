@@ -1,6 +1,9 @@
 import GAMEINFO, { ColorD2X } from "../game_dataset.js";
 import { submit, remainTime } from "../main.js";
 
+const NUM_OF_ROW = { 2: 1, 4: 2, 6: 2, 9: 3 };
+const NUM_OF_COL = { 2: 2, 4: 2, 6: 3, 9: 3 };
+
 export default class FitGame {
     constructor(query) {
         this.canvas = query;
@@ -9,7 +12,6 @@ export default class FitGame {
         GAMEINFO.initCurrentGame("fit", this.currentstage);
         this.laststage = Object.keys(GAMEINFO.fit).filter(key => key.search(/\d/) != -1).length;
 
-        this.$container = $(query);
         this.$answerRow = $(query).children("#answer");
 
         this.initGame();
@@ -27,11 +29,12 @@ export default class FitGame {
         this.$answerRow.append(`<div class="col p-3">
         <div class="color answer mx-auto my-auto" style="background-color: ${GAMEINFO.givenArr[0]}; display:none;"></div>
         </div>`);
-        const NumOfRow = parseInt(GAMEINFO.optionArr.length / 2);
-        const NumOfCol = NumOfRow <= 2 ? 2 : 3;
+        const boxwidth = window.innerWidth <= 410 ? window.innerWidth : 410;
+        const NumOfRow = NUM_OF_ROW[GAMEINFO.optionArr.length];
+        const NumOfCol = NUM_OF_COL[GAMEINFO.optionArr.length];
         $("#colorbox").css("height", `${20*NumOfRow}%`);
-        document.documentElement.style.setProperty("--fit-color-width", `${window.innerWidth / 3}px`);
-        GAMEINFO.optionArr.forEach((el, i) => {
+        document.documentElement.style.setProperty("--fit-color-width", `${boxwidth / NumOfCol * 0.7}px`);
+        GAMEINFO.optionArr.forEach((el) => {
             $("#colorbox").append(`
             <div class="color option m-1" style="
             background-color: ${el}; 

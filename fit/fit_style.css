@@ -88,6 +88,5 @@ div.color.option:active {
 }
 
 div.bar {
-    transition: width 25ms ease-in;
     border-radius: 7px;
 }

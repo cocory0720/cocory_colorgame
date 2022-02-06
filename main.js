@@ -5,10 +5,10 @@ import FitGame from "./modules/fit_app.js";
 import ChromaGame from "./modules/chroma_app.js";
 
 const SERIES = ["main", "fit", "hue", "value", "chroma", "end"];
-let currentContext;
 const FADE_OUT_TIME = 300;
 const DELAY_FOR_SUBMITTING = 500;
 const FADE_IN_TIME = 600;
+let currentContext;
 
 // class = "next-button"
 function initBtns() {
@@ -43,15 +43,11 @@ function showNextArticle(e) {
                     ).remove();
                     $("head").append(
                         $(
-                            `<link rel="stylesheet" href="./${
-                SERIES[currentSeriesIndex + 1]
-              }/${SERIES[currentSeriesIndex + 1]}_style.css">`
+                            `<link rel="stylesheet" href="./${ SERIES[currentSeriesIndex + 1] }/${SERIES[currentSeriesIndex + 1]}_style.css">`
                         )
                     );
                     $("main").load(
-                        `./${SERIES[currentSeriesIndex + 1]}/${
-              SERIES[currentSeriesIndex + 1]
-            }_index.html #test-app article`,
+                        `./${SERIES[currentSeriesIndex + 1]}/${SERIES[currentSeriesIndex + 1]}_index.html #test-app article`,
                         function() {
                             $("article:first").fadeIn(FADE_IN_TIME);
                             initBtns();
