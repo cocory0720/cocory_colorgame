@@ -1,6 +1,17 @@
 const PI2 = Math.PI * 2;
 
 /* export for Value Game */
+
+/** color를 drop하는 공간이 맞는지 확인하는 함수(1)
+ *  - 사용자가 채워넣는 공간
+ * @param {number} x0 시작 x좌표
+ * @param {number} y0 시작 y좌표
+ * @param {number} width 한 칸의 너비
+ * @param {number} height 한 칸의 높이
+ * @param {number} posX 포인터 x좌표
+ * @param {number} posY 포인터 y좌표
+ * @returns 
+ */
 function distSpace(x0, y0, width, height, posX, posY) {
     let check = false;
     posX > x0 && posX < x0 + width && posY > y0 && posY < y0 + height ?
@@ -9,6 +20,17 @@ function distSpace(x0, y0, width, height, posX, posY) {
     return check;
 }
 
+/** color를 drop하는 공간이 맞는지 확인하는 함수(2)
+ *  - color 버튼들이 모여있는 공간으로
+ *    컬러를 선택했다가 다시 돌려놓을 수 있음
+ * @param {number} x0 시작 x좌표
+ * @param {number} y1 시작 y좌표
+ * @param {number} y2 끝 y좌표
+ * @param {number} width 공간 전체 너비
+ * @param {number} posX 포인터 x좌표
+ * @param {number} posY 포인터 y좌표
+ * @returns 
+ */
 function distBtn(x0, y1, y2, width, posX, posY) {
     let check = false;
     posX > x0 && posX < x0 + width && posY > y1 && posY < y2 ?
