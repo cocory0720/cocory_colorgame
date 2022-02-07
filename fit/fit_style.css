@@ -63,17 +63,17 @@ div.btn {
     justify-content: center;
 }
 
+.color.answer {
+    width: 100%;
+    height: 100%;
+}
+
 div.color.option {
     width: var(--fit-color-width, 100px);
     height: var(--fit-color-width, 100px);
     border-radius: 7px;
     cursor: pointer;
     transition: transform 230ms ease, box-shadow 230ms ease;
-}
-
-.color.answer {
-    width: 100%;
-    height: 100%;
 }
 
 @media (hover: hover) {

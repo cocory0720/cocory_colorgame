@@ -4,7 +4,7 @@ import ValueGame from "./modules/value_app.js";
 import FitGame from "./modules/fit_app.js";
 import ChromaGame from "./modules/chroma_app.js";
 
-const SERIES = ["main", "value", "chroma", "fit", "hue", "value", "chroma", "end"];
+const SERIES = ["main", "fit", "hue", "value", "chroma", "end"];
 const FADE_OUT_TIME = 300;
 const DELAY_FOR_SUBMITTING = 500;
 const FADE_IN_TIME = 600;
@@ -12,7 +12,7 @@ let currentContext;
 
 // class = "next-button"
 function initBtns() {
-    $(document).off("click").one("click", ".action-next", showNextArticle)
+    $(document).one("click", ".action-next", showNextArticle)
 }
 initBtns();
 
@@ -154,7 +154,7 @@ function startGame() {
         }
         remainTime -= 0.01;
     }, 10);
-    $(document).off("click").one("click", ".action-submit", function() {
+    $(document).one("click", ".action-submit", function() {
         submit(remainTime);
         clearInterval(timer);
     });
