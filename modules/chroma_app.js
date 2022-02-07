@@ -228,8 +228,7 @@ class Picker {
 
 export default class ChromaGame {
   constructor(query, N) {
-    console.log(query);
-    switch (query) {
+    switch (query.id) {
       case "canvasChroma1":
         this.currentStage = 1;
         break;

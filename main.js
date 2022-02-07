@@ -17,8 +17,11 @@ function initBtns() {
 initBtns();
 
 function showNextArticle(e) {
-    const clickedArticle = $(e.target != undefined ? e.target : e).closest("article");
-    const delayForSubmit = clickedArticle.attr("id").slice(0, 4) == "test" ? DELAY_FOR_SUBMITTING : 0;
+    const clickedArticle = $(e.target != undefined ? e.target : e).closest(
+        "article"
+    );
+    const delayForSubmit =
+        clickedArticle.attr("id").slice(0, 4) == "test" ? DELAY_FOR_SUBMITTING : 0;
     setTimeout(() => {
         clickedArticle.fadeOut(FADE_OUT_TIME, function() {
             if (clickedArticle.next().length == 0) {
@@ -42,11 +45,15 @@ function showNextArticle(e) {
                     ).remove();
                     $("head").append(
                         $(
-                            `<link rel="stylesheet" href="./${ SERIES[currentSeriesIndex + 1] }/${SERIES[currentSeriesIndex + 1]}_style.css">`
+                            `<link rel="stylesheet" href="./${
+                SERIES[currentSeriesIndex + 1]
+              }/${SERIES[currentSeriesIndex + 1]}_style.css">`
                         )
                     );
                     $("main").load(
-                        `./${SERIES[currentSeriesIndex + 1]}/${SERIES[currentSeriesIndex + 1]}_index.html #test-app article`,
+                        `./${SERIES[currentSeriesIndex + 1]}/${
+              SERIES[currentSeriesIndex + 1]
+            }_index.html #test-app article`,
                         function() {
                             $("article:first").fadeIn(FADE_IN_TIME);
                         }
