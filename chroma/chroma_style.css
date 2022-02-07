@@ -4,7 +4,6 @@
   --bg-color: #717ac6;
   /* Padding - Margin - Border */
   --padding-size: 0.5em;
-  /* using */
   /* Font */
   --font-start-page: 4em;
   /* --title-margin: 3em; */
@@ -20,7 +19,7 @@
 
 html,
 body {
-  background-color: #717ac6;
+  background-color: var(--bg-color);
 }
 
 .nextBtn {
@@ -32,11 +31,11 @@ body {
   font-size: calc(var(--font-start-page) / 8);
 }
 
-/* .nextBtn:hover {
-    font-weight: bold;
-    cursor: pointer;
-    transform: scale(1.1);
-} */
+.nextBtn:active {
+  font-weight: bold;
+  cursor: pointer;
+  transform: scale(1.1);
+}
 
 /*********************************************************************/
 
@@ -181,10 +180,10 @@ body {
   margin-top: 5vh;
 }
 
-/* .action-submit:hover {
-    transform: scale(1.1);
-    cursor: pointer;
-} */
+.action-submit:active {
+  transform: scale(1.1);
+  cursor: pointer;
+}
 
 canvas {
   position: absolute;
@@ -210,6 +209,7 @@ canvas {
   width: 10vh;
   position: absolute;
   bottom: 5vh;
+  font-size: var(--padding-size);
 }
 
 .btnDiv {
