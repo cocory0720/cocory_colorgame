@@ -4,7 +4,7 @@ import ValueGame from "./modules/value_app.js";
 import FitGame from "./modules/fit_app.js";
 import ChromaGame from "./modules/chroma_app.js";
 
-const SERIES = ["main", "fit", "hue", "value", "chroma", "end"];
+const SERIES = ["main", "value", "chroma", "fit", "hue", "value", "chroma", "end"];
 const FADE_OUT_TIME = 300;
 const DELAY_FOR_SUBMITTING = 500;
 const FADE_IN_TIME = 600;
@@ -33,7 +33,6 @@ function showNextArticle(e) {
                         `./${SERIES[1]}/${SERIES[1]}_index.html #test-app article`,
                         function() {
                             $("article:first").fadeIn(FADE_IN_TIME);
-                            initBtns();
                         }
                     );
                 } else {
@@ -50,7 +49,6 @@ function showNextArticle(e) {
                         `./${SERIES[currentSeriesIndex + 1]}/${SERIES[currentSeriesIndex + 1]}_index.html #test-app article`,
                         function() {
                             $("article:first").fadeIn(FADE_IN_TIME);
-                            initBtns();
                         }
                     );
                 }
@@ -133,6 +131,7 @@ function showNextArticle(e) {
                 }
                 clickedArticle.next().fadeIn(FADE_IN_TIME);
             }
+            initBtns();
             document.documentElement.style.setProperty(
                 "--page-viewport-height",
                 `${window.innerHeight}px`
