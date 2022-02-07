@@ -21,7 +21,7 @@ export default class FitGame {
         this.perfectScore = 0;
         this.fitGameScore = 0;
 
-        window.requestAnimationFrame(this.animate.bind(this));
+        this.animateRQ = window.requestAnimationFrame(this.animate.bind(this));
     }
     initGame() {
         this.clickedQuery = undefined;
@@ -84,7 +84,7 @@ export default class FitGame {
     /* event handler jQuery code ends */
 
     animate() {
-        window.requestAnimationFrame(this.animate.bind(this));
+        this.animateRQ = window.requestAnimationFrame(this.animate.bind(this));
         $(".downcount-bar > .bar").attr("style", `
         width : ${this.fitRemainTime / GAMEINFO.timeLimit * 92}%;
         background-color : hsl(${this.fitRemainTime / GAMEINFO.timeLimit * 46},87%,66%);
@@ -135,5 +135,9 @@ export default class FitGame {
             $("#test-fit-1").children().fadeOut(250);
             submit();
         }
+    }
+
+    delAllReq() {
+        this.animateRQ = window.cancelAnimationFrame(this.animateRQ);
     }
 }
