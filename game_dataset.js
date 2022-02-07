@@ -53,7 +53,13 @@ function ColorD2X(dec) {
     return "#000000";
 }
 
-// compute distance
+/** 두 점 사이의 거리
+ * @param {number} x0 시작점의 x좌표
+ * @param {number} y0 시작점의 y좌표
+ * @param {number} x1 끝점의 x좌표
+ * @param {number} y1 끝점의 y좌표
+ * @returns 두 점 사이의 거리
+ */
 function dist(x0, y0, x1, y1) {
     return Math.sqrt(
         Math.abs((x0 - x1) * (x0 - x1)) + Math.abs((y0 - y1) * (y0 - y1))
