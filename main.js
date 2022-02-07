@@ -4,63 +4,92 @@ import ValueGame from "./modules/value_app.js";
 import FitGame from "./modules/fit_app.js";
 import ChromaGame from "./modules/chroma_app.js";
 
-const SERIES = ["main", "fit", "hue", "value", "chroma", "end"];
-const FADE_OUT_TIME = 300;
-const DELAY_FOR_SUBMITTING = 500;
-const FADE_IN_TIME = 600;
+/* 테스트 순서 */
+const SERIES = ["main", "fit", "value", "chroma", "hue", "end"];
+
+/* article 페이드 인/아웃 지속시간 */
+const FADE_OUT_TIME = 300; // 페이드 아웃
+const DELAY_FOR_SUBMITTING = 500; // 테스트 종료시 딜레이
+const FADE_IN_TIME = 600; // 페이드 인
+
+/** 각 모듈에 선언된 클래스를 담을 변수
+ * main.js 에서 호출하는 각 클래스의 메소드는 다음과 같음
+ *  currentContext.canvas : 테스트를 구현할 HTML객체를 담은 [변수 (HTML쿼리)]
+ *  currentContext.grade???Game : 각 테스트 제출 후 시간에 따른 점수 부여를 위한 [함수], submit()에서 사용 
+ */
 let currentContext;
 
-// class = "next-button"
-function initBtns() {
-    $(document).one("click", ".action-next", showNextArticle)
+/** class = "action-next" 의 동작을 위한 함수
+ * 매개변수가 가리키는 HTML 객체의 자식 중 .action-next 클래스를 사용하는 객체에 클릭 이벤트리스너를 등록함
+ * 다음 article로 전환시키는 showNextArticle 함수에서 사용됨
+ * @param {string} id 이벤트리스너를 등록할 객체를 자식으로 두는 article 의 id 값
+ */
+function initBtns(id) {
+    $(document).one("click", `#${id} .action-next`, showNextArticle);
+    console.log(id);
 }
-initBtns();
+initBtns("main-page"); // 첫 페이지를 위함
 
+/** 다음 article로 넘어가기 위한 함수
+ * 다음 article이 현재 HTML파일 내에 존재하지 않을 경우, 다음 게임에 해당하는 HTML/CSS 파일을 읽어옴.
+ * @param {object} e 다음 페이지로 넘어가기 위해 발생한 이벤트, 혹은 그것의 타겟
+ */
 function showNextArticle(e) {
-    const clickedArticle = $(e.target != undefined ? e.target : e).closest(
-        "article"
-    );
-    const delayForSubmit =
-        clickedArticle.attr("id").slice(0, 4) == "test" ? DELAY_FOR_SUBMITTING : 0;
+
+    // 이벤트가 발생한 현재 article태그 객체
+    const $clickedArticle = $(e.target != undefined ? e.target : e).closest("article");
+
+    // 현재 article의 id가 "test"로 시작할 경우 DELAY_FOR_SUBMITTING 만큼의 딜레이를 부여함
+    const delayForSubmit = $clickedArticle.attr("id").slice(0, 4) == "test" ? DELAY_FOR_SUBMITTING : 0;
     setTimeout(() => {
-        clickedArticle.fadeOut(FADE_OUT_TIME, function() {
-            if (clickedArticle.next().length == 0) {
+
+        // 딜레이가 부여된 이후
+        $clickedArticle.fadeOut(FADE_OUT_TIME, function() {
+
+            /** 해당 HTML 파일에 다음 <article>이 없을 경우 
+             * HTML / CSS 코드 및 연동 바꾸기
+             * 첫 article 표시
+             */
+            if ($clickedArticle.next().length == 0) {
+
+                // 현재 첫 테스트를 시작하지 않았을 경우, 첫 번째 테스트 진입
                 if (GAMEINFO.currentGame == undefined) {
                     $("link[href = 'style.css']").remove();
                     $("head").append(
-                        $(
-                            `<link rel="stylesheet" href="./${SERIES[1]}/${SERIES[1]}_style.css">`
-                        )
+                        $(`<link rel="stylesheet" href="./${SERIES[1]}/${SERIES[1]}_style.css">`)
                     );
                     $("main").load(
                         `./${SERIES[1]}/${SERIES[1]}_index.html #test-app article`,
                         function() {
                             $("article:first").fadeIn(FADE_IN_TIME);
-                        }
-                    );
-                } else {
-                    const currentSeriesIndex = SERIES.indexOf(GAMEINFO.currentGame);
-                    $(
-                        `link[href = "./${SERIES[currentSeriesIndex]}/${SERIES[currentSeriesIndex]}_style.css"]`
-                    ).remove();
-                    $("head").append(
-                        $(
-                            `<link rel="stylesheet" href="./${
-                SERIES[currentSeriesIndex + 1]
-              }/${SERIES[currentSeriesIndex + 1]}_style.css">`
-                        )
-                    );
-                    $("main").load(
-                        `./${SERIES[currentSeriesIndex + 1]}/${
-              SERIES[currentSeriesIndex + 1]
-            }_index.html #test-app article`,
-                        function() {
-                            $("article:first").fadeIn(FADE_IN_TIME);
+                            initBtns($("article:first").attr("id"));
                         }
                     );
                 }
-            } else {
-                switch (clickedArticle.next().attr("id")) {
+                // 테스트를 시작한 경우, 그 다음 테스트 진입
+                else {
+                    const currentSeriesIndex = SERIES.indexOf(GAMEINFO.currentGame);
+                    $(`link[href = "./${SERIES[currentSeriesIndex]}/${SERIES[currentSeriesIndex]}_style.css"]`)
+                        .remove();
+                    $("head").append(
+                        $(`<link rel="stylesheet" href="./${SERIES[currentSeriesIndex + 1]}/${SERIES[currentSeriesIndex + 1]}_style.css">`)
+                    );
+                    $("main").load(
+                        `./${SERIES[currentSeriesIndex + 1]}/${SERIES[currentSeriesIndex + 1]}_index.html #test-app article`,
+                        function() {
+                            $("article:first").fadeIn(FADE_IN_TIME);
+                            initBtns($("article:first").attr("id"));
+                        }
+                    );
+                }
+            }
+            /** 다음 article이 존재할 경우
+             * 그 article이 테스트를 구현하는 경우, 
+             *  각 모듈에서 구현된 테스트를 불러오기
+             *  타이머 시작하기 등.
+             */
+            else {
+                switch ($clickedArticle.next().attr("id")) {
                     case "test-hue-1":
                         currentContext = new HueGame(
                             document.querySelector("#wheel-10"),
@@ -136,9 +165,9 @@ function showNextArticle(e) {
                     default:
                         break;
                 }
-                clickedArticle.next().fadeIn(FADE_IN_TIME);
+                initBtns($clickedArticle.next().attr("id"));
+                $clickedArticle.next().fadeIn(FADE_IN_TIME);
             }
-            initBtns();
             document.documentElement.style.setProperty(
                 "--page-viewport-height",
                 `${window.innerHeight}px`
@@ -151,20 +180,23 @@ function showNextArticle(e) {
 // class = "action-submit" : Score current result
 let remainTime = 0; /****** 남은 시간 ******/
 function startGame() {
+    $(document).one("click", ".action-submit", function() {
+        submit(remainTime);
+        clearInterval(timer);
+        console.log(remainTime, timer);
+    });
     showRemainTime();
     remainTime = 0;
     remainTime += GAMEINFO.timeLimit + FADE_IN_TIME / 1000;
     let timer = setInterval(function() {
         if (remainTime < 0.01) {
+            $(document).off("click", ".action-submit");
             submit(0);
             clearInterval(timer);
         }
         remainTime -= 0.01;
     }, 10);
-    $(document).one("click", ".action-submit", function() {
-        submit(remainTime);
-        clearInterval(timer);
-    });
+
 }
 
 function showRemainTime() {

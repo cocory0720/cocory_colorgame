@@ -1,6 +1,6 @@
 // 게임종류 : 색상게임 = hue, 명도게임 = value, 채도게임 = chroma, 색감게임 = fit
 // 데이터의 종류 : 
-//    * answerArr = 정답
+//    * answerArr = 정답배열
 //    * givenArr  = 주어질 색상과 위치. 빈칸은 "xxxxxx" 로 채워주세요.
 //    * 시간 = 꼭 "##sec" 형식으로 작성해주세요.
 //
@@ -21,7 +21,7 @@ hue   ,3  ,90sec
 //
 //
 //////////////////////////명도테스트//////////////////////////
-// 
+// 위에서부터 채워집니다. 정답의 색상 중 랜덤한 하나의 색상이 문제로 주어집니다.
 //
 value ,1     ,answerArr  ,ffffff,e3e3e3,c6c6c6,aaaaaa,8e8e8e,717171,555555,393939,1c1c1c,000000
 value ,1     ,givenArr   ,ffffff,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx
@@ -32,7 +32,8 @@ value ,2     ,givenArr   ,ffffff,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxx
 value ,2     ,40sec
 //
 //
-//
+//////////////////////////채도테스트//////////////////////////
+// 명도 테스트와 같습니다.
 //red
 chroma ,1    ,answerArr  ,727272,7f6567,8c595d,994c52,a63f47,b2333d,bf2632,cc1927,d90d1d,e60012
 chroma ,1    ,givenArr   ,727272,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,e60012
@@ -54,6 +55,10 @@ chroma ,4    ,givenArr   ,eeeeee,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxx
 chroma ,4    ,30sec
 //
 //
+//////////////////////////색감테스트//////////////////////////
+// 다른 테스트와 형식이 다름으로 인해 데이터의 의미와 작성법이 다릅니다.
+//   * answerArr = 첫 칸은 빈칸입니다. 그 다음 주어질 색상을 작성합니다. 여기에 정답색상도 포함됩니다.
+//   * givenArr  = 첫 칸이 정답색상 입니다. 그 다음 주어질 색상의 수만큼 빈칸을 작성합니다.
 //
 fit   ,1  ,answerArr  ,xxxxxx,CEC62C,B0A347
 fit   ,1  ,givenArr   ,CEC62C,xxxxxx,xxxxxx
@@ -98,13 +103,7 @@ fit   ,10 ,3sec
 //
 ////////////// 주의사항 //////////////
 // 각 데이터는 무조건 ','만으로 구분됩니다.
-// 띄어쓰기는 허용합니다.
-// tab("    ")은 사용할 수 없습니다.
+// 띄어쓰기는 자유롭게 허용됩니다, tab("    ")은 사용할 수 없습니다.
 // 앞에 '//'가 들어간 행은 읽지 않습니다.
-// 샾(#)이 들어가도 되도록 만들었습니다.
+// 색상코드는 샾(#)이 포함되어도 되며, 대소문자를 가리지 않습니다.
 //
-/////////////// fit game 에 대하여
-// answerArr 의 첫 요소는 false
-// givenArr 의 첫 요소는 정답, 나머지 false
-// selectedArr 는 사용하지 않음
-// optionArr 가 주어진 문제임.
