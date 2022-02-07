@@ -49,39 +49,35 @@
 
 html,
 body {
-  /* 뭐 때문인지는 몰라도 body에서 width, height를 지정하면 pointer event 구현 x*/
   background-color: var(--blue-green-color);
 }
 
 /* Start page */
-
 #start_page {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
-  font-size: var(--font-start-page);
+  font-size: var(--font-biggest);
   -webkit-text-stroke: 1px var(--grey-color);
 }
 
 .nextBtn {
-  /* margin-top: var(--padding-medium); */
   border-radius: 10%;
-  padding: var(--padding-big);
+  padding: var(--padding-medium);
   border: 2px solid var(--white-color);
   background-color: transparent;
   color: var(--white-color);
   font-size: var(--font-small);
-  /* 2em */
-  /* font-size: 1em; */
 }
 
-/* .nextBtn:hover {
-    font-weight: bold;
-    cursor: pointer;
-    transform: scale(1.1);
-} */
+.nextBtn:active {
+  font-weight: bold;
+  cursor: pointer;
+  transform: scale(1.1);
+}
 
 .container1 {
   margin: calc(var(--padding-medium) / 2) 0;
@@ -124,6 +120,8 @@ body {
 /* Info Page */
 
 #info_page {
+  width: 100vw;
+  height: 100vh;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -171,7 +169,7 @@ body {
 }
 
 .container2 .flex_box .image2 {
-  height: 70%;
+  height: 97%;
   display: flex;
   flex-direction: column;
   background-color: #cfcfcf;
@@ -204,7 +202,6 @@ body {
 /***************************************************************************Info Page*/
 
 /* Test-Value-1 / Test-Value-2: canvas */
-
 #test-value-1,
 #test-value-2 {
   text-align: center;
@@ -216,10 +213,10 @@ body {
   margin-top: 5vh;
 }
 
-/* .action-submit:hover {
-    transform: scale(1.1);
-    cursor: pointer;
-} */
+.action-submit:active {
+  transform: scale(1.1);
+  cursor: pointer;
+}
 
 canvas {
   position: absolute;
@@ -232,6 +229,7 @@ canvas {
   left: 50%;
   transform: translate(-50%, 0);
   pointer-events: auto;
+  touch-action: none;
 }
 
 .action-submit {
