@@ -208,7 +208,6 @@ function startGame() {
     $(document).one("click", ".action-submit", function() {
         submit(remainTime);
         clearInterval(timer);
-        console.log(remainTime, timer);
     });
     showRemainTime();
     remainTime = 0;
