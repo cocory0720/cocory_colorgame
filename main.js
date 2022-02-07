@@ -4,20 +4,29 @@ import ValueGame from "./modules/value_app.js";
 import FitGame from "./modules/fit_app.js";
 import ChromaGame from "./modules/chroma_app.js";
 
+
+
 /* 테스트 순서 */
 const SERIES = ["main", "fit", "value", "chroma", "hue", "end"];
+
+
 
 /* article 페이드 인/아웃 지속시간 */
 const FADE_OUT_TIME = 300; // 페이드 아웃
 const DELAY_FOR_SUBMITTING = 500; // 테스트 종료시 딜레이
 const FADE_IN_TIME = 600; // 페이드 인
 
+
+
 /** 각 모듈에 선언된 클래스를 담을 변수
  * main.js 에서 호출하는 각 클래스의 메소드는 다음과 같음
  *  currentContext.canvas : 테스트를 구현할 HTML객체를 담은 [변수 (HTML쿼리)]
  *  currentContext.grade???Game : 각 테스트 제출 후 시간에 따른 점수 부여를 위한 [함수], submit()에서 사용 
+ *  currentContext.delAllReq : 테스트 종료 후, 모듈에서 등록한 이벤트리스너와 Animation Requestes를 제거
  */
 let currentContext;
+
+
 
 /** class = "action-next" 의 동작을 위한 함수
  * 매개변수가 가리키는 HTML 객체의 자식 중 .action-next 클래스를 사용하는 객체에 클릭 이벤트리스너를 등록함
@@ -26,9 +35,10 @@ let currentContext;
  */
 function initBtns(id) {
     $(document).one("click", `#${id} .action-next`, showNextArticle);
-    console.log(id);
 }
 initBtns("main-page"); // 첫 페이지를 위함
+
+
 
 /** 다음 article로 넘어가기 위한 함수
  * 다음 article이 현재 HTML파일 내에 존재하지 않을 경우, 다음 게임에 해당하는 HTML/CSS 파일을 읽어옴.
@@ -42,18 +52,31 @@ function showNextArticle(e) {
     // 현재 article의 id가 "test"로 시작할 경우 DELAY_FOR_SUBMITTING 만큼의 딜레이를 부여함
     const delayForSubmit = $clickedArticle.attr("id").slice(0, 4) == "test" ? DELAY_FOR_SUBMITTING : 0;
     setTimeout(() => {
-
         // 딜레이가 부여된 이후
+
         $clickedArticle.fadeOut(FADE_OUT_TIME, function() {
 
-            /** 해당 HTML 파일에 다음 <article>이 없을 경우 
-             * HTML / CSS 코드 및 연동 바꾸기
-             * 첫 article 표시
-             */
-            if ($clickedArticle.next().length == 0) {
+            // 모듈에서 등록한 이벤트리스너와 Animation Requestes들을 제거
+            if (currentContext != undefined) {
+                if (currentContext.delAllReq != undefined) {
+                    currentContext.delAllReq();
+                }
+            }
 
-                // 현재 첫 테스트를 시작하지 않았을 경우, 첫 번째 테스트 진입
+            if ($clickedArticle.next().length == 0) {
+                /** 해당 HTML 파일에 다음 <article>이 없을 경우 
+                 * HTML / CSS 코드 및 연동 바꾸기
+                 * 첫 article 표시
+                 */
+
+
+                $(document).off("click"); // document내 이벤트리스너 청소
+
+
                 if (GAMEINFO.currentGame == undefined) {
+                    // 현재 첫 테스트를 시작하지 않았을 경우, 첫 번째 테스트 진입
+
+
                     $("link[href = 'style.css']").remove();
                     $("head").append(
                         $(`<link rel="stylesheet" href="./${SERIES[1]}/${SERIES[1]}_style.css">`)
@@ -65,9 +88,10 @@ function showNextArticle(e) {
                             initBtns($("article:first").attr("id"));
                         }
                     );
-                }
-                // 테스트를 시작한 경우, 그 다음 테스트 진입
-                else {
+                } else {
+                    // 테스트를 시작한 경우, 그 다음 테스트 진입
+
+
                     const currentSeriesIndex = SERIES.indexOf(GAMEINFO.currentGame);
                     $(`link[href = "./${SERIES[currentSeriesIndex]}/${SERIES[currentSeriesIndex]}_style.css"]`)
                         .remove();
@@ -82,13 +106,14 @@ function showNextArticle(e) {
                         }
                     );
                 }
-            }
-            /** 다음 article이 존재할 경우
-             * 그 article이 테스트를 구현하는 경우, 
-             *  각 모듈에서 구현된 테스트를 불러오기
-             *  타이머 시작하기 등.
-             */
-            else {
+            } else {
+                /** 다음 article이 존재할 경우
+                 * 그 article이 테스트를 구현하는 경우, 
+                 *  각 모듈에서 구현된 테스트를 불러오기
+                 *  타이머 시작하기 등.
+                 */
+
+
                 switch ($clickedArticle.next().attr("id")) {
                     case "test-hue-1":
                         currentContext = new HueGame(
@@ -232,7 +257,6 @@ function submit(time) {
     }
     time = 0;
     showNextArticle(currentContext.canvas);
-    console.log(GAMEINFO.TOTAL_SCORE);
 }
 
 function changeBGColor() {
