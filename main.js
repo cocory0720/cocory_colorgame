@@ -77,12 +77,14 @@ function showNextArticle(e) {
                     // 현재 첫 테스트를 시작하지 않았을 경우, 첫 번째 테스트 진입
 
 
-                    $("link[href = 'style.css']").remove();
+                    $("link[href = 'style.css']").remove(); // 현재 CSS링크를 지우고
+
                     $("head").append(
-                        $(`<link rel="stylesheet" href="./${SERIES[1]}/${SERIES[1]}_style.css">`)
+                        $(`<link rel="stylesheet" href="./${SERIES[1]}/${SERIES[1]}_style.css">`) // 첫번째 테스트에 해당하는 파일의 CSS 링크
                     );
+
                     $("main").load(
-                        `./${SERIES[1]}/${SERIES[1]}_index.html #test-app article`,
+                        `./${SERIES[1]}/${SERIES[1]}_index.html #test-app article`, // 첫번째 테스트에 해당하는 파일의 HTML의 article 태그들 파싱
                         function() {
                             $("article:first").fadeIn(FADE_IN_TIME);
                             initBtns($("article:first").attr("id"));
