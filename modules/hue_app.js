@@ -221,7 +221,7 @@ export default class HueGame {
         this.canvas.addEventListener("pointermove", this.onMove.bind(this), false);
         this.canvas.addEventListener("pointerup", this.onUp.bind(this), false);
 
-        window.requestAnimationFrame(this.animate.bind(this));
+        this.animateRQ = window.requestAnimationFrame(this.animate.bind(this));
 
         $('.action-reset').off("click").click((e) => this.reset(e.target));
         $('.action-view').off("click").click((e) => this.viewAll(e.target));
@@ -283,7 +283,7 @@ export default class HueGame {
 
     }
     animate() {
-        window.requestAnimationFrame(this.animate.bind(this));
+        this.animateRQ = window.requestAnimationFrame(this.animate.bind(this));
         this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight);
         this.rotate *= 0.82;
 
@@ -414,5 +414,13 @@ export default class HueGame {
         console.log(GAMEINFO.TOTAL_SCORE);
         if (corrAns == (GAMEINFO.answerArr.length - GAMEINFO.givenArr.filter(el => el != false).length)) return true;
         else return false;
+    }
+
+    delAllReq() {
+        window.removeEventListener("resize", this.resize.bind(this), false);
+        this.canvas.removeEventListener("pointerdown", this.onDown.bind(this), false);
+        this.canvas.removeEventListener("pointermove", this.onMove.bind(this), false);
+        this.canvas.removeEventListener("pointerup", this.onUp.bind(this), false);
+        window.cancelAnimationFrame(this.animateRQ);
     }
 }

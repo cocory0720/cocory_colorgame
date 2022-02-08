@@ -99,7 +99,13 @@ function ColorD2X(dec) {
   return "#000000";
 }
 
-// compute distance
+/** 두 점 사이의 거리
+ * @param {number} x0 시작점의 x좌표
+ * @param {number} y0 시작점의 y좌표
+ * @param {number} x1 끝점의 x좌표
+ * @param {number} y1 끝점의 y좌표
+ * @returns 두 점 사이의 거리
+ */
 function dist(x0, y0, x1, y1) {
   return Math.sqrt(
     Math.abs((x0 - x1) * (x0 - x1)) + Math.abs((y0 - y1) * (y0 - y1))
@@ -312,9 +318,14 @@ $.ajax({
       const currentRow = allRows[row].split(",");
       if (GAMEINFO[currentRow[0]] === undefined) GAMEINFO[currentRow[0]] = {}; // the initial element is the key of test
       if (GAMEINFO[currentRow[0]][currentRow[1]] === undefined)
-        GAMEINFO[currentRow[0]][currentRow[1]] = {}; // the initial element is the key of difficulty
-      if (GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]] === undefined)
-        GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]] = []; // the initial element is the key of data
+        GAMEINFO[currentRow[0]][currentRow[1]] = {}; // the second element is the key of stage
+      if (GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]] === undefined) {
+        if (currentRow[2].slice(-3) == "sec")
+          GAMEINFO[currentRow[0]][currentRow[1]].timeLimit = parseInt(
+            currentRow[2].slice(0, -3)
+          );
+        else GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]] = []; // the third element is the key of array
+      }
       for (let i = 3; i < currentRow.length; i++) {
         const element =
           currentRow[i].slice(0, 1) == "#"
@@ -322,10 +333,6 @@ $.ajax({
             : currentRow[i]; //if the element starts with '#', remove it
         if (element == "xxxxxx")
           GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]].push(false);
-        else if (element.slice(-3) == "sec")
-          GAMEINFO[currentRow[0]][currentRow[1]].timeLimit = parseInt(
-            element.slice(0, -3)
-          );
         else
           GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]].push(
             "#" + element
