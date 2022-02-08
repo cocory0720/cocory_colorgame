@@ -103,13 +103,13 @@ const GAMEINFO = {
         SCORE_RATE_FOR_EACH_HUE_PROB: 1,
     },
     value: {
-        SCORE_RATE_FOR_EACH_VALUE_PROB: 1,
+        SCORE_RATE_FOR_EACH_VALUE_PROB: 0.5,
     },
     chroma: {
-        SCORE_RATE_FOR_EACH_CHROMA_PROB: 1,
+        SCORE_RATE_FOR_EACH_CHROMA_PROB: 0.6,
     },
     fit: {
-        SCORE_RATE_FOR_EACH_FIT_PROB: 1,
+        SCORE_RATE_FOR_EACH_FIT_PROB: 0.5,
     },
 
     get TOTAL_SCORE() {

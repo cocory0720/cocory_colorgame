@@ -220,12 +220,19 @@ function showNextArticle(e) {
 
                 $clickedArticle.next().fadeIn(FADE_IN_TIME); // 페이드 인
             }
+
             document.documentElement.style.setProperty(
                 "--page-viewport-height",
                 `${window.innerHeight}px`
             );
+
         });
+
     }, delayForSubmit);
+
+    if (delayForSubmit != 0) {
+        showCurrntStage();
+    }
 }
 
 // class = "timer" : Show remaining time
@@ -293,5 +300,20 @@ function changeBGColor() {
     htmlTag.style.backgroundColor = "transparent";
     bodyTag.style.backgroundColor = "transparent";
 }
+
+const totalNumberOfStage =
+    Object.keys(GAMEINFO.hue).filter(key => key.search(/\d/) != -1).length +
+    Object.keys(GAMEINFO.value).filter(key => key.search(/\d/) != -1).length +
+    Object.keys(GAMEINFO.chroma).filter(key => key.search(/\d/) != -1).length +
+    Object.keys(GAMEINFO.fit).filter(key => key.search(/\d/) != -1).length;
+
+let currentProgress = -1;
+
+function showCurrntStage() {
+    currentProgress++;
+    $("#navbar").attr("style", `--navbar-width : ${currentProgress/totalNumberOfStage * 100}`);
+}
+showCurrntStage();
+
 
 export { submit, remainTime, FADE_OUT_TIME, DELAY_FOR_SUBMITTING };

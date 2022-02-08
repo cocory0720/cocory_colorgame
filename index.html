@@ -33,8 +33,19 @@
 </head>
 
 <body>
-    <div id="navbar">
-
+    <div id="navbar" style="
+        position: fixed;
+        top: 0;
+        width: var(--navbar-width, 100%);
+        height: 3px;
+        background: linear-gradient( 
+            310deg, 
+            #80d7ff 0%, 
+            #ffea80 37%,
+            #ff8086 100%
+        );
+        transition: width 230ms ease;
+    ">
     </div>
     <main id="test-app">
 
