@@ -101,57 +101,12 @@ const GAMEINFO = {
     SCORE_RATE_FOR_UNDERTIME: 0.7,
     hue: {
         SCORE_RATE_FOR_EACH_HUE_PROB: 1,
-        1: {
-            answerArr: [],
-            givenArr: [],
-            timeLimit: 30,
-        },
-        2: {
-            answerArr: [],
-            givenArr: [],
-            timeLimit: 60,
-        },
-        3: {
-            answerArr: [],
-            givenArr: [],
-            timeLimit: 90,
-        },
     },
     value: {
         SCORE_RATE_FOR_EACH_VALUE_PROB: 1,
-        1: {
-            answerArr: [],
-            givenArr: [],
-            timeLimit: 20,
-        },
-        2: {
-            answerArr: [],
-            givenArr: [],
-            timeLimit: 40,
-        },
     },
     chroma: {
         SCORE_RATE_FOR_EACH_CHROMA_PROB: 1,
-        1: {
-            answerArr: [],
-            givenArr: [],
-            timeLimit: 20,
-        },
-        2: {
-            answerArr: [],
-            givenArr: [],
-            timeLimit: 20,
-        },
-        3: {
-            answerArr: [],
-            givenArr: [],
-            timeLimit: 30,
-        },
-        4: {
-            answerArr: [],
-            givenArr: [],
-            timeLimit: 30,
-        },
     },
     fit: {
         SCORE_RATE_FOR_EACH_FIT_PROB: 1,
@@ -243,31 +198,52 @@ const GAMEINFO = {
         return this.SCORE_RATE_FOR_UNDERTIME;
     },
 
-    //*** only for the hue test ***/
+    /*** only for the hue test ***/
+
+    /** 색상 휠 각 원형자리를 배치하기위한 각도 계산
+     * 및 해당 각도에 대한 배열 생성.
+     * 인접한 두 자리에 색상이 주어질 경우 에러가 발생할 것으로 예상됨.
+     * @param {number} n 색상 휠의 원형자리의 갯수
+     */
     initColorWheelAngles(n) {
-        // n colors wheel
-        const howBigisGiven = 1 + n / 150;
-        this._angles = [0];
-        const givens = this.givenArr;
-        const num = givens.filter((color) => color).length;
-        const commonAngle = PI2 / (n + (howBigisGiven - 1) * num);
+
+        const givens = this.givenArr; // 주어진 색상의 배열
+
+        const numOfGiven = givens.filter((color) => color).length; // 주어진 색상의 갯수
+
+        const howBigisGiven = 1 + n / 150; // 주어진 색상의 원형자리의 크기는 다른 자리보다 약간 큼. 그 정도를 담은 상수 (1.xx)
+
+        /** 색상 휠에서 각 원형자리의 반지름이 차지하는 각도
+         *  주어진 색상의 원형자리 : 2 * largeAngle
+         *  주어지지 않은 색상의 원형자리 : 2 * commonAngle
+         * 이때, 색상이 인접한 자리에 연달아 주어지지 않는다고 가정한다.
+         */
+        const commonAngle = PI2 / ((numOfGiven * (howBigisGiven - 1) + n) * 2);
         const largeAngle = commonAngle * howBigisGiven;
-        const midiumAngle = (commonAngle * (1 + howBigisGiven)) / 2;
+
+        this._angles = [0]; // 각 원형자리 위치의 각도를 담는 배열. 첫 자리는 0도부터 시작함.
+        let deltaAngle = 0; // 각 원형자리 위치의 각도를 누적하기 위한 변수
+
         for (let i = 0; i < n - 1; i++) {
-            if ((givens[i] ? 1 : 0) ^ (givens[i + 1] ? 1 : 0)) {
-                this._angles.push(midiumAngle);
-            } else if ((givens[i] ? 1 : 0) && (givens[i + 1] ? 1 : 0)) {
-                this._angles.push(this._largeAngle);
+            // 주어진 배열의 각 요소에 대하여,
+
+            const isGivenHere = givens[i] ? 1 : 0; // 현재 요소는 색상이 주어졌는가?
+            const isGivenNext = givens[i + 1] ? 1 : 0; // 그 다음 요소는 색상이 주어졌는가?
+
+            if (isGivenHere ^ isGivenNext) {
+                // 현재 요소와 그 다음 요소 중 한 요소만 색상이 주어진 상태라면,
+                deltaAngle += largeAngle + commonAngle;
+
             } else {
-                this._angles.push(commonAngle);
+                // 그 외의 경우는 가정에 의해 주어지지 않은 색상의 원형자리가 인접한 각도이다.
+                deltaAngle += commonAngle + commonAngle;
             }
+
+            this._angles.push(deltaAngle);
         }
-        for (let i = this._angles.length; i > 0; i--) {
-            for (let j = i - 1; j > 0; j--) {
-                this._angles[i - 1] += this._angles[j - 1];
-            }
-        }
-        this._commonCircle = PI2 / (10 + (n * 3) / 4 + (howBigisGiven - 1) * num);
+
+        // 원형자리의 반지름을 나타내기 위한 각도
+        this._commonCircle = PI2 / (10 + (n * 3) / 4 + (howBigisGiven - 1) * numOfGiven);
         this._largeCircle = this._commonCircle * howBigisGiven;
     },
     get getColorWheelAngles() {

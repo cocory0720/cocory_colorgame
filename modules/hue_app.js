@@ -236,7 +236,6 @@ export default class HueGame {
         if ((color == 0) || (GAMEINFO.answerArr.indexOf(ColorD2X(color)) != -1)) {
             this._clickedColor = color;
         } else {
-            // console.log("detected color curruption");
             return;
         }
     }
@@ -411,7 +410,6 @@ export default class HueGame {
             }
         });
         // this.Wheel.showWhatWasWrong(this.ctx, this.wrongIndex); //오답을 알려주지 않는 방향으로 게임 설계
-        console.log(GAMEINFO.TOTAL_SCORE);
         if (corrAns == (GAMEINFO.answerArr.length - GAMEINFO.givenArr.filter(el => el != false).length)) return true;
         else return false;
     }

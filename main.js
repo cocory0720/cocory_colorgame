@@ -19,18 +19,18 @@ const FADE_IN_TIME = 600; // 페이드 인
 
 
 /** 각 모듈에 선언된 클래스를 담을 변수
- * main.js 에서 호출하는 각 클래스의 메소드는 다음과 같음
- *  currentContext.canvas : 테스트를 구현할 HTML객체를 담은 [변수 (HTML쿼리)]
- *  currentContext.grade???Game : 각 테스트 제출 후 시간에 따른 점수 부여를 위한 [함수], submit()에서 사용 
- *  currentContext.delAllReq : 테스트 종료 후, 모듈에서 등록한 이벤트리스너와 Animation Requestes를 제거
+ *  main.js 에서 호출하는 각 클래스의 메소드는 다음과 같음
+ *  1. currentContext.canvas : 테스트를 구현할 HTML객체를 담은 [변수 (HTML쿼리)]
+ *  2. currentContext.grade???Game : 각 테스트 제출 후 시간에 따른 점수 부여를 위한 [함수], submit()에서 사용 
+ *  3. currentContext.delAllReq : 테스트 종료 후, 모듈에서 등록한 이벤트리스너와 Animation Requestes를 제거
  */
 let currentContext;
 
 
 
-/** class = "action-next" 의 동작을 위한 함수
- * 매개변수가 가리키는 HTML 객체의 자식 중 .action-next 클래스를 사용하는 객체에 클릭 이벤트리스너를 등록함
- * 다음 article로 전환시키는 showNextArticle 함수에서 사용됨
+/** class = "action-next" 의 동작을 위한 함수.
+ * 매개변수가 가리키는 HTML 객체의 자식 중 .action-next 클래스를 사용하는 객체에 클릭 이벤트리스너를 등록함.
+ * 다음 article로 전환시키는 showNextArticle 함수에서 사용됨.
  * @param {string} id 이벤트리스너를 등록할 객체를 자식으로 두는 article 의 id 값
  */
 function initBtns(id) {
@@ -40,7 +40,7 @@ initBtns("main-page"); // 첫 페이지를 위함
 
 
 
-/** 다음 article로 넘어가기 위한 함수
+/** 다음 article로 넘어가기 위한 함수.
  * 다음 article이 현재 HTML파일 내에 존재하지 않을 경우, 다음 게임에 해당하는 HTML/CSS 파일을 읽어옴.
  * @param {object} e 다음 페이지로 넘어가기 위해 발생한 이벤트, 혹은 그것의 타겟
  */
@@ -76,47 +76,60 @@ function showNextArticle(e) {
                 if (GAMEINFO.currentGame == undefined) {
                     // 현재 첫 테스트를 시작하지 않았을 경우, 첫 번째 테스트 진입
 
-
                     $("link[href = 'style.css']").remove(); // 현재 CSS링크를 지우고
 
+                    // 첫번째 테스트에 해당하는 파일의 CSS 링크
                     $("head").append(
-                        $(`<link rel="stylesheet" href="./${SERIES[1]}/${SERIES[1]}_style.css">`) // 첫번째 테스트에 해당하는 파일의 CSS 링크
+                        $(`<link rel="stylesheet" href="./${SERIES[1]}/${SERIES[1]}_style.css">`)
                     );
 
+                    // 첫번째 테스트에 해당하는 파일의 HTML의 article 태그들 파싱
                     $("main").load(
-                        `./${SERIES[1]}/${SERIES[1]}_index.html #test-app article`, // 첫번째 테스트에 해당하는 파일의 HTML의 article 태그들 파싱
-                        function() {
+                        `./${SERIES[1]}/${SERIES[1]}_index.html #test-app article`,
+                        function(_resp, status, xhr) {
+                            if (status == "error") window.alert(xhr.status + " " + xhr.statusText);
                             $("article:first").fadeIn(FADE_IN_TIME);
                             initBtns($("article:first").attr("id"));
                         }
                     );
+
+
                 } else {
                     // 테스트를 시작한 경우, 그 다음 테스트 진입
 
+                    const currentSeriesIndex = SERIES.indexOf(GAMEINFO.currentGame); // 현재 테스트 파일명과 인덱스
 
-                    const currentSeriesIndex = SERIES.indexOf(GAMEINFO.currentGame);
-                    $(`link[href = "./${SERIES[currentSeriesIndex]}/${SERIES[currentSeriesIndex]}_style.css"]`)
-                        .remove();
-                    $("head").append(
+                    // 현재 CSS링크를 지우고
+                    $(`link[href = "./${SERIES[currentSeriesIndex]}/${SERIES[currentSeriesIndex]}_style.css"]`).remove();
+
+                    $("head").append( // 첫번째 테스트에 해당하는 파일의 CSS 링크
                         $(`<link rel="stylesheet" href="./${SERIES[currentSeriesIndex + 1]}/${SERIES[currentSeriesIndex + 1]}_style.css">`)
                     );
+
+                    // 첫번째 테스트에 해당하는 파일의 HTML의 article 태그들 파싱
                     $("main").load(
                         `./${SERIES[currentSeriesIndex + 1]}/${SERIES[currentSeriesIndex + 1]}_index.html #test-app article`,
-                        function() {
+                        function(_resp, status, xhr) {
+                            if (status == "error") window.alert(xhr.status + " " + xhr.statusText);
                             $("article:first").fadeIn(FADE_IN_TIME);
                             initBtns($("article:first").attr("id"));
                         }
                     );
                 }
+
+
             } else {
                 /** 다음 article이 존재할 경우
-                 * 그 article이 테스트를 구현하는 경우, 
-                 *  각 모듈에서 구현된 테스트를 불러오기
-                 *  타이머 시작하기 등.
+                 *  또한 그 article이 테스트를 구현하는 경우, 
                  */
 
-
                 switch ($clickedArticle.next().attr("id")) {
+                    /** 다음 article의 id값에 따라
+                     *  1. 각 모듈에서 구현된 테스트를 불러오기
+                     *  2. 테스트 시작하기
+                     *  3. 배경 변경하기 등
+                     */
+
                     case "test-hue-1":
                         currentContext = new HueGame(
                             document.querySelector("#wheel-10"),
@@ -124,6 +137,7 @@ function showNextArticle(e) {
                         );
                         startGame();
                         break;
+
                     case "test-hue-2":
                         currentContext = new HueGame(
                             document.querySelector("#wheel-20"),
@@ -131,6 +145,7 @@ function showNextArticle(e) {
                         );
                         startGame();
                         break;
+
                     case "test-hue-3":
                         currentContext = new HueGame(
                             document.querySelector("#wheel-40"),
@@ -138,6 +153,7 @@ function showNextArticle(e) {
                         );
                         startGame();
                         break;
+
                     case "test-value-1":
                         changeBGColor();
                         currentContext = new ValueGame(
@@ -146,6 +162,7 @@ function showNextArticle(e) {
                         );
                         startGame();
                         break;
+
                     case "test-value-2":
                         changeBGColor();
                         currentContext = new ValueGame(
@@ -154,9 +171,11 @@ function showNextArticle(e) {
                         );
                         startGame();
                         break;
+
                     case "test-fit-1":
                         currentContext = new FitGame(document.querySelector("#fit-app"));
                         break;
+
                     case "test-chroma-1":
                         changeBGColor();
                         currentContext = new ChromaGame(
@@ -165,6 +184,7 @@ function showNextArticle(e) {
                         );
                         startGame();
                         break;
+
                     case "test-chroma-2":
                         // changeBGColor();
                         currentContext = new ChromaGame(
@@ -173,6 +193,7 @@ function showNextArticle(e) {
                         );
                         startGame();
                         break;
+
                     case "test-chroma-3":
                         // changeBGColor();
                         currentContext = new ChromaGame(
@@ -181,6 +202,7 @@ function showNextArticle(e) {
                         );
                         startGame();
                         break;
+
                     case "test-chroma-4":
                         // changeBGColor();
                         currentContext = new ChromaGame(
@@ -189,11 +211,14 @@ function showNextArticle(e) {
                         );
                         startGame();
                         break;
+
                     default:
                         break;
                 }
-                initBtns($clickedArticle.next().attr("id"));
-                $clickedArticle.next().fadeIn(FADE_IN_TIME);
+
+                initBtns($clickedArticle.next().attr("id")); // 해당 article 내 버튼 활성화
+
+                $clickedArticle.next().fadeIn(FADE_IN_TIME); // 페이드 인
             }
             document.documentElement.style.setProperty(
                 "--page-viewport-height",
@@ -258,6 +283,7 @@ function submit(time) {
     }
     time = 0;
     showNextArticle(currentContext.canvas);
+    console.log(GAMEINFO.TOTAL_SCORE);
 }
 
 function changeBGColor() {
