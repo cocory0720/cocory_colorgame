@@ -85,8 +85,9 @@ export default class FitGame {
 
     animate() {
         this.animateRQ = window.requestAnimationFrame(this.animate.bind(this));
+        const timeRate = (this.fitRemainTime / GAMEINFO.timeLimit * 95) <= 95 ? (this.fitRemainTime / GAMEINFO.timeLimit * 95) : 95;
         $(".downcount-bar > .bar").attr("style", `
-        width : ${this.fitRemainTime / GAMEINFO.timeLimit * 92}%;
+        width : ${timeRate}%;
         background-color : hsl(${this.fitRemainTime / GAMEINFO.timeLimit * 46},87%,66%);
         `)
     }
