@@ -89,7 +89,7 @@ export default class FitGame {
         $(".downcount-bar > .bar").attr("style", `
         width : ${timeRate}%;
         background-color : hsl(${this.fitRemainTime / GAMEINFO.timeLimit * 46},87%,66%);
-        `)
+        `);
     }
 
     scoreNnextGame(timer) {
