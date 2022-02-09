@@ -2,46 +2,104 @@ html,
 body,
 main,
 article {
-    width: 100%;
-    height: 100%;
-    height: var(--page-viewport-height, 100%);
-    pointer-events: none;
-    position: fixed;
-    overflow: hidden;
-    user-select: none;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
+  width: 100%;
+  height: 100%;
+  height: var(--page-viewport-height, 100%);
+  pointer-events: none;
+  position: fixed;
+  overflow: hidden;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
 }
 
 article {
-    display: none;
+  display: none;
 }
+
+/**********************/
+
+#start-hue-test,
+#info-hue-test {
+  height: 100vh;
+  /* width: 100vw; */
+  background-repeat: no-repeat, repeat;
+  background-size: contain;
+  background-position: center center;
+}
+
+#start-hue-test {
+  background-image: url("../img/hue/element_title.png"),
+    url("../img/hue/background.png");
+}
+
+#info-hue-test {
+  background-image: url("../img/hue/element_info.png"),
+    url("../img/hue/background.png");
+}
+
+#start-hue-btn,
+#info-hue-btn {
+  border: 3px solid white;
+  font-size: 2em;
+  background-color: #dd7676;
+  color: white;
+  position: absolute;
+  transform: translate(-50%, 0);
+}
+
+#start-hue-btn {
+  left: 50%;
+  bottom: 30%;
+}
+
+#info-hue-btn {
+  bottom: 10%;
+  left: 50%;
+}
+
+#start-hue-btn:active,
+#info-hue-btn:active {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+[id^="test-hue"] {
+  /* height: 100vh;
+  width: 100vw; */
+  background-repeat: repeat;
+  background-size: contain;
+  background-position: center center;
+  background-image: url("../img/hue/grid.png");
+}
+
+/**********************/
 
 canvas,
 #fit-app {
-    position: absolute;
-    z-index: -9999;
-    width: 100%;
-    height: 100%;
-    max-width: 1600px;
-    max-height: 900px;
-    top: 0%;
-    left: 50%;
-    transform: translate(-50%, 0);
-    pointer-events: auto;
-    background-color: #eee;
+  position: absolute;
+  z-index: -9999;
+  width: 100%;
+  height: 100%;
+  max-width: 1600px;
+  max-height: 900px;
+  top: 0%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
+  /* background-color: #eee; */
 }
 
 div.btn {
-    pointer-events: auto;
+  pointer-events: auto;
 }
 
 .menu {
-    position: absolute;
-    width: 100%;
-    height: 15%;
-    bottom: 0;
-    left: 50%;
-    transform: translate(-50%, 0);
-    max-width: 800px;
+  position: absolute;
+  width: 100%;
+  height: 15%;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  max-width: 800px;
 }

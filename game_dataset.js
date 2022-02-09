@@ -10,7 +10,7 @@ const PI2 = Math.PI * 2;
  * @param {number} height 한 칸의 높이
  * @param {number} posX 포인터 x좌표
  * @param {number} posY 포인터 y좌표
- * @returns 
+ * @returns {boolean}
  */
 function distSpace(x0, y0, width, height, posX, posY) {
     let check = false;
@@ -29,7 +29,7 @@ function distSpace(x0, y0, width, height, posX, posY) {
  * @param {number} width 공간 전체 너비
  * @param {number} posX 포인터 x좌표
  * @param {number} posY 포인터 y좌표
- * @returns 
+ * @returns {boolean}
  */
 function distBtn(x0, y1, y2, width, posX, posY) {
     let check = false;
@@ -38,7 +38,18 @@ function distBtn(x0, y1, y2, width, posX, posY) {
         (check = false);
     return check;
 }
-
+/** color를 drop할 수 없는 공간인지 확인하는 함수 in ValueGame
+ *  - white와 기준색인 경우 color drop 불가
+ *  - white는 고정 / 기준색은 랜덤 지정
+ * @param {number} x0 시작 x좌표
+ * @param {number} y0 시작 y좌표
+ * @param {number} width 한 칸의 너비
+ * @param {number} height 한 칸의 높이
+ * @param {number} posX 포인터 x좌표
+ * @param {number} posY 포인터 y좌표
+ * @param {number} idx 기준색의 위치 인덱스
+ * @returns {boolean}
+ */
 function isNoDropArea(x0, y0, width, height, posX, posY, idx) {
     let check = false;
     //white의 경우 + 기준색의 경우
@@ -55,6 +66,19 @@ function isNoDropArea(x0, y0, width, height, posX, posY, idx) {
 /* Value Game Ends */
 
 /* export for Chroma Game */
+
+/** color를 drop할 수 없는 공간인지 확인하는 함수 in ChromaGame
+ *  - 제시색과 제시색-회색의 경우 color drop 불가
+ *  - 제시색과 제시색-회색 고정
+ * @param {number} x0 시작 x좌표
+ * @param {number} y0 시작 y좌표
+ * @param {number} width 한 칸의 너비
+ * @param {number} height 한 칸의 높이
+ * @param {number} posX 포인터 x좌표
+ * @param {number} posY 포인터 y좌표
+ * @param {number} N 총 색상 개수
+ * @returns {boolean}
+ */
 function isNoDropArea_Chroma(x0, y0, width, height, posX, posY, N) {
     let check = false;
     //제시색의 경우 + 제시색-회색의 경우
@@ -432,8 +456,6 @@ $.ajax({
                         }
                     }
                 }
-
-
             }
         }
     });
