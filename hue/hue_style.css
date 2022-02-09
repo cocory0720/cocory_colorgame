@@ -17,27 +17,63 @@ article {
   display: none;
 }
 
-#before-hue-test {
+/**********************/
+
+#before-hue-test,
+#info-hue-test {
   height: 100vh;
   /* width: 100vw; */
-  background-image: url("/img/hue.png");
-  background-repeat: no-repeat;
+  background-repeat: no-repeat, repeat;
   background-size: contain;
   background-position: center center;
 }
 
-#start-hue-btn {
-  margin-top: 57vh;
-  margin-left: 48vw;
-  border: 3px solid white;
-  font-size: 3em;
-  background-color: #dd7676;
-  color: white;
+#before-hue-test {
+  background-image: url("../img/hue/element_title.png"),
+    url("../img/hue/background.png");
 }
 
-#start-hue-btn:active {
-  transform: scale(1.1);
+#info-hue-test {
+  background-image: url("../img/hue/element_info.png"),
+    url("../img/hue/background.png");
 }
+
+#start-hue-btn,
+#info-hue-btn {
+  border: 3px solid white;
+  font-size: 2em;
+  background-color: #dd7676;
+  color: white;
+  position: absolute;
+  transform: translate(-50%, 0);
+}
+
+#start-hue-btn {
+  left: 50%;
+  bottom: 30%;
+}
+
+#info-hue-btn {
+  bottom: 10%;
+  left: 50%;
+}
+
+#start-hue-btn:active,
+#info-hue-btn:active {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+[id^="test-hue"] {
+  /* height: 100vh;
+  width: 100vw; */
+  background-repeat: repeat;
+  background-size: contain;
+  background-position: center center;
+  background-image: url("../img/grid.png");
+}
+
+/**********************/
 
 canvas,
 #fit-app {
@@ -51,7 +87,7 @@ canvas,
   left: 50%;
   transform: translate(-50%, 0);
   pointer-events: auto;
-  background-color: #eee;
+  /* background-color: #eee; */
 }
 
 div.btn {
