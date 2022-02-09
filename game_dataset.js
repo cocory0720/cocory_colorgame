@@ -434,9 +434,9 @@ $.ajax({
                      * 정답의 색상과 주어진 색상(answerArr, givenArr)의 배열을 담기위한 배열을 선언하고 데이터를 담음.
                      */
 
-                    if (currentRow[2] == "timeLimit")
-                        GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]] = parseInt(currentRow[2].slice(0, -3));
-                    else {
+                    if (currentRow[2] == "timeLimit") {
+                        GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]] = parseInt(currentRow[3].slice(0, -3));
+                    } else {
                         GAMEINFO[currentRow[0]][currentRow[1]][currentRow[2]] = []; // the third element is the key of array
 
                         /**
