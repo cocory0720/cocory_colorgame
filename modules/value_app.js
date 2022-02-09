@@ -32,16 +32,19 @@ class Spaces {
         ctx.save();
         ctx.translate(0, 0);
         for (let i = 0; i < this.N; i++) {
+            const x = this.x;
+            const y = this.y1 + i * ((this.y2 - this.y1) / this.N);
+            const w = this.ax;
+            const h = (this.y2 - this.y1) / this.N
+
             GAMEINFO.selectedArr[i] ? (isValue = true) : (isValue = false);
             ctx.save();
             ctx.beginPath();
-            ctx.fillStyle = isValue === true ? GAMEINFO.selectedArr[i] : "#c7e2e0";
-            ctx.rect(
-                this.x,
-                this.y1 + i * ((this.y2 - this.y1) / this.N),
-                this.ax,
-                (this.y2 - this.y1) / this.N
-            );
+            ctx.fillStyle = isValue === true ? GAMEINFO.selectedArr[i] : "#ffffff88";
+
+            ctx.arc(x + h / 2, y + h / 2, h / 2, Math.PI * 0.5, Math.PI * 1.5, false);
+            ctx.arc(x + w - h / 2, y + h / 2, h / 2, Math.PI * 1.5, Math.PI * 0.5, false);
+
             ctx.stroke();
             ctx.fill();
             ctx.closePath();
@@ -237,14 +240,19 @@ class Picker {
 
 export default class ValueGame {
     constructor(query, N) {
+
             this.currentStage = N <= 10 ? 1 : 2;
+
             GAMEINFO.initCurrentGame("value", this.currentStage); //게임 자체 데이터 가져오기
+
             this.basisLoc = setSelected_OptionArr(
                 GAMEINFO.givenArr,
                 GAMEINFO.optionArr,
                 GAMEINFO.answerArr
             ); //기준값 정한 후 재설정
+
             GAMEINFO.selectedArr = [...GAMEINFO.givenArr];
+
             this.n = N; //value 개수
 
             //canvas
