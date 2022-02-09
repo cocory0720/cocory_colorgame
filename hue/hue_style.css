@@ -19,7 +19,7 @@ article {
 
 /**********************/
 
-#before-hue-test,
+#start-hue-test,
 #info-hue-test {
   height: 100vh;
   /* width: 100vw; */
@@ -28,7 +28,7 @@ article {
   background-position: center center;
 }
 
-#before-hue-test {
+#start-hue-test {
   background-image: url("../img/hue/element_title.png"),
     url("../img/hue/background.png");
 }
@@ -70,7 +70,7 @@ article {
   background-repeat: repeat;
   background-size: contain;
   background-position: center center;
-  background-image: url("../img/grid.png");
+  background-image: url("../img/hue/grid.png");
 }
 
 /**********************/

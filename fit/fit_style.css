@@ -19,7 +19,7 @@ article {
 
 /**********************/
 
-#before-fit-test,
+#start-fit-test,
 #info-fit-test {
   height: 100vh;
   width: 100vw;
@@ -28,7 +28,7 @@ article {
   background-position: center center;
 }
 
-#before-fit-test {
+#start-fit-test {
   background-image: url("../img/fit/element_title.png"),
     url("../img/fit/background.png");
 }
@@ -70,7 +70,7 @@ article {
   background-repeat: repeat;
   background-size: contain;
   background-position: center center;
-  background-image: url("../img/grid.png");
+  background-image: url("../img/fit/grid.png");
 }
 
 /**********************/
