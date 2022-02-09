@@ -269,17 +269,17 @@ function submit(time) {
     switch (GAMEINFO.currentGame) {
         case "hue":
             if (currentContext.gradeHueGame()) {
-                GAMEINFO.TOTAL_SCORE += time * GAMEINFO.undertimeScore;
+                GAMEINFO.TOTAL_SCORE += time * GAMEINFO.SCORE_RATE_FOR_UNDERTIME;
             }
             break;
         case "value":
             if (currentContext.gradeValueGame()) {
-                GAMEINFO.TOTAL_SCORE += time * GAMEINFO.undertimeScore;
+                GAMEINFO.TOTAL_SCORE += time * GAMEINFO.SCORE_RATE_FOR_UNDERTIME;
             }
             break;
         case "chroma":
             if (currentContext.gradeChromaGame()) {
-                GAMEINFO.TOTAL_SCORE += time * GAMEINFO.undertimeScore;
+                GAMEINFO.TOTAL_SCORE += time * GAMEINFO.SCORE_RATE_FOR_UNDERTIME;
             }
             break;
         case "fit":

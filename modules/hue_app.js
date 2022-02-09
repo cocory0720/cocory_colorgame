@@ -1,3 +1,10 @@
+/********************** LICENSE TO CODE **********************
+ * MIT License
+ * Copyright (c) 2022 이재석 건국대학교 전기전자공학부
+ * 
+ * Caution : The contents of. Check LICENSE or README.
+ */
+
 import GAMEINFO, { PI2, ColorD2X, ColorX2RGBA, dist } from "../game_dataset.js";
 import { FADE_OUT_TIME, DELAY_FOR_SUBMITTING } from "../main.js";
 
@@ -198,9 +205,17 @@ class Picker {
     }
 }
 
-// Hue game canvas main script
+/** 색상 테스트 모듈 */
 export default class HueGame {
+    /**
+     * @param {*} query 색상 테스트를 구현할 canvas 객체의 HTML 쿼리
+     * @param {*} N 테스트에서 사용되는 색상 수
+     */
     constructor(query, N) {
+
+        /**
+         * 현재 스테이지를 색상 수로 특정하여 게임데이터를 가져옴
+         */
         this.currentStage = N <= 10 ? 1 : N <= 20 ? 2 : 3;
         GAMEINFO.initCurrentGame("hue", this.currentStage);
         GAMEINFO.initColorWheelAngles(N);

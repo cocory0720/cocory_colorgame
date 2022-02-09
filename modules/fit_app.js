@@ -131,7 +131,7 @@ export default class FitGame {
         } else {
             GAMEINFO.TOTAL_SCORE += this.fitGameScore;
             if (this.perfectScore == this.fitGameScore) {
-                GAMEINFO.TOTAL_SCORE += remainTime * GAMEINFO.undertimeScore;
+                GAMEINFO.TOTAL_SCORE += remainTime * GAMEINFO.SCORE_RATE_FOR_UNDERTIME;
             }
             $("#test-fit-1").children().fadeOut(250);
             submit();
