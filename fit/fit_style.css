@@ -22,14 +22,20 @@ article {
 #before-fit-test,
 #info-fit-test {
   height: 100vh;
-  /* width: 100vw; */
-  background-repeat: no-repeat;
+  width: 100vw;
+  background-repeat: no-repeat, repeat;
   background-size: contain;
   background-position: center center;
 }
 
 #before-fit-test {
-  background-image: url("/img/fit/main.png");
+  background-image: url("../img/fit/element_title.png"),
+    url("../img/fit/background.png");
+}
+
+#info-fit-test {
+  background-image: url("../img/fit/element_info.png"),
+    url("../img/fit/background.png");
 }
 
 #start-fit-btn,
@@ -38,29 +44,33 @@ article {
   font-size: 2em;
   background-color: #f4d05d;
   color: white;
+  position: absolute;
+  transform: translate(-50%, 0);
 }
 
 #start-fit-btn {
-  margin-top: 57vh;
-  margin-left: 50vw;
+  bottom: 35%;
+  left: 60%;
+}
+
+#info-fit-btn {
+  bottom: 10%;
+  left: 50%;
 }
 
 #start-fit-btn:active,
 #info-fit-btn:active {
   font-weight: bold;
   cursor: pointer;
-  transform: scale(1.1);
 }
 
-#info-fit-test {
-  background-image: url("/img/fit/info.png");
-}
-
-#info-fit-btn {
-  position: absolute;
-  bottom: 10%;
-  left: 50%;
-  transform: translate(-50%, 0);
+#test-fit-1 {
+  height: 100vh;
+  width: 100vw;
+  background-repeat: repeat;
+  background-size: contain;
+  background-position: center center;
+  background-image: url("../img/grid.png");
 }
 
 /**********************/
@@ -77,7 +87,7 @@ canvas,
   left: 50%;
   transform: translate(-50%, 0);
   pointer-events: auto;
-  background-color: #eee;
+  /* background-color: #eee; */
 }
 
 div.btn {
