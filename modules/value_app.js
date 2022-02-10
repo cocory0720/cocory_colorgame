@@ -7,14 +7,21 @@ import GAMEINFO, {
 
 let isWide;
 
+/** 기준색 랜덤 설정 및 optionArr 초기화 함수
+ *
+ * @param {array} givenArr  초기에 주어지는 배열
+ * @param {array} optionArr value 버튼 배열
+ * @param {array} answerArr 정답 배열
+ * @returns {number} 랜덤으로 설정된 기준색의 위치 인덱스
+ */
 function setSelected_OptionArr(givenArr, optionArr, answerArr) {
-    let rannum = Math.floor(Math.random() * 9) + 1; //1~9
-    givenArr.splice(rannum, 1, answerArr[rannum]);
+    let rannum = Math.floor(Math.random() * 9) + 1; //1~9 사이의 랜덤값으로 기준색의 위치 인덱스가 결정됨
+    givenArr.splice(rannum, 1, answerArr[rannum]); //givenArr에서 rannum 위치값을 기준색으로 수정
 
-    const idx = optionArr.indexOf(answerArr[rannum]);
-    optionArr.splice(idx, 1);
+    const idx = optionArr.indexOf(answerArr[rannum]); //optionArr에서의 기준색의 위치 인덱스
+    optionArr.splice(idx, 1); //optionArr에서 기준색이 된 명도 삭제
 
-    return rannum;
+    return rannum; //기준색의 위치 인덱스 반환
 }
 
 class Spaces {
@@ -69,13 +76,22 @@ class Spaces {
         ctx.restore();
     }
 
+
+    /**사용자가 선택한 명도를 해당 공간에 채워주는 함수
+     *
+     * @param {number} posX 포인터 x좌표
+     * @param {number} posY 포인터 y좌표
+     * @param {number} selectedColor 사용자가 선택한 명도
+     * @param {number} basisLoc 기준색 위치 인덱스
+     */
     dropSelectedColor(posX, posY, selectedColor, basisLoc) {
         const selectedColorCode = ColorD2X(selectedColor);
-        let checkSpace = false;
+        let checkSpace = false; //명도
         let loc = 0;
 
         //case 1. space에 넣은 경우 - 한 번이라도 true가 반환되면 break
         for (let i = 0; i < this.N; i++) {
+            //각 space 내에서 확인
             if (!distSpace(
                     this.x,
                     this.y1 + i * ((this.y2 - this.y1) / this.N),
@@ -256,20 +272,16 @@ class Picker {
 
 export default class ValueGame {
     constructor(query, N) {
-
             this.currentStage = N <= 10 ? 1 : 2;
-
             GAMEINFO.initCurrentGame("value", this.currentStage); //게임 자체 데이터 가져오기
-
             this.basisLoc = setSelected_OptionArr(
                 GAMEINFO.givenArr,
                 GAMEINFO.optionArr,
                 GAMEINFO.answerArr
             ); //기준값 정한 후 재설정
-
-            GAMEINFO.selectedArr = [...GAMEINFO.givenArr];
-
-            this.n = N; //value 개수
+            GAMEINFO.selectedArr = [...GAMEINFO.givenArr]; //초기 selectedArr(사용자가 선택한 명도 배열)는
+            //givenArr(주어지는 명도 배열)와 동일
+            this.n = N; //명도 개수
 
             //canvas
             this.canvas = query;
@@ -376,6 +388,7 @@ export default class ValueGame {
         }
     }
 
+
     onMove(e) {
         if (this.isDown && this.clickedColor >= 0) {
             this.pointerX = 2 * e.offsetX;
@@ -426,8 +439,16 @@ export default class ValueGame {
 
     delAllReq() {
         window.removeEventListener("resize", this.resize.bind(this), false);
-        this.canvas.removeEventListener("pointerdown", this.onDown.bind(this), false);
-        this.canvas.removeEventListener("pointermove", this.onMove.bind(this), false);
+        this.canvas.removeEventListener(
+            "pointerdown",
+            this.onDown.bind(this),
+            false
+        );
+        this.canvas.removeEventListener(
+            "pointermove",
+            this.onMove.bind(this),
+            false
+        );
         this.canvas.removeEventListener("pointerup", this.onUp.bind(this), false);
         window.cancelAnimationFrame(this.animateRQ);
     }
