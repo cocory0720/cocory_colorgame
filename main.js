@@ -36,7 +36,7 @@ let currentContext;
 function initBtns(id) {
     $(document).one("click", `#${id} .action-next`, showNextArticle);
 }
-initBtns("main-page"); // 첫 페이지를 위함
+initBtns("start-main"); // 첫 페이지를 위함
 
 
 

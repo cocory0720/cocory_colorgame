@@ -1,28 +1,10 @@
-/* background images */
-
-#start-value {
-    background-image: url("../img/value/element_title.png"), url("../img/value/background.png");
-}
-
-#info-value {
-    background-image: url("../img/value/element_info.png"), url("../img/value/background.png");
-}
-
-#start-value,
-#info-value {
-    background-repeat: no-repeat, repeat;
-    background-size: contain;
-    background-position: center center;
-}
-
-[id |="test-value"] {
-    background-image: url("../img/value/grid.png");
-    background-repeat: repeat;
-    background-size: contain;
-    background-position: center;
-}
-
 :root {
+    /* images */
+    --start-value-background: url("../img/value/start-value/background.png");
+    --start-value-element: url("../img/value/start-value/element.png");
+    --info-value-background: url("../img/value/info-value/background.png");
+    --info-value-element: url("../img/value/info-value/element.png");
+    --test-value-background: url("../img/value/test-value/background.png");
     /* Color */
     --white-color: #fffeff;
     --grey-color: #f5f5f5;
@@ -63,6 +45,28 @@
 
 
 /* Start page */
+
+#start-value {
+    background-image: var(--start-value-element), var(--start-value-background);
+}
+
+#info-value {
+    background-image: var(--info-value-element), var(--info-value-background);
+}
+
+#start-value,
+#info-value {
+    background-repeat: no-repeat, repeat;
+    background-size: contain;
+    background-position: center center;
+}
+
+[id |="test-value"] {
+    background-image: var(--test-value-background);
+    background-repeat: repeat;
+    background-size: contain;
+    background-position: center;
+}
 
 #start-value-btn,
 #info-value-btn {

@@ -1,11 +1,18 @@
-/* background images */
+:root {
+    /* images */
+    --start-hue-background: url("../img/hue/start-hue/background.png");
+    --start-hue-element: url("../img/hue/start-hue/element.png");
+    --info-hue-background: url("../img/hue/info-hue/background.png");
+    --info-hue-element: url("../img/hue/info-hue/element.png");
+    --test-hue-background: url("../img/hue/test-hue/background.png");
+}
 
 #start-hue {
-    background-image: url("../img/hue/element_title.png"), url("../img/hue/background.png");
+    background-image: var(--start-hue-element), var(--start-hue-background);
 }
 
 #info-hue {
-    background-image: url("../img/hue/element_info.png"), url("../img/hue/background.png");
+    background-image: var(--info-hue-element), var(--info-hue-background);
 }
 
 #start-hue,
@@ -16,14 +23,11 @@
 }
 
 [id^="test-hue"] {
-    background-image: url("../img/hue/grid.png");
+    background-image: var(--test-hue-background);
     background-repeat: repeat;
     background-size: contain;
     background-position: center center;
 }
-
-
-/**********************/
 
 #start-hue-btn,
 #info-hue-btn {
@@ -51,9 +55,6 @@
     cursor: pointer;
 }
 
-
-/**********************/
-
 canvas {
     position: absolute;
     z-index: -9999;
@@ -65,7 +66,6 @@ canvas {
     left: 50%;
     transform: translate(-50%, 0);
     pointer-events: auto;
-    /* background-color: #eee; */
 }
 
 .menu {

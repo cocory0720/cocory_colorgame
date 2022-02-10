@@ -1,11 +1,18 @@
-/* background images */
+:root {
+    /* images */
+    --start-fit-background: url("../img/fit/start-fit/background.png");
+    --start-fit-element: url("../img/fit/start-fit/element.png");
+    --info-fit-background: url("../img/fit/info-fit/background.png");
+    --info-fit-element: url("../img/fit/info-fit/element.png");
+    --test-fit-background: url("../img/fit/test-fit/background.png");
+}
 
 #start-fit {
-    background-image: url("../img/fit/element_title.png"), url("../img/fit/background.png");
+    background-image: var(--start-fit-element), var(--start-fit-background);
 }
 
 #info-fit {
-    background-image: url("../img/fit/element_info.png"), url("../img/fit/background.png");
+    background-image: var(--info-fit-element), var(--info-fit-background);
 }
 
 #start-fit,
@@ -16,14 +23,11 @@
 }
 
 [id |="test-fit"] {
-    background-image: url("../img/fit/grid.png");
+    background-image: var(--test-fit-background);
     background-repeat: repeat;
     background-size: contain;
     background-position: center center;
 }
-
-
-/**********************/
 
 #start-fit-btn,
 #info-fit-btn {
@@ -54,7 +58,6 @@
 
 /**********************/
 
-canvas,
 #fit-app {
     position: absolute;
     z-index: -9999;
@@ -85,11 +88,6 @@ div.btn {
 
 #fit-app {
     max-width: 410px;
-}
-
-#answer {
-    height: 15%;
-    background-color: #ddd;
 }
 
 #colorbox {

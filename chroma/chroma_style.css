@@ -1,28 +1,10 @@
-/* background images */
-
-#start-chroma {
-    background-image: url("../img/chroma/element_title.png"), url("../img/chroma/background.png");
-}
-
-#info-chroma {
-    background-image: url("../img/chroma/element_info.png"), url("../img/chroma/background.png");
-}
-
-#start-chroma,
-#info-chroma {
-    background-repeat: no-repeat, repeat;
-    background-size: contain;
-    background-position: center center;
-}
-
-[id |="test-value"] {
-    background-image: url("../img/chroma/grid.png");
-    background-repeat: repeat;
-    background-size: contain;
-    background-position: center center;
-}
-
 :root {
+    /* images */
+    --start-chroma-background: url("../img/chroma/start-chroma/background.png");
+    --start-chroma-element: url("../img/chroma/start-chroma/element.png");
+    --info-chroma-background: url("../img/chroma/info-chroma/background.png");
+    --info-chroma-element: url("../img/chroma/info-chroma/element.png");
+    --test-chroma-element: url("../img/chroma/test-chroma/background.png");
     /* Color */
     --white-color: #fffeff;
     --bg-color: #717ac6;
@@ -32,36 +14,33 @@
     --font-start-page: 4em;
 }
 
+#start-chroma {
+    background-image: var(--start-chroma-element), var(--start-chroma-background);
+}
 
-/***********************************************************/
+#info-chroma {
+    background-image: var(--info-chroma-element), var(--info-chroma-background);
+}
+
+#start-chroma,
+#info-chroma {
+    background-repeat: no-repeat, repeat;
+    background-size: contain;
+    background-position: center center;
+}
+
+[id |="test-chroma"] {
+    background-image: var(--test-chroma-element);
+    background-repeat: repeat;
+    background-size: contain;
+    background-position: center;
+}
 
 * {
     margin: 0;
     padding: 0;
     /* font-family: "Jua", sans-serif; */
 }
-
-
-/* .nextBtn {
-  border-radius: 10%;
-  padding: var(--padding-size);
-  border: 2px solid var(--white-color);
-  background-color: transparent;
-  color: var(--white-color);
-  font-size: calc(var(--font-start-page) / 8);
-}
-
-.nextBtn:active {
-  font-weight: bold;
-  cursor: pointer;
-  transform: scale(1.1);
-} */
-
-
-/*********************************************************************/
-
-
-/******************************************************** Start Page */
 
 #start-chroma-btn,
 #info-chroma-btn {
@@ -89,15 +68,6 @@
 #info-chroma-btn:active {
     font-weight: bold;
     cursor: pointer;
-}
-
-[id^="test-chroma"] {
-    height: 100vh;
-    width: 100vw;
-    background-repeat: repeat;
-    background-size: contain;
-    background-position: center center;
-    background-image: url("../img/chroma/grid.png");
 }
 
 
