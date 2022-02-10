@@ -1,3 +1,15 @@
+/* main page background images */
+
+#start-main {
+    background-image: url("../img/main/element.png"), url("../img/main/background.png");
+    background-repeat: no-repeat, repeat;
+    background-size: contain;
+    background-position: center center;
+}
+
+
+/* Apply to all style */
+
 html,
 body,
 main,
@@ -20,6 +32,9 @@ article {
     pointer-events: auto;
 }
 
+
+/* main page */
+
 #navbar {
     position: fixed;
     top: 0;
@@ -27,4 +42,20 @@ article {
     height: 3px;
     background-image: linear-gradient( 310deg, #80d7ff 0%, #ffea80 37%, #ff8086 100%);
     transition: width 230ms ease;
+}
+
+#start-main-btn {
+    border: 3px solid var(--white-color);
+    font-size: 2em;
+    background-color: #56a8a2;
+    color: var(--white-color);
+    position: absolute;
+    transform: translate(-50%, 0);
+    left: 50%;
+    bottom: 30%;
+}
+
+#start-main-btn:active {
+    font-weight: bold;
+    cursor: pointer;
 }
