@@ -7,7 +7,7 @@ import ChromaGame from "./modules/chroma_app.js";
 
 
 /* 테스트 순서 */
-const SERIES = ["main", "value", "hue", "fit", "value", "chroma", "hue", "end"];
+const SERIES = ["main", "fit", "value", "chroma", "hue", "end"];
 
 
 
@@ -75,8 +75,6 @@ function showNextArticle(e) {
 
                 if (GAMEINFO.currentGame == undefined) {
                     // 현재 첫 테스트를 시작하지 않았을 경우, 첫 번째 테스트 진입
-
-                    $("link[href = 'style.css']").remove(); // 현재 CSS링크를 지우고
 
                     // 첫번째 테스트에 해당하는 파일의 CSS 링크
                     $("head").append(

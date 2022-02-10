@@ -1,156 +1,135 @@
-html,
-body,
-main,
-article {
-  width: 100%;
-  height: 100%;
-  height: var(--page-viewport-height, 100%);
-  pointer-events: none;
-  position: fixed;
-  overflow: hidden;
-  user-select: none;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
+/* background images */
+
+#start-fit {
+    background-image: url("../img/fit/element_title.png"), url("../img/fit/background.png");
 }
 
-article {
-  display: none;
+#info-fit {
+    background-image: url("../img/fit/element_info.png"), url("../img/fit/background.png");
 }
+
+#start-fit,
+#info-fit {
+    background-repeat: no-repeat, repeat;
+    background-size: contain;
+    background-position: center center;
+}
+
+[id |="test-fit"] {
+    background-image: url("../img/fit/grid.png");
+    background-repeat: repeat;
+    background-size: contain;
+    background-position: center center;
+}
+
 
 /**********************/
 
-#start-fit-test,
-#info-fit-test {
-  height: 100vh;
-  width: 100vw;
-  background-repeat: no-repeat, repeat;
-  background-size: contain;
-  background-position: center center;
-}
-
-#start-fit-test {
-  background-image: url("../img/fit/element_title.png"),
-    url("../img/fit/background.png");
-}
-
-#info-fit-test {
-  background-image: url("../img/fit/element_info.png"),
-    url("../img/fit/background.png");
-}
-
 #start-fit-btn,
 #info-fit-btn {
-  border: 3px solid white;
-  font-size: 2em;
-  background-color: #f4d05d;
-  color: white;
-  position: absolute;
-  transform: translate(-50%, 0);
+    border: 3px solid white;
+    font-size: 2em;
+    background-color: #f4d05d;
+    color: white;
+    position: absolute;
+    transform: translate(-50%, 0);
 }
 
 #start-fit-btn {
-  bottom: 35%;
-  left: 60%;
+    bottom: 35%;
+    left: 60%;
 }
 
 #info-fit-btn {
-  bottom: 10%;
-  left: 50%;
+    bottom: 10%;
+    left: 50%;
 }
 
 #start-fit-btn:active,
 #info-fit-btn:active {
-  font-weight: bold;
-  cursor: pointer;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-#test-fit-1 {
-  height: 100vh;
-  width: 100vw;
-  background-repeat: repeat;
-  background-size: contain;
-  background-position: center center;
-  background-image: url("../img/fit/grid.png");
-}
 
 /**********************/
 
 canvas,
 #fit-app {
-  position: absolute;
-  z-index: -9999;
-  width: 100%;
-  height: 100%;
-  max-width: 1600px;
-  max-height: 900px;
-  top: 0%;
-  left: 50%;
-  transform: translate(-50%, 0);
-  pointer-events: auto;
-  /* background-color: #eee; */
+    position: absolute;
+    z-index: -9999;
+    width: 100%;
+    height: 100%;
+    max-width: 1600px;
+    max-height: 900px;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    pointer-events: auto;
+    /* background-color: #eee; */
 }
 
 div.btn {
-  pointer-events: auto;
+    pointer-events: auto;
 }
 
 .menu {
-  position: absolute;
-  width: 100%;
-  height: 15%;
-  bottom: 0;
-  left: 50%;
-  transform: translate(-50%, 0);
-  max-width: 800px;
+    position: absolute;
+    width: 100%;
+    height: 15%;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    max-width: 800px;
 }
 
 #fit-app {
-  max-width: 410px;
+    max-width: 410px;
 }
 
 #answer {
-  height: 15%;
-  background-color: #ddd;
+    height: 15%;
+    background-color: #ddd;
 }
 
 #colorbox {
-  display: flex;
-  align-content: center;
-  align-self: center;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-content: center;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
 }
 
 .color.answer {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 div.color.option {
-  width: var(--fit-color-width, 100px);
-  height: var(--fit-color-width, 100px);
-  border-radius: 7px;
-  cursor: pointer;
-  transition: transform 230ms ease, box-shadow 230ms ease;
+    width: var(--fit-color-width, 100px);
+    height: var(--fit-color-width, 100px);
+    border-radius: 7px;
+    cursor: pointer;
+    transition: transform 230ms ease, box-shadow 230ms ease;
 }
 
 @media (hover: hover) {
-  div.color.option:hover {
-    transform: scale(1.08);
-    box-shadow: none !important;
-  }
+    div.color.option:hover {
+        transform: scale(1.08);
+        box-shadow: none !important;
+    }
 }
 
 div.color.option:active {
-  transform: scale(0.88);
+    transform: scale(0.88);
 }
 
 div.bar {
-  border-radius: 7px;
+    border-radius: 7px;
 }
 
 @media screen and (min-width: 375px) {
-  #info-fit-btn {
-    margin-top: 80vh;
-  }
+    #info-fit-btn {
+        margin-top: 80vh;
+    }
 }

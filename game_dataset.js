@@ -252,9 +252,7 @@ const GAMEINFO = {
     get selectedArr() {
         return this._selectedArr;
     },
-    /**
-     * @param {*} arr 현재 테스트-스테이지에서 사용자가 배치한 색상과 위치. 컬러코드 "#??????" 형식의 문자열 혹은 배열 
-     */
+    /** @param {*} arr 현재 테스트-스테이지에서 사용자가 배치한 색상과 위치. 컬러코드 "#??????" 형식의 문자열 혹은 배열 */
     set selectedArr(arr) {
         this._selectedArr = arr;
     },
@@ -263,9 +261,7 @@ const GAMEINFO = {
     get optionArr() {
         return this._optionArr;
     },
-    /**
-     * @param {*} arr 현재 테스트-스테이지에서 사용자가 선택할 수 있는 색상. 컬러코드 "#??????" 형식의 문자열
-     */
+    /** @param {*} arr 현재 테스트-스테이지에서 사용자가 선택할 수 있는 색상. 컬러코드 "#??????" 형식의 문자열 */
     set optionArr(arr) {
         this._optionArr = arr;
     },
@@ -361,21 +357,17 @@ const GAMEINFO = {
         this._largeCircle = this._commonCircle * howBigisGiven;
     },
 
-    /**
-     * 각 원형자리 위치의 각도를 담은 배열을 가져옴.
-     */
+    /** 각 원형자리 위치의 각도를 담은 배열을 가져옴. */
     get getColorWheelAngles() {
         return this._angles;
     },
-    /**
-     * 주어진 색상의 원형자리의 지름에 해당하는 각도를 가져옴.
-     */
+
+    /** 주어진 색상의 원형자리의 지름에 해당하는 각도를 가져옴. */
     get getLargeCircle() {
         return this._largeCircle;
     },
-    /**
-     * 주어지지 않은 원형자리의 지름에 해당하는 각도를 가져옴.
-     */
+
+    /** 주어지지 않은 원형자리의 지름에 해당하는 각도를 가져옴. */
     get getCommonCircle() {
         return this._commonCircle;
     },

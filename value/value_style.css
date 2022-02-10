@@ -1,3 +1,27 @@
+/* background images */
+
+#start-value {
+    background-image: url("../img/value/element_title.png"), url("../img/value/background.png");
+}
+
+#info-value {
+    background-image: url("../img/value/element_info.png"), url("../img/value/background.png");
+}
+
+#start-value,
+#info-value {
+    background-repeat: no-repeat, repeat;
+    background-size: contain;
+    background-position: center center;
+}
+
+[id |="test-value"] {
+    background-image: url("../img/value/grid.png");
+    background-repeat: repeat;
+    background-size: contain;
+    background-position: center;
+}
+
 :root {
     /* Color */
     --white-color: #fffeff;
@@ -37,52 +61,8 @@
     /* font-family: "Gugi", cursive; */
 }
 
-html,
-body {
-    width: 100%;
-    height: 100%;
-    /* height: var(--page-viewport-height, 100%); */
-    /* pointer-events: none; */
-    /* position: fixed;
-  overflow: hidden;
-  user-select: none;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none; */
-}
-
-article {
-    width: 100%;
-    height: var(--page-viewport-height, 100%);
-    position: fixed;
-}
-
-.action-submit,
-.action-next,
-.action-reset,
-.action-view {
-    pointer-events: auto;
-}
-
 
 /* Start page */
-
-#start-value-test,
-#info-value-test {
-    width: 100vw;
-    height: 100vh;
-    /* width: 100vw; */
-    background-repeat: no-repeat, repeat;
-    background-size: contain;
-    background-position: center center;
-}
-
-#start-value-test {
-    background-image: url("../img/value/element_title.png"), url("../img/value/background.png");
-}
-
-#info-value-test {
-    background-image: url("../img/value/element_info.png"), url("../img/value/background.png");
-}
 
 #start-value-btn,
 #info-value-btn {
@@ -136,16 +116,7 @@ article {
 
 #test-value-1,
 #test-value-2 {
-    /* height: 100vh;
-  width: 100vw; */
-    position: fixed;
-    width: 100%;
-    height: 100%;
     text-align: center;
-    background-repeat: repeat;
-    background-size: contain;
-    background-position: center center;
-    background-image: url("../img/value/grid.png");
 }
 
 #test-value-1 .timer,

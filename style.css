@@ -16,6 +16,6 @@ article {
     display: none;
 }
 
-div.btn {
+[class *="action"] {
     pointer-events: auto;
 }
