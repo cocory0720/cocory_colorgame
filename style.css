@@ -19,3 +19,12 @@ article {
 [class *="action"] {
     pointer-events: auto;
 }
+
+#navbar {
+    position: fixed;
+    top: 0;
+    width: var(--navbar-width, 100%);
+    height: 3px;
+    background-image: linear-gradient( 310deg, #80d7ff 0%, #ffea80 37%, #ff8086 100%);
+    transition: width 230ms ease;
+}
