@@ -1,3 +1,8 @@
+// 라이선스 내용
+// 코드와 달리, 콘텐츠에 대한 내용은 코코리색채연구소 소유. 컬러코드 및 컨텐츠 무단 복제 및 이용 불가.
+//
+//
+//
 //
 //
 //
@@ -28,7 +33,7 @@ hue   ,3  ,timeLimit ,90sec
 //
 value ,1     ,answerArr  ,ffffff,e3e3e3,c6c6c6,aaaaaa,8e8e8e,717171,555555,393939,1c1c1c,000000
 value ,1     ,givenArr   ,ffffff,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx
-value ,1     ,timeLimit  ,20sec
+value ,1     ,timeLimit  ,9999sec
 //
 value ,2     ,answerArr  ,ffffff,f2f2f2,e4e4e4,d7d7d7,c9c9c9,bcbcbc,aeaeae,a1a1a1,949494,868686,797979,6b6b6b,5e5e5e,515151,434343,363636,282828,1b1b1b,0d0d0d,000000
 value ,2     ,givenArr   ,ffffff,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx

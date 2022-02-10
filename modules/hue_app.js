@@ -213,9 +213,7 @@ export default class HueGame {
      */
     constructor(query, N) {
 
-        /**
-         * 현재 스테이지를 색상 수로 특정하여 게임데이터를 가져옴
-         */
+        /** 현재 스테이지를 색상 수로 특정하여 게임데이터를 가져옴 */
         this.currentStage = N <= 10 ? 1 : N <= 20 ? 2 : 3;
         GAMEINFO.initCurrentGame("hue", this.currentStage);
         GAMEINFO.initColorWheelAngles(N);

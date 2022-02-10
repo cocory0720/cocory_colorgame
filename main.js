@@ -7,7 +7,7 @@ import ChromaGame from "./modules/chroma_app.js";
 
 
 /* 테스트 순서 */
-const SERIES = ["main", "fit", "value", "chroma", "hue", "end"];
+const SERIES = ["main", "value", "hue", "fit", "value", "chroma", "hue", "end"];
 
 
 
@@ -221,6 +221,10 @@ function showNextArticle(e) {
                 $clickedArticle.next().fadeIn(FADE_IN_TIME); // 페이드 인
             }
 
+            /**
+             * 모바일 브라우저의 상단바에 의해, 페이지하단이 벗어나고 스크롤이 활성화되는 문제를 해결하기 위한 코드.
+             * 페이지의 높이를 다시 설정함.
+             */
             document.documentElement.style.setProperty(
                 "--page-viewport-height",
                 `${window.innerHeight}px`

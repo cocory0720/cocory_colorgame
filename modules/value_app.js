@@ -40,7 +40,13 @@ class Spaces {
             GAMEINFO.selectedArr[i] ? (isValue = true) : (isValue = false);
             ctx.save();
             ctx.beginPath();
-            ctx.fillStyle = isValue === true ? GAMEINFO.selectedArr[i] : "#ffffff88";
+
+            /**
+             * 선택된 색상은 그 색상을 채움.
+             * 그렇지 않은 경우, 연회색, 약 60% 투명도.
+             * 투명도를 성정하는 것이 중요함. (색상오염방지)
+             */
+            ctx.fillStyle = isValue === true ? GAMEINFO.selectedArr[i] : "#eeeeee9a";
 
             ctx.arc(x + h / 2, y + h / 2, h / 2, Math.PI * 0.5, Math.PI * 1.5, false);
             ctx.arc(x + w - h / 2, y + h / 2, h / 2, Math.PI * 1.5, Math.PI * 0.5, false);
@@ -319,7 +325,7 @@ export default class ValueGame {
     animate() {
         this.animateRQ = window.requestAnimationFrame(this.animate.bind(this));
         this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight);
-        this.ctx.fillStyle = "#56a8a2";
+        this.ctx.fillStyle = "#00000000";
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         this.Spaces.genSpaces(this.ctx);
         this.ClrBtns.genBtns(this.ctx);
@@ -332,21 +338,29 @@ export default class ValueGame {
     }
 
     onDown(e) {
-        let pickColor = 0;
         this.pointerX = 2 * e.offsetX;
         this.pointerY = 2 * e.offsetY;
         this.isDown = true;
+
         if (this.isDown) {
-            this.ctx
-                .getImageData(this.pointerX, this.pointerY, 1, 1)
-                .data.slice(0, 3)
-                .forEach((RGBs, i) => {
-                    pickColor += RGBs * Math.pow(256, 2 - i);
-                });
+
+            // 클릭한 위치의 R, G, B, A 의 배열
+            const pickColorInfo = this.ctx.getImageData(this.pointerX, this.pointerY, 1, 1).data
+
+            if (pickColorInfo[3] != 255) {
+                this.clickedColor = -1;
+                return;
+            }
+
+            const pickColor = pickColorInfo[0] * 256 * 256 +
+                pickColorInfo[1] * 256 +
+                pickColorInfo[2];
+
             if (!GAMEINFO.answerArr.includes(ColorD2X(pickColor)) ||
                 GAMEINFO.givenArr.includes(ColorD2X(pickColor))
             ) {
-                pickColor = -1;
+                this.clickedColor = -1;
+                return;
             }
             this.clickedColor = pickColor;
         }
