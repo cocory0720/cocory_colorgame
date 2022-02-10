@@ -28,7 +28,6 @@ class Spaces {
     }
 
     genSpaces(ctx) {
-        let isValue;
         ctx.save();
         ctx.translate(0, 0);
         for (let i = 0; i < this.N; i++) {
@@ -37,22 +36,33 @@ class Spaces {
             const w = this.ax;
             const h = (this.y2 - this.y1) / this.N
 
-            GAMEINFO.selectedArr[i] ? (isValue = true) : (isValue = false);
             ctx.save();
             ctx.beginPath();
 
-            /**
-             * 선택된 색상은 그 색상을 채움.
-             * 그렇지 않은 경우, 연회색, 약 60% 투명도.
-             * 투명도를 성정하는 것이 중요함. (색상오염방지)
-             */
-            ctx.fillStyle = isValue === true ? GAMEINFO.selectedArr[i] : "#eeeeee9a";
-
             ctx.arc(x + h / 2, y + h / 2, h / 2, Math.PI * 0.5, Math.PI * 1.5, false);
             ctx.arc(x + w - h / 2, y + h / 2, h / 2, Math.PI * 1.5, Math.PI * 0.5, false);
+            ctx.lineTo(x + h / 2, y + h);
 
-            ctx.stroke();
-            ctx.fill();
+
+            if (GAMEINFO.selectedArr[i]) {
+                /**
+                 * 끌어다 놓아진 색상은 그 자리를 그 색상을 채움.
+                 */
+
+                ctx.fillStyle = GAMEINFO.selectedArr[i];
+                ctx.fill();
+
+            } else {
+                /**
+                 * 빈자리는 연회색, 약 60% 투명도의 색상으로 채움.
+                 * 투명도를 설정하는 것이 중요함. (색상오염방지)
+                 */
+
+                ctx.fillStyle = "#eeeeee9a"
+                ctx.fill();
+                ctx.stroke();
+
+            }
             ctx.closePath();
             ctx.restore();
         }
