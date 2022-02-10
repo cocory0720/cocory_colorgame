@@ -23,6 +23,19 @@ body {
     height: 100%;
 }
 
+article {
+    width: 100%;
+    height: var(--page-viewport-height, 100%);
+    position: fixed;
+}
+
+.action-submit,
+.action-next,
+.action-reset,
+.action-view {
+    pointer-events: auto;
+}
+
 
 /* .nextBtn {
   border-radius: 10%;
