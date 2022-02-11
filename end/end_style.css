@@ -1,7 +1,7 @@
 :root {
     /* images */
-    --result-end-background: url("./img/end/result-end/background.png");
-    --result-end-element: url("./img/end/result-end/element.png");
+    --result-end-background: url("../img/end/result-end/background.png");
+    --result-end-element: url("../img/end/result-end/element.png");
 }
 
 #result-end {

@@ -27,6 +27,9 @@
     --info-hue-background: url("../img/hue/info-hue/background.png");
     --info-hue-element: url("../img/hue/info-hue/element.png");
     --test-hue-background: url("../img/hue/test-hue/background.png");
+    /* end */
+    --result-end-background: url("../img/end/result-end/background.png");
+    --result-end-element: url("../img/end/result-end/element.png");
 }
 
 
