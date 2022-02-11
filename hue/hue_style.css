@@ -1,12 +1,3 @@
-:root {
-    /* images */
-    --start-hue-background: url("../img/hue/start-hue/background.png");
-    --start-hue-element: url("../img/hue/start-hue/element.png");
-    --info-hue-background: url("../img/hue/info-hue/background.png");
-    --info-hue-element: url("../img/hue/info-hue/element.png");
-    --test-hue-background: url("../img/hue/test-hue/background.png");
-}
-
 #start-hue {
     background-image: var(--start-hue-element), var(--start-hue-background);
 }
@@ -53,19 +44,6 @@
 #info-hue-btn:active {
     font-weight: bold;
     cursor: pointer;
-}
-
-canvas {
-    position: absolute;
-    z-index: -9999;
-    width: 100%;
-    height: 100%;
-    max-width: 1600px;
-    max-height: 900px;
-    top: 0%;
-    left: 50%;
-    transform: translate(-50%, 0);
-    pointer-events: auto;
 }
 
 .menu {

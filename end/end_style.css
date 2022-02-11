@@ -1,17 +1,12 @@
-html,
-body,
-main,
-article {
-    width: 100%;
-    height: var(--page-viewport-height, 100%);
-    pointer-events: none;
-    position: fixed;
-    overflow: hidden;
-    user-select: none;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
+:root {
+    /* images */
+    --result-end-background: url("./img/end/result-end/background.png");
+    --result-end-element: url("./img/end/result-end/element.png");
 }
 
-article {
-    display: none;
+#result-end {
+    background-image: var(--result-end-element), var(--result-end-background);
+    background-repeat: no-repeat, repeat;
+    background-size: contain;
+    background-position: center center;
 }

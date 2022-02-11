@@ -1,10 +1,4 @@
 :root {
-    /* images */
-    --start-chroma-background: url("../img/chroma/start-chroma/background.png");
-    --start-chroma-element: url("../img/chroma/start-chroma/element.png");
-    --info-chroma-background: url("../img/chroma/info-chroma/background.png");
-    --info-chroma-element: url("../img/chroma/info-chroma/element.png");
-    --test-chroma-element: url("../img/chroma/test-chroma/background.png");
     /* Color */
     --white-color: #fffeff;
     --bg-color: #717ac6;

@@ -1,12 +1,3 @@
-:root {
-    /* images */
-    --start-fit-background: url("../img/fit/start-fit/background.png");
-    --start-fit-element: url("../img/fit/start-fit/element.png");
-    --info-fit-background: url("../img/fit/info-fit/background.png");
-    --info-fit-element: url("../img/fit/info-fit/element.png");
-    --test-fit-background: url("../img/fit/test-fit/background.png");
-}
-
 #start-fit {
     background-image: var(--start-fit-element), var(--start-fit-background);
 }
@@ -57,34 +48,6 @@
 
 
 /**********************/
-
-#fit-app {
-    position: absolute;
-    z-index: -9999;
-    width: 100%;
-    height: 100%;
-    max-width: 1600px;
-    max-height: 900px;
-    top: 0%;
-    left: 50%;
-    transform: translate(-50%, 0);
-    pointer-events: auto;
-    /* background-color: #eee; */
-}
-
-div.btn {
-    pointer-events: auto;
-}
-
-.menu {
-    position: absolute;
-    width: 100%;
-    height: 15%;
-    bottom: 0;
-    left: 50%;
-    transform: translate(-50%, 0);
-    max-width: 800px;
-}
 
 #fit-app {
     max-width: 410px;
