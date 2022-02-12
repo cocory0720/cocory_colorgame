@@ -6,7 +6,14 @@ import ChromaGame from "./modules/chroma_app.js";
 
 
 
-/* 테스트 순서 */
+/* 로딩화면 구현 */
+window.addEventListener("DOMContentLoaded", function() {
+    console.log("!");
+})
+
+
+
+/** 테스트 순서 */
 const SERIES = ["main", "fit", "value", "chroma", "hue", "end"];
 
 
@@ -18,7 +25,8 @@ const FADE_IN_TIME = 600; // 페이드 인
 
 
 
-/** 각 모듈에 선언된 클래스를 담을 변수
+/** 
+ *  @param {object} class 각 모듈에서 선언된 클래스를 담을 변수
  *  main.js 에서 호출하는 각 클래스의 메소드는 다음과 같음
  *  1. currentContext.canvas : 테스트를 구현할 HTML객체를 담은 [변수 (HTML쿼리)]
  *  2. currentContext.grade???Game : 각 테스트 제출 후 시간에 따른 점수 부여를 위한 [함수], submit()에서 사용 
