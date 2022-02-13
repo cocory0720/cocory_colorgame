@@ -61,14 +61,7 @@ class Spaces {
             ctx.save();
             ctx.beginPath();
 
-            ctx.arc(
-                x + h / 2,
-                y + h / 2,
-                h / 2,
-                Math.PI * 0.5,
-                Math.PI * 1.5,
-                false
-            );
+            ctx.arc(x + h / 2, y + h / 2, h / 2, Math.PI * 0.5, Math.PI * 1.5, false);
             ctx.arc(
                 x + w - h / 2,
                 y + h / 2,
@@ -353,7 +346,8 @@ export default class ValueGame {
         // }
     resize() {
         this.stageWidth = 2 * (window.innerWidth < 1600 ? window.innerWidth : 1600);
-        this.stageHeight = 2 * (window.innerHeight < 900 ? window.innerHeight : 900);
+        this.stageHeight =
+            2 * (window.innerHeight < 900 ? window.innerHeight : 900);
         this.canvas.width = this.stageWidth;
         this.canvas.height = this.stageHeight;
 
