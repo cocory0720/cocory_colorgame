@@ -89,6 +89,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0) !important;
 }
 
 html,
@@ -109,7 +110,7 @@ article {
     display: none;
 }
 
-[class *="action-"] {
+[class*="action-"] {
     pointer-events: auto;
     cursor: pointer;
     border: 0;
@@ -119,12 +120,12 @@ article {
 }
 
 @media (hover: hover) {
-    [class *="action-"]:hover {
+    [class*="action-"]:hover {
         transform: translate(-50%, 0) scale(1.08) !important;
     }
 }
 
-[class *="action-"]:active {
+[class*="action-"]:active {
     transform: translate(-50%, 0) scale(0.88) !important;
 }
 
@@ -202,7 +203,7 @@ canvas,
     background-position: center center;
 }
 
-[id |="test-fit"] {
+[id|="test-fit"] {
     background-image: var(--test-fit-background);
     background-repeat: repeat;
     background-size: contain;
@@ -319,7 +320,7 @@ div.bar {
     background-position: center center;
 }
 
-[id |="test-value"] {
+[id|="test-value"] {
     background-image: var(--test-value-background);
     background-repeat: repeat;
     background-size: contain;
@@ -357,7 +358,7 @@ div.bar {
 
 /* ingame */
 
-[id |="test-value"] .title-value {
+[id|="test-value"] .title-value {
     background-image: var(--test-value-title);
     background-repeat: no-repeat;
     background-size: contain;
@@ -370,7 +371,7 @@ div.bar {
     margin-top: 1em;
 }
 
-[id |="test-value"] .action-submit {
+[id|="test-value"] .action-submit {
     background-image: var(--test-value-button-submit);
     background-repeat: no-repeat;
     background-size: contain;
@@ -404,7 +405,7 @@ div.bar {
     background-position: center center;
 }
 
-[id |="test-chroma"] {
+[id|="test-chroma"] {
     background-image: var(--test-chroma-background);
     background-repeat: repeat;
     background-size: contain;
@@ -441,7 +442,7 @@ div.bar {
 
 /* ingame */
 
-[id |="test-chroma"] .title-chroma {
+[id|="test-chroma"] .title-chroma {
     background-image: var(--test-chroma-title);
     background-repeat: no-repeat;
     background-size: contain;
@@ -454,7 +455,7 @@ div.bar {
     margin-top: 1em;
 }
 
-[id |="test-chroma"] .action-submit {
+[id|="test-chroma"] .action-submit {
     background-image: var(--test-chroma-button-submit);
     background-repeat: no-repeat;
     background-size: contain;
@@ -525,7 +526,7 @@ div.bar {
 
 /* ingame */
 
-[id |="test-hue"] .title-hue {
+[id|="test-hue"] .title-hue {
     background-image: var(--test-hue-title);
     background-repeat: no-repeat;
     background-size: contain;
