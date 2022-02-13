@@ -5,19 +5,83 @@
  * Caution : The contents of. Check LICENSE or README.
  */
 
+
 import GAMEINFO, { PI2, ColorD2X, ColorX2RGBA, dist } from "../game_dataset.js";
 import { FADE_OUT_TIME, DELAY_FOR_SUBMITTING } from "../main.js";
 
+
+
+/**
+ * 둥근 정사각형 그리기
+ * @param {*} ctx context
+ * @param {*} x (둥글지 않은 사각형 기준) 왼쪽 위 끝 모서리의 x좌표
+ * @param {*} y (둥글지 않은 사각형 기준) 왼쪽 위 끝 모서리의 y좌표
+ * @param {*} d (둥글지 않은 사각형 기준) 각 변의 길이
+ */
+function radicalRect(ctx, x, y, d) {
+
+    /** 버튼 모서리 둥글기 (버튼 폭에 대한 비율) */
+    const BDR_RADIUS_RATIO = 0.1;
+
+    ctx.beginPath();
+    ctx.arc(
+        x + BDR_RADIUS_RATIO * d,
+        y + BDR_RADIUS_RATIO * d,
+        BDR_RADIUS_RATIO * d,
+        Math.PI,
+        Math.PI * 1.5,
+        false
+    );
+    ctx.arc(
+        x + (1 - BDR_RADIUS_RATIO) * d,
+        y + BDR_RADIUS_RATIO * d,
+        BDR_RADIUS_RATIO * d,
+        Math.PI * 1.5,
+        PI2,
+        false
+    );
+    ctx.arc(
+        x + (1 - BDR_RADIUS_RATIO) * d,
+        y + (1 - BDR_RADIUS_RATIO) * d,
+        BDR_RADIUS_RATIO * d,
+        0,
+        Math.PI * 0.5,
+        false
+    );
+    ctx.arc(
+        x + BDR_RADIUS_RATIO * d,
+        y + (1 - BDR_RADIUS_RATIO) * d,
+        BDR_RADIUS_RATIO * d,
+        Math.PI * 0.5,
+        Math.PI,
+        false
+    );
+    ctx.lineTo(x, y + BDR_RADIUS_RATIO * d);
+    ctx.fill();
+    ctx.closePath();
+}
+
+
+
+/** 색상 휠 구현. GAMEINFO.selectedArr 배열의 내용을 표시함. */
 class Wheel {
+    /**
+     * @param {*} x 색상 휠의 중심의 x좌표
+     * @param {*} y 색상 휠의 중심의 y좌표
+     * @param {*} rad 색상 휠의 반지름
+     * @param {*} N 색상 개수
+     */
     constructor(x, y, rad, N) {
         this.x = x;
         this.y = y;
         this.rad = rad;
         this.N = N;
         this.rotate = 0;
+        /** (사용되지 않음) 애니메이션을 위한 시간 파라미터를 담은 배열 */
         this.fadeAnimation = { delay: 0 };
     }
 
+    /** 색상 휠 그리기 */
     genWhl(ctx, rotate) {
         ctx.save();
         ctx.strokeStyle = "#888";
@@ -102,6 +166,7 @@ class Wheel {
         }
     }
 
+    /** (사용되지 않음) 틀린 색상을 표시함 */
     showWhatWasWrong(ctx, indexes) {
         const req = window.requestAnimationFrame(this.showWhatWasWrong.bind(this, ctx, indexes));
         const FADE_VALOCITY = 8;
@@ -132,7 +197,10 @@ class Wheel {
         if (this.fadeAnimation["delay"] >= FADE_OUT_TIME) window.cancelAnimationFrame(req);
     }
 }
-// color buttons
+
+
+
+/** 색상 버튼 구현. GAMEINFO.optionArr 내용을 구현함. */
 class ClrBtns {
     constructor(x, y1, y2, N) {
         this.x = x;
@@ -144,6 +212,7 @@ class ClrBtns {
     genBtns(ctx) {
         ctx.save();
         ctx.translate(0, 0);
+        /** 버튼간 간격 (전체 높이에 대한 비율) */
         const MRG_RATIO = 0.2;
         const row = (this.N <= 10) ? 2 : (this.N <= 20) ? 3 : 4;
         const col = 2 * row;
@@ -157,9 +226,7 @@ class ClrBtns {
                 const y = this.y1 + (d + mrg) * j;
                 ctx.save();
                 ctx.fillStyle = GAMEINFO.optionArr[index];
-                ctx.beginPath();
-                ctx.fillRect(x, y, d, d);
-                ctx.closePath();
+                radicalRect(ctx, x, y, d);
                 ctx.restore();
                 index++;
             }
@@ -168,7 +235,9 @@ class ClrBtns {
     }
 }
 
-// picked color window with speech bubble
+
+
+/** 색상 말풍선 구현. 현재 선택되어있는 색상을 표시함 */
 class Picker {
     constructor(size) {
         this.h = size / 100; //ratio
@@ -197,13 +266,15 @@ class Picker {
 
             ctx.fillStyle = currentColor;
             ctx.beginPath();
-            ctx.arc(bdr_h + bbl_h / 2, bdr_h * 2 + bbl_h / 2, bdr_h / 2 + bbl_h / 2, 0, PI2, false);
+            radicalRect(ctx, bdr_h, bdr_h * 2, bbl_h);
             ctx.closePath();
             ctx.fill();
             ctx.restore();
         }
     }
 }
+
+
 
 /** 색상 테스트 모듈 */
 export default class HueGame {
@@ -236,26 +307,44 @@ export default class HueGame {
         /** 캔버스에 그려지는 요소들을 배치함 */
         this.resize();
 
+        /** 포인터 이벤트가 발생한 x좌표. 캔버스의 크기가 두배임에 유의. */
         this.pointerX = 0;
+        /** 포인터 이벤트가 발생한 y좌표. 캔버스의 크기가 두배임에 유의. */
         this.pointerY = 0;
+
+        /** 포인터 이벤트가 색상 휠 안쪽부분에서 발생 할 경우, 
+         * 색상 배치와 휠 회전을 구현하기 위함 */
         this.isDownOnWheel = false;
+
+        /** 색상 휠이 회전한 정도 */
         this.rotate = 0;
 
+        // 포인터 이벤트 등록
         this.canvas.addEventListener("pointerdown", this.onDown.bind(this), false);
         this.canvas.addEventListener("pointermove", this.onMove.bind(this), false);
         this.canvas.addEventListener("pointerup", this.onUp.bind(this), false);
 
+        /** 애니메이션 등록. 등록된 ID값. 애니메이션 취소를 위함. */
         this.animateRQ = window.requestAnimationFrame(this.animate.bind(this));
 
+        // 전체보기와 리셋 버튼
         $('.action-reset').off("click").click((e) => this.reset(e.target));
-        $('.action-view').off("click").click((e) => this.viewAll());
+        $('.action-view').off("click").click(() => this.viewAll());
+
+        /** 전체보기 상태인 경우에 홀수, 토글 구현을 위해 (값 % 2)를 이용 */
         this.isViewAll = 0;
+        /** 애니메이션 구현을 위한 시간 파라미터 */
         this.t_veiwAll = 0;
+        /** 리셋을 누른 경우 홀수, 토글 구현을 위해 (값 % 2)를 이용. 정말 리셋할지를 묻기위함. */
         this.sure4Reset = 0;
     }
     get clickedColor() {
-        return this._clickedColor; // colorcode in Decimal
-    }
+            return this._clickedColor; // colorcode in Decimal
+        }
+        /**
+         * 선택된 색상의 컬러코드(10진수). 변형된 색상인지 확인함.
+         * @param {number} color R *256^2 + G *256 + B 로 이루어진 10진수 코드
+         */
     set clickedColor(color) { // color corruption hazard control
         if ((color == 0) || (GAMEINFO.answerArr.indexOf(ColorD2X(color)) != -1)) {
             this._clickedColor = color;
@@ -301,33 +390,45 @@ export default class HueGame {
             /** 색상 버튼의 왼쪽 상단 모서리의 가로위치 */
             this.btnOffsetX = center[0] + this.radiusOfWheel / 2 + this.stageWidth / 12;
 
+            // PC화면 크기에서는 전체보기 기능 불필요
             const viewBtn = $(`#test-${GAMEINFO.currentGame}-${GAMEINFO.currentStage} .action-view`);
             viewBtn.css("display", "none");
-            viewBtn.prev().toggleClass("col-5");
-            viewBtn.prev().toggleClass("col-7");
+
         } else {
             // Mobile
+
             this.radiusOfWheel = this.stageWidth / (2.84 - this.currentStage / 2);
+
             this.widthOfBtns = this.radiusOfWheel * (1.1 - this.currentStage * 0.12);
+
             this.btnOffsetX = center[0] + this.stageWidth / 2 - this.widthOfBtns;
+
             this.centerOfWheelX = this.btnOffsetX - this.radiusOfWheel - 60;
+
         }
-        this.Wheel = new Wheel( //(x, y, rad, N)
+
+        /** 현재 캔버스의 색상 휠을 그리는 객체 */
+        this.Wheel = new Wheel( // (x, y, rad, N)
             this.centerOfWheelX,
             this.centerOfWheelY,
             this.radiusOfWheel,
             this.n,
         )
-        this.ClrBtns = new ClrBtns( //(x, y1=center - w, y2 = center + w, N)
+
+        /** 현재 캔버스의 색상 버튼들을 그리는 객체 */
+        this.ClrBtns = new ClrBtns( // (x, y1 = center - w, y2 = center + w, N)
             this.btnOffsetX,
             this.stageHeight / 2 - this.widthOfBtns,
             this.stageHeight / 2 + this.widthOfBtns,
             this.n
         )
+
+        /** 현재 캔버스에서 선택한 색상을 보여주는 말풍선을 그리는 객체 */
         this.Picker = new Picker(this.widthOfBtns / 3);
 
-
     }
+
+
     animate() {
         this.animateRQ = window.requestAnimationFrame(this.animate.bind(this));
         this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight);
@@ -454,7 +555,8 @@ export default class HueGame {
                 }
             }
         });
-        // this.Wheel.showWhatWasWrong(this.ctx, this.wrongIndex); //오답을 알려주지 않는 방향으로 게임 설계
+        // this.Wheel.showWhatWasWrong(this.ctx, this.wrongIndex); 
+        // 함수를 사용하지 않음 : 오답을 알려주지 않는 방향으로 게임 설계.
         if (corrAns == (GAMEINFO.answerArr.length - GAMEINFO.givenArr.filter(el => el != false).length)) return true;
         else return false;
     }
