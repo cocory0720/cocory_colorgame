@@ -213,16 +213,27 @@ export default class HueGame {
      */
     constructor(query, N) {
 
-        /** 현재 스테이지를 색상 수로 특정하여 게임데이터를 가져옴 */
+        /** 현재 스테이지 */
         this.currentStage = N <= 10 ? 1 : N <= 20 ? 2 : 3;
+
+        // 현재 테스트-스테이지에 대한 정보를 가져옴
         GAMEINFO.initCurrentGame("hue", this.currentStage);
+
+        // 색상휠을 구현할 각도 배열을 가져움
         GAMEINFO.initColorWheelAngles(N);
+
+        /** 현재 스테이지 색상 수 */
         this.n = N;
 
+        /** 현재 페이지 캔버스HTML객체 */
         this.canvas = query;
+        /** 현재 캔버스 객체의 context */
         this.ctx = this.canvas.getContext("2d");
 
+        // 페이지 리사이즈시 캔버스를 다시 그림
         window.addEventListener("resize", this.resize.bind(this), false);
+
+        /** 캔버스에 그려지는 요소들을 배치함 */
         this.resize();
 
         this.pointerX = 0;
@@ -237,7 +248,7 @@ export default class HueGame {
         this.animateRQ = window.requestAnimationFrame(this.animate.bind(this));
 
         $('.action-reset').off("click").click((e) => this.reset(e.target));
-        $('.action-view').off("click").click((e) => this.viewAll(e.target));
+        $('.action-view').off("click").click((e) => this.viewAll());
         this.isViewAll = 0;
         this.t_veiwAll = 0;
         this.sure4Reset = 0;
@@ -252,27 +263,50 @@ export default class HueGame {
             return;
         }
     }
+
+    /**
+     * 캔버스의 크기를 정하고, 그 안에 그려지는 요소들을 배치함.
+     */
     resize() {
+        /** 캔버스의 크기는 css로 정한 크기의 2배임. */
         this.stageWidth = 2 * (window.innerWidth < 1600 ? window.innerWidth : 1600);
+        /** 캔버스의 크기는 css로 정한 크기의 2배임. */
         this.stageHeight = 2 * (window.innerHeight < 900 ? window.innerHeight : 900);
         this.canvas.width = this.stageWidth;
         this.canvas.height = this.stageHeight;
 
+        /** 화면 비율이 w : h = 7.5 : 9 보다 넓을 경우 true*/
         this.isWide = this.stageWidth / 750 > this.stageHeight / 900 ? 1 : 0;
+
         let center = [this.stageWidth / 2, this.stageHeight / 2];
+
+        /** 색상 휠의 중심의 세로위치 (= 화면 중앙) */
         this.centerOfWheelY = center[1];
-        if (this.isWide) { // PC
+
+        if (this.isWide) {
+            // PC
+
+            /** 색상 휠의 반지름 */
             this.radiusOfWheel = this.stageHeight / (5 - this.currentStage / 2);
+
+            /** 색상 버튼들의 너비 */
             this.widthOfBtns = this.radiusOfWheel * (1.3 - this.currentStage * 0.12);
+
+            // 색상 휠의 중심을 약간 왼쪽 바깥으로 이동
             center[0] -= 80;
+
+            /** 색상 휠의 중심의 가로위치 */
             this.centerOfWheelX = center[0] - this.stageWidth / 12 - 40;
+
+            /** 색상 버튼의 왼쪽 상단 모서리의 가로위치 */
             this.btnOffsetX = center[0] + this.radiusOfWheel / 2 + this.stageWidth / 12;
 
             const viewBtn = $(`#test-${GAMEINFO.currentGame}-${GAMEINFO.currentStage} .action-view`);
             viewBtn.css("display", "none");
             viewBtn.prev().toggleClass("col-5");
             viewBtn.prev().toggleClass("col-7");
-        } else { // Mobile
+        } else {
+            // Mobile
             this.radiusOfWheel = this.stageWidth / (2.84 - this.currentStage / 2);
             this.widthOfBtns = this.radiusOfWheel * (1.1 - this.currentStage * 0.12);
             this.btnOffsetX = center[0] + this.stageWidth / 2 - this.widthOfBtns;
@@ -346,19 +380,17 @@ export default class HueGame {
         this.clickedColor = 0;
     }
 
-    viewAll(btn) {
+    viewAll() {
         this.isViewAll += 1;
         window.requestAnimationFrame(this.viewAllAnimate.bind(this));
         switch (this.isViewAll % 2) {
             case 1:
                 window.removeEventListener("resize", this.resize.bind(this), false);
                 this.canvas.removeEventListener("pointerdown", this.onDown.bind(this), false);
-                $(btn).text("돌아오기");
                 break;
             case 0:
                 window.addEventListener("resize", this.resize.bind(this), false);
                 this.canvas.addEventListener("pointerdown", this.onDown.bind(this), false);
-                $(btn).text("전체보기");
                 break;
             default:
                 break;
