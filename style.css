@@ -1,564 +1,593 @@
 :root {
-  /* images */
-  /* main */
-  --start-main-background: url("./img/main/start-main/background.png");
-  --start-main-element: url("./img/main/start-main/element.png");
-  --start-main-button-next: url("./img/main/start-main/button_next.png");
-  /* fit */
-  --start-fit-background: url("./img/fit/start-fit/background.png");
-  --start-fit-element: url("./img/fit/start-fit/element.png");
-  --start-fit-button-next: url("./img/fit/start-fit/button_next.png");
-  --info-fit-background: url("./img/fit/info-fit/background.png");
-  --info-fit-element: url("./img/fit/info-fit/element.png");
-  --info-fit-button-next: url("./img/fit/info-fit/button_next.png");
-  --test-fit-background: url("./img/fit/test-fit/background.png");
-  --test-fit-title: url("./img/fit/test-fit/title.png");
-  /* value */
-  --start-value-background: url("./img/value/start-value/background.png");
-  --start-value-element: url("./img/value/start-value/element.png");
-  --start-value-button-next: url("./img/value/start-value/button_next.png");
-  --info-value-background: url("./img/value/info-value/background.png");
-  --info-value-element: url("./img/value/info-value/element.png");
-  --info-value-button-next: url("./img/value/info-value/button_next.png");
-  --test-value-background: url("./img/value/test-value/background.png");
-  --test-value-title: url("./img/value/test-value/title.png");
-  --test-value-button-submit: url("./img/value/test-value/button_submit.png");
-  --test-value-button-reset: url("./img/value/test-value/button_reset.png");
-  /* chroma */
-  --start-chroma-background: url("./img/chroma/start-chroma/background.png");
-  --start-chroma-element: url("./img/chroma/start-chroma/element.png");
-  --start-chroma-button-next: url("./img/chroma/start-chroma/button_next.png");
-  --info-chroma-background: url("./img/chroma/info-chroma/background.png");
-  --info-chroma-element: url("./img/chroma/info-chroma/element.png");
-  --info-chroma-button-next: url("./img/chroma/info-chroma/button_next.png");
-  --test-chroma-background: url("./img/chroma/test-chroma/background.png");
-  --test-chroma-title: url("./img/chroma/test-chroma/title.png");
-  --test-chroma-button-submit: url("./img/chroma/test-chroma/button_submit.png");
-  --test-chroma-button-reset: url("./img/chroma/test-chroma/button_reset.png");
-  /* hue */
-  --start-hue-background: url("./img/hue/start-hue/background.png");
-  --start-hue-element: url("./img/hue/start-hue/element.png");
-  --start-hue-button-next: url("./img/hue/start-hue/button_next.png");
-  --info-hue-background: url("./img/hue/info-hue/background.png");
-  --info-hue-element: url("./img/hue/info-hue/element.png");
-  --info-hue-button-next: url("./img/hue/info-hue/button_next.png");
-  --test-hue-background: url("./img/hue/test-hue/background.png");
-  --test-hue-title: url("./img/hue/test-hue/title.png");
-  --test-hue-button-submit: url("./img/hue/test-hue/button_submit.png");
-  --test-hue-button-reset: url("./img/hue/test-hue/button_reset.png");
-  --test-hue-button-view: url("./img/hue/test-hue/button_view.png");
-  /* end */
-  --result-end-background: url("./img/end/result-end/background.png");
-  --result-end-element: url("./img/end/result-end/element.png");
-  /* Color */
-  --white-color: #fffeff;
-  --bg-color: #717ac6;
-  /* Padding - Margin - Border */
-  --padding-big: 1em;
-  --padding-medium: 0.5em;
-  --body-width: 25.875em;
-  --title-margin: 3em;
-  /* Font Size */
-  --font-small: 0.5em;
-  --grey-color: #f5f5f5;
-  /* Background Color */
-  --value1-color: #e3e3e3;
-  --value2-color: #393939;
-  --value3-color: #1c1c1c;
-  --value4-color: #aaaaaa;
-  --value5-color: #717171;
-  --value6-color: #555555;
-  --value7-color: #c6c6c6;
-  --value8-color: #000000;
-  --value9-color: #8e8e8e;
-  --value10-color: #ffffff;
-  /* btn */
-  --font-medium: 0.875em;
-  --font-big: 1.3em;
-  --font-biggest: 3em;
-  --font-title: 2em;
-  /* title size */
-  --font-btn: 1.5em;
-  --font-start-page: 4em;
+    /* images */
+    /* main */
+    --start-main-background: url("./img/main/start-main/background.png");
+    --start-main-element: url("./img/main/start-main/element.png");
+    --start-main-button-next: url("./img/main/start-main/button_next.png");
+    /* fit */
+    --start-fit-background: url("./img/fit/start-fit/background.png");
+    --start-fit-element: url("./img/fit/start-fit/element.png");
+    --start-fit-button-next: url("./img/fit/start-fit/button_next.png");
+    --info-fit-background: url("./img/fit/info-fit/background.png");
+    --info-fit-element: url("./img/fit/info-fit/element.png");
+    --info-fit-button-next: url("./img/fit/info-fit/button_next.png");
+    --test-fit-background: url("./img/fit/test-fit/background.png");
+    --test-fit-title: url("./img/fit/test-fit/title.png");
+    /* value */
+    --start-value-background: url("./img/value/start-value/background.png");
+    --start-value-element: url("./img/value/start-value/element.png");
+    --start-value-button-next: url("./img/value/start-value/button_next.png");
+    --info-value-background: url("./img/value/info-value/background.png");
+    --info-value-element: url("./img/value/info-value/element.png");
+    --info-value-button-next: url("./img/value/info-value/button_next.png");
+    --test-value-background: url("./img/value/test-value/background.png");
+    --test-value-title: url("./img/value/test-value/title.png");
+    --test-value-button-submit: url("./img/value/test-value/button_submit.png");
+    --test-value-button-reset: url("./img/value/test-value/button_reset.png");
+    /* chroma */
+    --start-chroma-background: url("./img/chroma/start-chroma/background.png");
+    --start-chroma-element: url("./img/chroma/start-chroma/element.png");
+    --start-chroma-button-next: url("./img/chroma/start-chroma/button_next.png");
+    --info-chroma-background: url("./img/chroma/info-chroma/background.png");
+    --info-chroma-element: url("./img/chroma/info-chroma/element.png");
+    --info-chroma-button-next: url("./img/chroma/info-chroma/button_next.png");
+    --test-chroma-background: url("./img/chroma/test-chroma/background.png");
+    --test-chroma-title: url("./img/chroma/test-chroma/title.png");
+    --test-chroma-button-submit: url("./img/chroma/test-chroma/button_submit.png");
+    --test-chroma-button-reset: url("./img/chroma/test-chroma/button_reset.png");
+    /* hue */
+    --start-hue-background: url("./img/hue/start-hue/background.png");
+    --start-hue-element: url("./img/hue/start-hue/element.png");
+    --start-hue-button-next: url("./img/hue/start-hue/button_next.png");
+    --info-hue-background: url("./img/hue/info-hue/background.png");
+    --info-hue-element: url("./img/hue/info-hue/element.png");
+    --info-hue-button-next: url("./img/hue/info-hue/button_next.png");
+    --test-hue-background: url("./img/hue/test-hue/background.png");
+    --test-hue-title: url("./img/hue/test-hue/title.png");
+    --test-hue-button-submit: url("./img/hue/test-hue/button_submit.png");
+    --test-hue-button-reset: url("./img/hue/test-hue/button_reset.png");
+    --test-hue-button-view: url("./img/hue/test-hue/button_view.png");
+    /* end */
+    --result-end-background: url("./img/end/result-end/background.png");
+    --result-end-element: url("./img/end/result-end/element.png");
+    /* Color */
+    --white-color: #fffeff;
+    --bg-color: #717ac6;
+    /* Padding - Margin - Border */
+    --padding-big: 1em;
+    --padding-medium: 0.5em;
+    --body-width: 25.875em;
+    --title-margin: 3em;
+    /* Font Size */
+    --font-small: 0.5em;
+    --grey-color: #f5f5f5;
+    /* Background Color */
+    --value1-color: #e3e3e3;
+    --value2-color: #393939;
+    --value3-color: #1c1c1c;
+    --value4-color: #aaaaaa;
+    --value5-color: #717171;
+    --value6-color: #555555;
+    --value7-color: #c6c6c6;
+    --value8-color: #000000;
+    --value9-color: #8e8e8e;
+    --value10-color: #ffffff;
+    /* btn */
+    --btn-large-height: 4em;
+    --btn-large-width: 12em;
+    --btn-mid-height: 3em;
+    --btn-mid-width: 9em;
+    /* title size */
+    --font-btn: 1.5em;
+    --font-start-page: 4em;
 }
+
 
 /* Apply to all style */
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  box-shadow: 0 0 0 0 rgba(0, 123, 255, 0) !important;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0) !important;
 }
 
 html,
 body,
 main,
 article {
-  width: 100%;
-  height: var(--page-viewport-height, 100%);
-  pointer-events: none;
-  position: fixed;
-  overflow: hidden;
-  user-select: none;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
+    width: 100%;
+    height: var(--page-viewport-height, 100%);
+    pointer-events: none;
+    position: fixed;
+    overflow: hidden;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
 }
 
 article {
-  display: none;
+    display: none;
 }
 
 [class*="action-"] {
-  pointer-events: auto;
-  cursor: pointer;
-  border: 0;
-  outline: 0;
-  background-color: rgba(255, 255, 255, 0);
-  transition: transform 230ms ease;
+    pointer-events: auto;
+    cursor: pointer;
+    border: 0;
+    outline: 0;
+    background-color: rgba(255, 255, 255, 0);
+    transition: transform 230ms ease;
 }
 
 @media (hover: hover) {
-  [class*="action-"]:hover {
-    transform: translate(-50%, 0) scale(1.08) !important;
-  }
+    [class*="action-"]:hover {
+        transform: translate(-50%, 0) scale(1.08) !important;
+    }
 }
 
 [class*="action-"]:active {
-  transform: translate(-50%, 0) scale(0.88) !important;
+    transform: translate(-50%, 0) scale(0.88) !important;
 }
 
 canvas,
 #fit-app {
-  position: absolute;
-  z-index: -9999;
-  width: 100%;
-  height: 100%;
-  max-width: 1600px;
-  max-height: 900px;
-  top: 0%;
-  left: 50%;
-  transform: translate(-50%, 0);
-  pointer-events: auto;
-  touch-action: none;
+    position: absolute;
+    z-index: -9999;
+    width: 100%;
+    height: 100%;
+    max-width: 1600px;
+    max-height: 900px;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    pointer-events: auto;
+    touch-action: none;
 }
 
+
 /* main page */
+
 
 /* bg */
 
 #navbar {
-  position: fixed;
-  top: 0;
-  width: var(--navbar-width, 100%);
-  height: 3px;
-  background-image: linear-gradient(
-    310deg,
-    #80d7ff 0%,
-    #ffea80 37%,
-    #ff8086 100%
-  );
-  transition: width 230ms ease;
+    position: fixed;
+    top: 0;
+    width: var(--navbar-width, 100%);
+    height: 3px;
+    background-image: linear-gradient( 310deg, #80d7ff 0%, #ffea80 37%, #ff8086 100%);
+    transition: width 230ms ease;
 }
 
 #start-main {
-  background-image: var(--start-main-element), var(--start-main-background);
-  background-repeat: no-repeat, repeat;
-  background-size: contain;
-  background-position: center center;
+    background-image: var(--start-main-element), var(--start-main-background);
+    background-repeat: no-repeat, repeat;
+    background-size: contain;
+    background-position: center center;
 }
+
 
 /* btn */
 
 #start-main-btn {
-  background-image: var(--start-main-button-next);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  position: absolute;
-  width: 12em;
-  height: 4em;
-  left: 50%;
-  transform: translate(-50%, 0);
-  bottom: 30%;
+    background-image: var(--start-main-button-next);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: absolute;
+    width: var(--btn-large-width);
+    height: var(--btn-large-height);
+    left: 50%;
+    transform: translate(-50%, 0);
+    bottom: 30%;
 }
 
-#start-main-btn:active {
-  font-weight: bold;
-  cursor: pointer;
-}
 
 /* fit test */
+
 
 /* bg */
 
 #start-fit {
-  background-image: var(--start-fit-element), var(--start-fit-background);
+    background-image: var(--start-fit-element), var(--start-fit-background);
 }
 
 #info-fit {
-  background-image: var(--info-fit-element), var(--info-fit-background);
+    background-image: var(--info-fit-element), var(--info-fit-background);
 }
 
 #start-fit,
 #info-fit {
-  background-repeat: no-repeat, repeat;
-  background-size: contain;
-  background-position: center center;
+    background-repeat: no-repeat, repeat;
+    background-size: contain;
+    background-position: center center;
 }
 
 [id|="test-fit"] {
-  background-image: var(--test-fit-background);
-  background-repeat: repeat;
-  background-size: contain;
-  background-position: center center;
+    background-image: var(--test-fit-background);
+    background-repeat: repeat;
+    background-size: contain;
+    background-position: center center;
 }
+
 
 /* btn */
 
 #start-fit-btn,
 #info-fit-btn {
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  position: absolute;
-  width: 12em;
-  height: 4em;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: absolute;
+    width: var(--btn-large-width);
+    height: var(--btn-large-height);
 }
 
 #start-fit-btn {
-  background-image: var(--start-fit-button-next);
-  left: 60%;
-  transform: translate(-50%, 0);
-  bottom: 35%;
+    background-image: var(--start-fit-button-next);
+    left: 60%;
+    transform: translate(-50%, 0);
+    bottom: 35%;
 }
 
 #info-fit-btn {
-  background-image: var(--info-fit-button-next);
-  left: 50%;
-  transform: translate(-50%, 0);
-  bottom: 10%;
+    background-image: var(--info-fit-button-next);
+    left: 50%;
+    transform: translate(-50%, 0);
+    bottom: 10%;
 }
+
 
 /* ingame */
 
 #title-fit {
-  background-image: var(--test-fit-title);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  position: relative;
-  width: 9em;
-  height: 3em;
-  left: 50%;
-  transform: translate(-50%, 0);
-  margin-top: 1em;
+    background-image: var(--test-fit-title);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: relative;
+    width: 9em;
+    height: 3em;
+    left: 50%;
+    transform: translate(-50%, 0);
+    margin-top: 1em;
 }
 
 #fit-app {
-  max-width: 410px;
+    max-width: 410px;
 }
 
 #colorbox {
-  display: flex;
-  align-content: center;
-  align-self: center;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-content: center;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
 }
 
 .color.answer {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 div.color.option {
-  width: var(--fit-color-width, 100px);
-  height: var(--fit-color-width, 100px);
-  border-radius: 7px;
-  cursor: pointer;
-  transition: transform 230ms ease, box-shadow 230ms ease;
+    width: var(--fit-color-width, 100px);
+    height: var(--fit-color-width, 100px);
+    border-radius: 7px;
+    cursor: pointer;
+    transition: transform 230ms ease, box-shadow 230ms ease;
 }
 
 @media (hover: hover) {
-  div.color.option:hover {
-    transform: scale(1.08);
-    box-shadow: none !important;
-  }
+    div.color.option:hover {
+        transform: scale(1.08);
+        box-shadow: none !important;
+    }
 }
 
 div.color.option:active {
-  transform: scale(0.88);
+    transform: scale(0.88);
 }
 
 div.bar {
-  border-radius: 7px;
+    border-radius: 7px;
 }
 
-@media screen and (min-width: 375px) {
-  #info-fit-btn {
-    margin-top: 80vh;
-  }
-}
 
 /* value test */
+
 
 /* bg */
 
 #start-value {
-  background-image: var(--start-value-element), var(--start-value-background);
+    background-image: var(--start-value-element), var(--start-value-background);
 }
 
 #info-value {
-  background-image: var(--info-value-element), var(--info-value-background);
+    background-image: var(--info-value-element), var(--info-value-background);
 }
 
 #start-value,
 #info-value {
-  background-repeat: no-repeat, repeat;
-  background-size: contain;
-  background-position: center center;
+    background-repeat: no-repeat, repeat;
+    background-size: contain;
+    background-position: center center;
 }
 
 [id|="test-value"] {
-  background-image: var(--test-value-background);
-  background-repeat: repeat;
-  background-size: contain;
-  background-position: center;
-  text-align: center;
+    background-image: var(--test-value-background);
+    background-repeat: repeat;
+    background-size: contain;
+    background-position: center;
+    text-align: center;
 }
+
 
 /* btn */
 
 #start-value-btn,
 #info-value-btn {
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  position: absolute;
-  width: 12em;
-  height: 4em;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: absolute;
+    width: var(--btn-large-width);
+    height: var(--btn-large-height);
 }
 
 #start-value-btn {
-  background-image: var(--start-value-button-next);
-  left: 50%;
-  transform: translate(-50%, 0);
-  bottom: 5%;
+    background-image: var(--start-value-button-next);
+    left: 50%;
+    transform: translate(-50%, 0);
+    bottom: 5%;
 }
 
 #info-value-btn {
-  background-image: var(--info-value-button-next);
-  left: 50%;
-  transform: translate(-50%, 0);
-  bottom: 10%;
+    background-image: var(--info-value-button-next);
+    left: 50%;
+    transform: translate(-50%, 0);
+    bottom: 10%;
 }
+
 
 /* ingame */
 
 [id|="test-value"] .title-value {
-  background-image: var(--test-value-title);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  position: relative;
-  width: 9em;
-  height: 3em;
-  left: 50%;
-  transform: translate(-50%, 0);
-  margin-top: 1em;
+    background-image: var(--test-value-title);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: relative;
+    width: 9em;
+    height: 3em;
+    left: 50%;
+    transform: translate(-50%, 0);
+    margin-top: 1em;
 }
 
 [id|="test-value"] .action-submit {
-  background-image: var(--test-value-button-submit);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  position: absolute;
-  width: 50%;
-  height: 2em;
-  left: 50%;
-  transform: translate(-50%, 0);
-  bottom: 5%;
+    background-image: var(--test-value-button-submit);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: absolute;
+    width: var(--btn-mid-width);
+    height: var(--btn-mid-height);
+    left: 50%;
+    transform: translate(-50%, 0);
+    bottom: 5%;
 }
 
+
 /* chroma test */
+
 
 /* bg */
 
 #start-chroma {
-  background-image: var(--start-chroma-element), var(--start-chroma-background);
+    background-image: var(--start-chroma-element), var(--start-chroma-background);
 }
 
 #info-chroma {
-  background-image: var(--info-chroma-element), var(--info-chroma-background);
+    background-image: var(--info-chroma-element), var(--info-chroma-background);
 }
 
 #start-chroma,
 #info-chroma {
-  background-repeat: no-repeat, repeat;
-  background-size: contain;
-  background-position: center center;
+    background-repeat: no-repeat, repeat;
+    background-size: contain;
+    background-position: center center;
 }
 
 [id|="test-chroma"] {
-  background-image: var(--test-chroma-background);
-  background-repeat: repeat;
-  background-size: contain;
-  background-position: center;
+    background-image: var(--test-chroma-background);
+    background-repeat: repeat;
+    background-size: contain;
+    background-position: center;
 }
+
 
 /* btn */
 
 #start-chroma-btn,
 #info-chroma-btn {
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  position: absolute;
-  width: 12em;
-  height: 4em;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: absolute;
+    width: var(--btn-large-width);
+    height: var(--btn-large-height);
 }
 
 #start-chroma-btn {
-  background-image: var(--start-chroma-button-next);
-  left: 50%;
-  transform: translate(-50%, 0);
-  bottom: 25%;
+    background-image: var(--start-chroma-button-next);
+    left: 50%;
+    transform: translate(-50%, 0);
+    bottom: 25%;
 }
 
 #info-chroma-btn {
-  background-image: var(--info-chroma-button-next);
-  left: 50%;
-  transform: translate(-50%, 0);
-  bottom: 10%;
+    background-image: var(--info-chroma-button-next);
+    left: 50%;
+    transform: translate(-50%, 0);
+    bottom: 10%;
 }
+
 
 /* ingame */
 
 [id|="test-chroma"] .title-chroma {
-  background-image: var(--test-chroma-title);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  position: relative;
-  width: 9em;
-  height: 3em;
-  left: 50%;
-  transform: translate(-50%, 0);
-  margin-top: 1em;
+    background-image: var(--test-chroma-title);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: relative;
+    width: 9em;
+    height: 3em;
+    left: 50%;
+    transform: translate(-50%, 0);
+    margin-top: 1em;
 }
 
 [id|="test-chroma"] .action-submit {
-  background-image: var(--test-chroma-button-submit);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  position: absolute;
-  width: 50%;
-  height: 2em;
-  left: 50%;
-  transform: translate(-50%, 0);
-  bottom: 5%;
+    background-image: var(--test-chroma-button-submit);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: absolute;
+    width: var(--btn-mid-width);
+    height: var(--btn-mid-height);
+    left: 50%;
+    transform: translate(-50%, 0);
+    bottom: 5%;
 }
 
+
 /* hue test */
+
 
 /* bg */
 
 #start-hue {
-  background-image: var(--start-hue-element), var(--start-hue-background);
+    background-image: var(--start-hue-element), var(--start-hue-background);
 }
 
 #info-hue {
-  background-image: var(--info-hue-element), var(--info-hue-background);
+    background-image: var(--info-hue-element), var(--info-hue-background);
 }
 
 #start-hue,
 #info-hue {
-  background-repeat: no-repeat, repeat;
-  background-size: contain;
-  background-position: center center;
+    background-repeat: no-repeat, repeat;
+    background-size: contain;
+    background-position: center center;
 }
 
 [id^="test-hue"] {
-  background-image: var(--test-hue-background);
-  background-repeat: repeat;
-  background-size: contain;
-  background-position: center;
+    background-image: var(--test-hue-background);
+    background-repeat: repeat;
+    background-size: contain;
+    background-position: center;
 }
+
 
 /* btn */
 
 #start-hue-btn,
 #info-hue-btn {
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  position: absolute;
-  width: 12em;
-  height: 4em;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: absolute;
+    width: var(--btn-large-width);
+    height: var(--btn-large-height);
 }
 
 #start-hue-btn {
-  background-image: var(--start-hue-button-submit);
-  bottom: 30%;
-  transform: translate(-50%, 0);
-  left: 50%;
+    background-image: var(--start-hue-button-submit);
+    bottom: 30%;
+    transform: translate(-50%, 0);
+    left: 50%;
 }
 
 #info-hue-btn {
-  background-image: var(--info-hue-button-next);
-  left: 50%;
-  transform: translate(-50%, 0);
-  bottom: 10%;
+    background-image: var(--info-hue-button-next);
+    left: 50%;
+    transform: translate(-50%, 0);
+    bottom: 10%;
 }
+
 
 /* ingame */
 
 [id|="test-hue"] .title-hue {
-  background-image: var(--test-hue-title);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  position: relative;
-  width: 9em;
-  height: 3em;
-  left: 50%;
-  transform: translate(-50%, 0);
-  margin-top: 1em;
+    background-image: var(--test-hue-title);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: relative;
+    width: 9em;
+    height: 3em;
+    left: 50%;
+    transform: translate(-50%, 0);
+    margin-top: 1em;
 }
 
-.menu {
-  position: absolute;
-  width: 100%;
-  height: 10%;
-  bottom: 0;
-  left: 50%;
-  transform: translate(-50%, 0);
-  max-width: 800px;
+[id |="test-hue"] .menu {
+    position: absolute;
+    width: 100%;
+    height: 10%;
+    bottom: 0;
+    max-width: 18em;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 
-[id|="test-hue"] .action-submit {
-  background-image: var(--test-hue-button-submit);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: left;
-  height: 2em;
+[id |="test-hue"] .action-view {
+    background-image: var(--test-hue-button-view);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: relative;
+    height: var(--btn-mid-height);
+    width: calc(var(--btn-mid-width) * 2);
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 
-[id|="test-hue"] .action-reset {
-  background-image: var(--test-hue-button-reset);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: right;
-  height: 2em;
+[id |="test-hue"] .action-reset {
+    background-image: var(--test-hue-button-reset);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: relative;
+    height: var(--btn-mid-height);
+    width: var(--btn-mid-width);
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 
-[id|="test-hue"] .action-view {
-  background-image: var(--test-hue-button-view);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  height: 2em;
+[id |="test-hue"] .action-submit {
+    background-image: var(--test-hue-button-submit);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: relative;
+    height: var(--btn-mid-height);
+    width: var(--btn-mid-width);
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+
+/* end */
+
+
+/* bg */
+
+#result-end {
+    background-image: var(--result-end-element), var(--result-end-background);
+    background-repeat: no-repeat, repeat;
+    background-size: contain;
+    background-position: center center;
 }
