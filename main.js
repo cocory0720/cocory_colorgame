@@ -11,6 +11,7 @@ import ChromaGame from "./modules/chroma_app.js";
  * 페이지의 높이를 다시 설정함.
  */
 window.addEventListener("DOMContentLoaded", function() {
+    console.log("!");
     setTimeout(scrollTo, 0, 0, 1);
     document.documentElement.style.setProperty(
         "--page-viewport-height",
