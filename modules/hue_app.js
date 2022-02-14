@@ -84,25 +84,35 @@ class Wheel {
     /** 색상 휠 그리기 */
     genWhl(ctx, rotate) {
         ctx.save();
-        ctx.strokeStyle = "#888";
-
         ctx.translate(this.x, this.y);
         this.rotate += rotate;
         ctx.rotate(this.rotate);
+
+        // 큰 배경 원
+        ctx.strokeStyle = "#888";
         ctx.beginPath();
         ctx.arc(0, 0, this.rad, 0, PI2, false);
         ctx.stroke();
         ctx.closePath();
+
+        // 작은 원형자리
         for (let i = 0; i < this.N; i++) {
+            /** 현재 자리의 중심의 x좌표 */
             const x = this.rad * Math.cos(GAMEINFO.getColorWheelAngles[i]);
+            /** 현재 자리의 중심의 y좌표 */
             const y = this.rad * Math.sin(GAMEINFO.getColorWheelAngles[i]);
+            /** 현재 자리의 반지름 */
             const r = this.rad * Math.sin(GAMEINFO.givenArr[i] ? GAMEINFO.getLargeCircle / 2 : GAMEINFO.getCommonCircle / 2);
+
+            // 막대사탕모양 그리기
             ctx.beginPath();
             ctx.moveTo(0, 0);
             ctx.lineTo(x * (1 - r / this.rad), y * (1 - r / this.rad));
             ctx.stroke();
             ctx.beginPath();
             ctx.arc(x, y, r, 0, PI2, false);
+
+            // 원형 자리 채우기
             if (GAMEINFO.selectedArr[i]) {
                 ctx.save();
                 ctx.fillStyle = GAMEINFO.selectedArr[i];
@@ -120,40 +130,95 @@ class Wheel {
         ctx.restore();
     }
 
+    /**
+     * 선택된 색상을 배치함.
+     * @param {*} posX 포인터 onUp된 x좌표
+     * @param {*} posY 포인터 onUp된 y좌표
+     * @param {*} selectedColor 선택된 색상의 컬러코드 (10진수)
+     * @returns 
+     */
     dropSelectedColor(posX, posY, selectedColor) {
+        /** 선택된 색상의 컬러코드 (16진수) */
         const selectedColorCode = ColorD2X(selectedColor);
+
         for (let i = 0; i < this.N; i++) {
+            /** 각 원형자리에 대하여 onUp이벤트가 발생한 위치와의 거리를 측정함 */
+
+            /** 현재 원형자리의 각도(회전값이 포함됨) */
             const targetAngle = this.rotate + GAMEINFO.getColorWheelAngles[i];
+            /** 현재 원형자리의 중심의 x좌표 */
             const x = this.rad * Math.cos(targetAngle);
+            /** 현재 원형자리의 중심의 y좌표 */
             const y = this.rad * Math.sin(targetAngle);
+            /** 현재 원형자리의 반지름 */
             const r = this.rad * Math.sin(GAMEINFO.givenArr[i] ? GAMEINFO.getLargeCircle / 2 : GAMEINFO.getCommonCircle / 2);
+            /** 색상 휠의 중심에 대하여, 발생한 포인터이벤트의 상대위치의 x좌표*/
             const relativeX = posX - this.x;
+            /** 색상 휠의 중심에 대하여, 발생한 포인터이벤트의 상대위치의 y좌표*/
             const relativeY = posY - this.y;
+
             if (dist(x, y, relativeX, relativeY) < r) { //this area has index of i
+                /** 현재 원형자리의 중심과 이벤트 발생 위치의 거리가 반지름보다 작은 경우 */
+
+                /** 현재 색상 버튼에 있는 색상들의 배열 */
                 const onBtnArr = GAMEINFO.optionArr;
+                /** 현재 색상 휠에 있는 색상들의 배열 */
                 const onWheelArr = GAMEINFO.selectedArr;
+                /** 현재 선택된 색상이 색상 버튼에서 온 색상인가? -1 : 그 자리의 index. */
                 const colorFromBtn = onBtnArr.indexOf(selectedColorCode);
+                /** 현재 선택된 색상이 색상 휠에서 온 색상인가? -1 : 그 자리의 index. */
                 const colorFromWheel = onWheelArr.indexOf(selectedColorCode);
-                if (onWheelArr[i] == false) { // if the area not already filled
+
+                if (onWheelArr[i] == false) {
+                    // 이벤트가 발생한 원형자리가 비어있을 경우
                     if (colorFromBtn != -1) { // if the color is from the button
+                        // 현재 선택된 색상이 색상 버튼에서 온 색상인 경우
+
+                        // 버튼에서 그 색상을 제거
                         onBtnArr.splice(colorFromBtn, 1);
-                    } else { // if the color is from the other area of the wheel
+
+                        // 선택된 자리를 선택한 색상으로 채움(덮어씀)
+                        onWheelArr[i] = selectedColorCode;
+                    } else {
+                        // 현재 선택된 색상이 색상 휠의 다른 자리에서 온 색상인 경우
+
+                        // 휠에서 그 색상을 제거
                         delete onWheelArr[colorFromWheel];
                         onWheelArr[colorFromWheel] = false;
+
+                        // 선택된 자리를 선택한 색상으로 채움(덮어씀)
+                        onWheelArr[i] = selectedColorCode;
                     }
-                } else { // if the area already filled
+                } else {
+                    // 이벤트가 발생한 원형자리가 채워져있을 경우
+
+                    // 일단, 채워져있는 그 색상이 테스트에서 주어진 색상인 경우 아무 동작도 하지 않음
                     if (GAMEINFO.givenArr.indexOf(onWheelArr[i]) != -1) return;
+
                     if (colorFromBtn != -1) {
+                        // 현재 선택된 색상이 색상 버튼에서 온 색상인 경우
+
+                        /**
+                         * 버튼에서 선택된 색상을 제거하고,
+                         * 그 자리에 채워져있던 색상을 버튼에 추가함.
+                         */
                         onBtnArr.splice(colorFromBtn, 1);
                         onBtnArr.push(onWheelArr[i]);
+
+                        // 선택된 자리를 선택한 색상으로 채움(덮어씀)
                         onWheelArr[i] = selectedColorCode;
-                    } else { // if the color is from the other area of the wheel
+                    } else {
+                        // 현재 선택된 색상이 색상 휠의 다른 자리에서 온 색상인 경우
+
+                        // 서로 위치를 바꿈
                         const temp = onWheelArr[i];
                         delete onWheelArr[colorFromWheel];
                         onWheelArr[colorFromWheel] = temp;
+                        // 선택된 자리를 선택한 색상으로 채움(덮어씀)
+                        onWheelArr[i] = selectedColorCode;
                     }
                 }
-                onWheelArr[i] = selectedColorCode;
+
                 return;
             }
         }
