@@ -254,6 +254,9 @@ class ClrBtns {
   }
 }
 
+/** 명도 말풍선을 구현하는 클래스
+ *  - 사용자에 의해 선택된 명도를 표시하기 위함
+ */
 class Picker {
   constructor(size) {
     this.h = size / 100; //ratio
@@ -337,16 +340,25 @@ export default class ValueGame {
     this.n = N; //명도 수
 
     //canvas
+    /** 현재 페이지의 canvas 객체의 HTML */
     this.canvas = query;
+    /** 현재 canvas 내 context */
     this.ctx = this.canvas.getContext("2d");
 
+    //현재 페이지 크기를 재조정할 시, canvas를 다시 그림
     window.addEventListener("resize", this.resize.bind(this), false);
+
+    /** canvas에 그려지는 요소들을 배치 */
     this.resize();
 
+    /** 포인터 이벤트가 발생한 x좌표 (단, canvas의 크기가 두 배임을 유의) */
     this.pointerX = 0;
+    /** 포인터 이벤트가 발생한 y좌표 (단, canvas의 크기가 두 배임을 유의) */
     this.pointerY = 0;
+    /** 사용자의 클릭 상태를 저장하는 변수 */
     this.isDown = false;
 
+    //포인터 이벤트 등록
     this.canvas.addEventListener("pointerdown", this.onDown.bind(this), false);
     this.canvas.addEventListener("pointermove", this.onMove.bind(this), false);
     this.canvas.addEventListener("pointerup", this.onUp.bind(this), false);
@@ -354,6 +366,7 @@ export default class ValueGame {
     this.animateRQ = window.requestAnimationFrame(this.animate.bind(this));
   }
 
+  /** canvas 크기를 정하고 그 안에 그려지는 요소들을 배치하는 함수 */
   resize() {
     this.stageWidth = 2 * (window.innerWidth < 1600 ? window.innerWidth : 1600);
     this.stageHeight =
@@ -370,6 +383,7 @@ export default class ValueGame {
     this.btnx =
       isWide === 1 ? this.stageWidth / 2 : this.ax + this.stageWidth / 16;
 
+    /** 현재 canvas 내에서 명도를 채워넣는 space를 그리는 객체 */
     this.Spaces = new Spaces(
       this.ax,
       this.spacex,
@@ -378,6 +392,7 @@ export default class ValueGame {
       this.n
     );
 
+    /** 현재 canvas 내에서 명도 btn을 그리는 객체 */
     this.ClrBtns = new ClrBtns(
       this.bx,
       this.btnx,
@@ -385,6 +400,8 @@ export default class ValueGame {
       this.stageHeight * 0.8,
       this.n
     );
+
+    /** 현재 canvas 내에서 선택한 명도를 보여주는 말풍선을 그리는 객체 */
     this.Picker = new Picker(100);
   }
   animate() {
@@ -411,7 +428,6 @@ export default class ValueGame {
     this.pointerX = 2 * e.offsetX;
     this.pointerY = 2 * e.offsetY;
     /**
-     * 사용자의 클릭 상태를 저장하는 변수
      * - onDown의 경우, 포인터가 클릭상태이므로 true
      */
     this.isDown = true;
