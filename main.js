@@ -15,14 +15,15 @@ import ChromaGame from "./modules/chroma_app.js";
  * 모바일 브라우저의 상단바에 의해, 페이지하단이 벗어나고 스크롤이 활성화되는 문제를 해결하기 위한 코드.
  * 페이지의 높이를 다시 설정함.
  */
-window.addEventListener("DOMContentLoaded", function() {
-    console.log("!");
-    setTimeout(scrollTo, 0, 0, 1);
-    document.documentElement.style.setProperty(
-        "--page-viewport-height",
-        `${window.innerHeight}px`
-    );
-});
+function setScreenSize() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--page-viewport-height', `${vh}px`);
+}
+
+window.addEventListener("DOMContentLoaded", () => setScreenSize());
+
+window.addEventListener('resize', () => setScreenSize());
+
 
 /* article 페이드 인/아웃 지속시간 */
 const FADE_OUT_TIME = 300; // 페이드 아웃

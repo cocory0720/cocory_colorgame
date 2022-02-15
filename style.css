@@ -98,11 +98,12 @@ body,
 main,
 article {
     width: 100%;
-    height: var(--page-viewport-height, 100%);
-    pointer-events: none;
+    height: calc(var(--page-viewport-height, 1vh) * 100);
     position: fixed;
     overflow: hidden;
     user-select: none;
+    touch-action: none;
+    pointer-events: none;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
 }
