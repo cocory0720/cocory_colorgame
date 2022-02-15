@@ -1,10 +1,15 @@
+// HTML/CSS/JS Code by JaeSuk Lee, Department of Electrical and Electronics Engineering, (https://github.com/jay-sogii)
+//
+// 본 저작물에 대한 저작, 배포, 활용 등에 대한 권리는 (주)코코리색채연구소의 승인을 얻어야 가능합니다.
+//
+//
+//
+
 import GAMEINFO from "./game_dataset.js";
 import HueGame from "./modules/hue_app.js";
 import ValueGame from "./modules/value_app.js";
 import FitGame from "./modules/fit_app.js";
 import ChromaGame from "./modules/chroma_app.js";
-
-
 
 /**
  * 모바일 브라우저의 상단바에 의해, 페이지하단이 벗어나고 스크롤이 활성화되는 문제를 해결하기 위한 코드.
@@ -17,27 +22,21 @@ window.addEventListener("DOMContentLoaded", function() {
         "--page-viewport-height",
         `${window.innerHeight}px`
     );
-})
-
-
+});
 
 /* article 페이드 인/아웃 지속시간 */
 const FADE_OUT_TIME = 300; // 페이드 아웃
 const DELAY_FOR_SUBMITTING = 500; // 테스트 종료시 딜레이
 const FADE_IN_TIME = 600; // 페이드 인
 
-
-
-/** 
+/**
  *  @param {object} class 각 모듈에서 선언된 클래스를 담을 변수
  *  main.js 에서 호출하는 각 클래스의 메소드는 다음과 같음
  *  1. currentContext.canvas : 테스트를 구현할 HTML객체를 담은 [변수 (HTML쿼리)]
- *  2. currentContext.grade???Game : 각 테스트 제출 후 시간에 따른 점수 부여를 위한 [함수], submit()에서 사용 
+ *  2. currentContext.grade???Game : 각 테스트 제출 후 시간에 따른 점수 부여를 위한 [함수], submit()에서 사용
  *  3. currentContext.delAllReq : 테스트 종료 후, 모듈에서 등록한 이벤트리스너와 Animation Requestes를 제거하기위한 [함수]
  */
 let currentContext;
-
-
 
 /** class = "action-next" 의 동작을 위한 함수.
  * 매개변수가 가리키는 HTML 객체의 자식 중 .action-next 클래스를 사용하는 객체에 클릭 이벤트리스너를 등록함.
@@ -48,8 +47,6 @@ function initBtns(id) {
     $(document).one("click", `#${id} .action-next`, showNextArticle);
 }
 initBtns("start-main"); // 첫 페이지를 위함
-
-
 
 /** 다음 article로 넘어가기 위한 함수.
  * @param {object} e 다음 페이지로 넘어가기 위해 발생한 이벤트, 혹은 그것의 타겟
@@ -164,7 +161,6 @@ function showNextArticle(e) {
                         break;
 
                     case "test-value-1":
-                        changeBGColor();
                         currentContext = new ValueGame(
                             document.querySelector("#canvasValue1"),
                             10
@@ -173,7 +169,6 @@ function showNextArticle(e) {
                         break;
 
                     case "test-value-2":
-                        changeBGColor();
                         currentContext = new ValueGame(
                             document.querySelector("#canvasValue2"),
                             20
@@ -186,7 +181,6 @@ function showNextArticle(e) {
                         break;
 
                     case "test-chroma-1":
-                        changeBGColor();
                         currentContext = new ChromaGame(
                             document.querySelector("#canvasChroma1"),
                             10
@@ -195,7 +189,6 @@ function showNextArticle(e) {
                         break;
 
                     case "test-chroma-2":
-                        // changeBGColor();
                         currentContext = new ChromaGame(
                             document.querySelector("#canvasChroma2"),
                             10
@@ -204,7 +197,6 @@ function showNextArticle(e) {
                         break;
 
                     case "test-chroma-3":
-                        // changeBGColor();
                         currentContext = new ChromaGame(
                             document.querySelector("#canvasChroma3"),
                             12
@@ -213,7 +205,6 @@ function showNextArticle(e) {
                         break;
 
                     case "test-chroma-4":
-                        // changeBGColor();
                         currentContext = new ChromaGame(
                             document.querySelector("#canvasChroma4"),
                             12
@@ -270,20 +261,23 @@ function showNextArticle(e) {
     // }
 }
 
+
 // class = "timer" : Show remaining time
 // class = "action-submit" : Score current result
 let remainTime = 0; /****** 남은 시간 ******/
 function startGame() {
-
-    showRemainTime();
     remainTime = 0;
     remainTime += GAMEINFO.timeLimit + FADE_IN_TIME / 1000;
     let timer = setInterval(function() {
-        if (remainTime < 0.01) {
+        showRemainTime();
+        if (remainTime <= 0.01) {
+            remainTime = 0;
+            showRemainTime();
             $(document).off("click", ".action-submit");
-            submit(0);
+            submit(remainTime);
             clearInterval(timer);
         }
+
         remainTime -= 0.01;
     }, 10);
 
@@ -294,11 +288,9 @@ function startGame() {
 }
 
 function showRemainTime() {
-    setInterval(() => {
-        $(`#test-${GAMEINFO.currentGame}-${GAMEINFO.currentStage} .timer`).text(
-            `${remainTime.toFixed(2)}초`
-        );
-    }, 10);
+    $(`#test-${GAMEINFO.currentGame}-${GAMEINFO.currentStage} .timer`).text(
+        `${remainTime.toFixed(2)}초`
+    );
 }
 
 function submit(time) {
@@ -329,26 +321,21 @@ function submit(time) {
     console.log(GAMEINFO.TOTAL_SCORE);
 }
 
-function changeBGColor() {
-    const htmlTag = document.querySelector("html");
-    const bodyTag = document.querySelector("body");
-
-    htmlTag.style.backgroundColor = "transparent";
-    bodyTag.style.backgroundColor = "transparent";
-}
-
 /* 테스트 현재 진행상황을 보여주는 상단바(동작 안함)
 const totalNumberOfStage =
-    Object.keys(GAMEINFO.hue).filter(key => key.search(/\d/) != -1).length +
-    Object.keys(GAMEINFO.value).filter(key => key.search(/\d/) != -1).length +
-    Object.keys(GAMEINFO.chroma).filter(key => key.search(/\d/) != -1).length +
-    Object.keys(GAMEINFO.fit).filter(key => key.search(/\d/) != -1).length;
+  Object.keys(GAMEINFO.hue).filter((key) => key.search(/\d/) != -1).length +
+  Object.keys(GAMEINFO.value).filter((key) => key.search(/\d/) != -1).length +
+  Object.keys(GAMEINFO.chroma).filter((key) => key.search(/\d/) != -1).length +
+  Object.keys(GAMEINFO.fit).filter((key) => key.search(/\d/) != -1).length;
 
 let currentProgress = -1;
 
-function showCurrntStage() {
-    currentProgress++;
-    $("#navbar").attr("style", `--navbar-width : ${currentProgress/totalNumberOfStage * 100}`);
+function showCurrentStage() {
+  currentProgress++;
+  $("#navbar").attr(
+    "style",
+    `--navbar-width : ${(currentProgress / totalNumberOfStage) * 100}`
+  );
 }
 showCurrntStage();
 */
