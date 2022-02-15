@@ -1,15 +1,12 @@
 /********************** LICENSE TO CODE **********************
  * MIT License
  * Copyright (c) 2022 이재석 건국대학교 전기전자공학부
- * 
+ *
  * Caution : The contents of. Check LICENSE or README.
  */
 
-
 import GAMEINFO, { PI2, ColorD2X, ColorX2RGBA, dist } from "../game_dataset.js";
 import { FADE_OUT_TIME, DELAY_FOR_SUBMITTING } from "../main.js";
-
-
 
 /**
  * 둥근 정사각형 그리기
@@ -19,7 +16,6 @@ import { FADE_OUT_TIME, DELAY_FOR_SUBMITTING } from "../main.js";
  * @param {*} d (둥글지 않은 사각형 기준) 각 변의 길이
  */
 function radicalRect(ctx, x, y, d) {
-
     /** 버튼 모서리 둥글기 (버튼 폭에 대한 비율) */
     const BDR_RADIUS_RATIO = 0.1;
 
@@ -61,8 +57,6 @@ function radicalRect(ctx, x, y, d) {
     ctx.closePath();
 }
 
-
-
 /** 색상 휠 구현. GAMEINFO.selectedArr 배열의 내용을 표시함. */
 class Wheel {
     /**
@@ -84,51 +78,83 @@ class Wheel {
     /** 색상 휠 그리기 */
     genWhl(ctx, rotate) {
         ctx.save();
+        ctx.strokeStyle = "#888";
+
         ctx.translate(this.x, this.y);
         this.rotate += rotate;
         ctx.rotate(this.rotate);
-
-        // 큰 배경 원
-        ctx.strokeStyle = "#888";
         ctx.beginPath();
         ctx.arc(0, 0, this.rad, 0, PI2, false);
         ctx.stroke();
         ctx.closePath();
-
-        // 작은 원형자리
         for (let i = 0; i < this.N; i++) {
-            /** 현재 자리의 중심의 x좌표 */
             const x = this.rad * Math.cos(GAMEINFO.getColorWheelAngles[i]);
-            /** 현재 자리의 중심의 y좌표 */
             const y = this.rad * Math.sin(GAMEINFO.getColorWheelAngles[i]);
-            /** 현재 자리의 반지름 */
-            const r = this.rad * Math.sin(GAMEINFO.givenArr[i] ? GAMEINFO.getLargeCircle / 2 : GAMEINFO.getCommonCircle / 2);
-
-            // 막대사탕모양 그리기
+            const r =
+                this.rad *
+                Math.sin(
+                    GAMEINFO.givenArr[i] ?
+                    GAMEINFO.getLargeCircle / 2 :
+                    GAMEINFO.getCommonCircle / 2
+                );
             ctx.beginPath();
             ctx.moveTo(0, 0);
             ctx.lineTo(x * (1 - r / this.rad), y * (1 - r / this.rad));
             ctx.stroke();
             ctx.beginPath();
             ctx.arc(x, y, r, 0, PI2, false);
-
-            // 원형 자리 채우기
             if (GAMEINFO.selectedArr[i]) {
                 ctx.save();
-                ctx.fillStyle = GAMEINFO.selectedArr[i];
-                ctx.fill();
-                ctx.restore();
-            } else {
-                ctx.save();
-                ctx.fillStyle = "#eee";
-                ctx.fill();
+                ctx.translate(this.x, this.y);
+                this.rotate += rotate;
+                ctx.rotate(this.rotate);
+
+                // 큰 배경 원
+                ctx.strokeStyle = "#888";
+                ctx.beginPath();
+                ctx.arc(0, 0, this.rad, 0, PI2, false);
+                ctx.stroke();
+                ctx.closePath();
+
+                // 작은 원형자리
+                for (let i = 0; i < this.N; i++) {
+                    /** 현재 자리의 중심의 x좌표 */
+                    const x = this.rad * Math.cos(GAMEINFO.getColorWheelAngles[i]);
+                    /** 현재 자리의 중심의 y좌표 */
+                    const y = this.rad * Math.sin(GAMEINFO.getColorWheelAngles[i]);
+                    /** 현재 자리의 반지름 */
+                    const r = this.rad * Math.sin(GAMEINFO.givenArr[i] ? GAMEINFO.getLargeCircle / 2 : GAMEINFO.getCommonCircle / 2);
+
+                    // 막대사탕모양 그리기
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(x * (1 - r / this.rad), y * (1 - r / this.rad));
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.arc(x, y, r, 0, PI2, false);
+
+                    // 원형 자리 채우기
+                    if (GAMEINFO.selectedArr[i]) {
+                        ctx.save();
+                        ctx.fillStyle = GAMEINFO.selectedArr[i];
+                        ctx.fill();
+                        ctx.restore();
+                    } else {
+                        ctx.save();
+                        ctx.fillStyle = "#eee";
+                        ctx.fill();
+                        ctx.restore();
+                        ctx.stroke();
+                    }
+                    ctx.closePath();
+                }
                 ctx.restore();
                 ctx.stroke();
             }
             ctx.closePath();
         }
-        ctx.restore();
     }
+
 
     /**
      * 선택된 색상을 배치함.
@@ -229,24 +255,38 @@ class Wheel {
             GAMEINFO.selectedArr[colorFromWheel] = false;
             GAMEINFO.optionArr.push(selectedColorCode);
         }
+        onWheelArr[i] = selectedColorCode;
+        return;
     }
+
+
 
     /** (사용되지 않음) 틀린 색상을 표시함 */
     showWhatWasWrong(ctx, indexes) {
-        const req = window.requestAnimationFrame(this.showWhatWasWrong.bind(this, ctx, indexes));
+        const req = window.requestAnimationFrame(
+            this.showWhatWasWrong.bind(this, ctx, indexes)
+        );
         const FADE_VALOCITY = 8;
         this.fadeAnimation["delay"] += 8;
-        indexes.forEach(index => {
+        indexes.forEach((index) => {
             if (this.fadeAnimation[index] == undefined) this.fadeAnimation[index] = 1;
             const targetAngle = this.rotate + GAMEINFO.getColorWheelAngles[index];
             const x = this.rad * Math.cos(targetAngle);
             const y = this.rad * Math.sin(targetAngle);
-            const r = this.rad * Math.sin(GAMEINFO.givenArr[index] ? GAMEINFO.getLargeCircle / 2 : GAMEINFO.getCommonCircle / 2);
+            const r =
+                this.rad *
+                Math.sin(
+                    GAMEINFO.givenArr[index] ?
+                    GAMEINFO.getLargeCircle / 2 :
+                    GAMEINFO.getCommonCircle / 2
+                );
             ctx.save();
             ctx.translate(this.x, this.y);
             ctx.shadowColor = "rgba(0,0,0,0.6)";
             ctx.shadowBlur = 7;
-            ctx.strokeStyle = ColorX2RGBA(GAMEINFO.answerArr[index]) + `${this.fadeAnimation[index]/255}`;
+            ctx.strokeStyle =
+                ColorX2RGBA(GAMEINFO.answerArr[index]) +
+                `${this.fadeAnimation[index] / 255}`;
             ctx.lineWidth = 8;
             ctx.beginPath();
             ctx.moveTo(0, 0);
@@ -257,13 +297,13 @@ class Wheel {
             ctx.stroke();
             ctx.closePath();
             ctx.restore();
-            if (this.fadeAnimation[index] < 255) this.fadeAnimation[index] += FADE_VALOCITY;
+            if (this.fadeAnimation[index] < 255)
+                this.fadeAnimation[index] += FADE_VALOCITY;
         });
-        if (this.fadeAnimation["delay"] >= FADE_OUT_TIME) window.cancelAnimationFrame(req);
+        if (this.fadeAnimation["delay"] >= FADE_OUT_TIME)
+            window.cancelAnimationFrame(req);
     }
 }
-
-
 
 /** 색상 버튼 구현. GAMEINFO.optionArr 내용을 구현함. */
 class ClrBtns {
@@ -279,10 +319,10 @@ class ClrBtns {
         ctx.translate(0, 0);
         /** 버튼간 간격 (전체 높이에 대한 비율) */
         const MRG_RATIO = 0.2;
-        const row = (this.N <= 10) ? 2 : (this.N <= 20) ? 3 : 4;
+        const row = this.N <= 10 ? 2 : this.N <= 20 ? 3 : 4;
         const col = 2 * row;
-        const d = (1 - MRG_RATIO) * (this.y2 - this.y1) / col;
-        const mrg = (this.y2 - this.y1) * MRG_RATIO / (col - 1);
+        const d = ((1 - MRG_RATIO) * (this.y2 - this.y1)) / col;
+        const mrg = ((this.y2 - this.y1) * MRG_RATIO) / (col - 1);
         let index = 0;
         for (let i = 0; i < row; i++) {
             for (let j = 0; j < col; j++) {
@@ -299,8 +339,6 @@ class ClrBtns {
         ctx.restore();
     }
 }
-
-
 
 /** 색상 말풍선 구현. 현재 선택되어있는 색상을 표시함 */
 class Picker {
@@ -319,13 +357,34 @@ class Picker {
             ctx.bezierCurveTo(bdr_h, bdr_h / 2, bdr_h, bdr_h, bdr_h, bdr_h);
             ctx.bezierCurveTo(0, bdr_h, 0, bdr_h * 2, 0, bdr_h * 2);
             ctx.lineTo(0, bdr_h * 2 + bbl_h);
-            ctx.bezierCurveTo(0, bdr_h * 3 + bbl_h, bdr_h, bdr_h * 3 + bbl_h, bdr_h, bdr_h * 3 + bbl_h);
+            ctx.bezierCurveTo(
+                0,
+                bdr_h * 3 + bbl_h,
+                bdr_h,
+                bdr_h * 3 + bbl_h,
+                bdr_h,
+                bdr_h * 3 + bbl_h
+            );
             ctx.lineTo(bdr_h + bbl_h, bdr_h * 3 + bbl_h);
-            ctx.bezierCurveTo(bdr_h * 2 + bbl_h, bdr_h * 3 + bbl_h, bdr_h * 2 + bbl_h, bdr_h * 2 + bbl_h, bdr_h * 2 + bbl_h, bdr_h * 2 + bbl_h);
+            ctx.bezierCurveTo(
+                bdr_h * 2 + bbl_h,
+                bdr_h * 3 + bbl_h,
+                bdr_h * 2 + bbl_h,
+                bdr_h * 2 + bbl_h,
+                bdr_h * 2 + bbl_h,
+                bdr_h * 2 + bbl_h
+            );
             ctx.lineTo(bdr_h * 2 + bbl_h, bdr_h * 2);
-            ctx.bezierCurveTo(bdr_h * 2 + bbl_h, bdr_h, bdr_h + bbl_h, bdr_h, bdr_h + bbl_h, bdr_h);
+            ctx.bezierCurveTo(
+                bdr_h * 2 + bbl_h,
+                bdr_h,
+                bdr_h + bbl_h,
+                bdr_h,
+                bdr_h + bbl_h,
+                bdr_h
+            );
             ctx.lineTo(bdr_h * 2, bdr_h);
-            ctx.bezierCurveTo(bdr_h * 3 / 2, 0, 0, 0, 0, 0);
+            ctx.bezierCurveTo((bdr_h * 3) / 2, 0, 0, 0, 0, 0);
             ctx.stroke();
             ctx.closePath();
 
@@ -339,8 +398,6 @@ class Picker {
     }
 }
 
-
-
 /** 색상 테스트 모듈 */
 export default class HueGame {
     /**
@@ -348,7 +405,6 @@ export default class HueGame {
      * @param {*} N 테스트에서 사용되는 색상 수
      */
     constructor(query, N) {
-
         /** 현재 스테이지 */
         this.currentStage = N <= 10 ? 1 : N <= 20 ? 2 : 3;
 
@@ -377,7 +433,7 @@ export default class HueGame {
         /** 포인터 이벤트가 발생한 y좌표. 캔버스의 크기가 두배임에 유의. */
         this.pointerY = 0;
 
-        /** 포인터 이벤트가 색상 휠 안쪽부분에서 발생 할 경우, 
+        /** 포인터 이벤트가 색상 휠 안쪽부분에서 발생 할 경우,
          * 색상 배치와 휠 회전을 구현하기 위함 */
         this.isDownOnWheel = false;
 
@@ -393,8 +449,12 @@ export default class HueGame {
         this.animateRQ = window.requestAnimationFrame(this.animate.bind(this));
 
         // 전체보기와 리셋 버튼
-        $('.action-reset').off("click").click((e) => this.reset(e.target));
-        $('.action-view').off("click").click(() => this.viewAll());
+        $(".action-reset")
+            .off("click")
+            .click(() => this.reset());
+        $(".action-view")
+            .off("click")
+            .click(() => this.viewAll());
 
         /** 전체보기 상태인 경우에 홀수, 토글 구현을 위해 (값 % 2)를 이용 */
         this.isViewAll = 0;
@@ -410,8 +470,9 @@ export default class HueGame {
          * 선택된 색상의 컬러코드(10진수). 변형된 색상인지 확인함.
          * @param {number} color R *256^2 + G *256 + B 로 이루어진 10진수 코드
          */
-    set clickedColor(color) { // color corruption hazard control
-        if ((color == 0) || (GAMEINFO.answerArr.indexOf(ColorD2X(color)) != -1)) {
+    set clickedColor(color) {
+        // color corruption hazard control
+        if (color == 0 || GAMEINFO.answerArr.indexOf(ColorD2X(color)) != -1) {
             this._clickedColor = color;
         } else {
             return;
@@ -425,7 +486,8 @@ export default class HueGame {
         /** 캔버스의 크기는 css로 정한 크기의 2배임. */
         this.stageWidth = 2 * (window.innerWidth < 1600 ? window.innerWidth : 1600);
         /** 캔버스의 크기는 css로 정한 크기의 2배임. */
-        this.stageHeight = 2 * (window.innerHeight < 900 ? window.innerHeight : 900);
+        this.stageHeight =
+            2 * (window.innerHeight < 900 ? window.innerHeight : 900);
         this.canvas.width = this.stageWidth;
         this.canvas.height = this.stageHeight;
 
@@ -453,12 +515,14 @@ export default class HueGame {
             this.centerOfWheelX = center[0] - this.stageWidth / 12 - 40;
 
             /** 색상 버튼의 왼쪽 상단 모서리의 가로위치 */
-            this.btnOffsetX = center[0] + this.radiusOfWheel / 2 + this.stageWidth / 12;
+            this.btnOffsetX =
+                center[0] + this.radiusOfWheel / 2 + this.stageWidth / 12;
 
             // PC화면 크기에서는 전체보기 기능 불필요
-            const viewBtn = $(`#test-${GAMEINFO.currentGame}-${GAMEINFO.currentStage} .action-view`);
+            const viewBtn = $(
+                `#test-${GAMEINFO.currentGame}-${GAMEINFO.currentStage} .action-view`
+            );
             viewBtn.css("display", "none");
-
         } else {
             // Mobile
 
@@ -469,7 +533,6 @@ export default class HueGame {
             this.btnOffsetX = center[0] + this.stageWidth / 2 - this.widthOfBtns;
 
             this.centerOfWheelX = this.btnOffsetX - this.radiusOfWheel - 60;
-
         }
 
         /** 현재 캔버스의 색상 휠을 그리는 객체 */
@@ -477,8 +540,8 @@ export default class HueGame {
             this.centerOfWheelX,
             this.centerOfWheelY,
             this.radiusOfWheel,
-            this.n,
-        )
+            this.n
+        );
 
         /** 현재 캔버스의 색상 버튼들을 그리는 객체 */
         this.ClrBtns = new ClrBtns( // (x, y1 = center - w, y2 = center + w, N)
@@ -486,13 +549,11 @@ export default class HueGame {
             this.stageHeight / 2 - this.widthOfBtns,
             this.stageHeight / 2 + this.widthOfBtns,
             this.n
-        )
+        );
 
         /** 현재 캔버스에서 선택한 색상을 보여주는 말풍선을 그리는 객체 */
         this.Picker = new Picker(this.widthOfBtns / 3);
-
     }
-
 
     animate() {
         this.animateRQ = window.requestAnimationFrame(this.animate.bind(this));
@@ -501,20 +562,36 @@ export default class HueGame {
 
         this.Wheel.genWhl(this.ctx, this.rotate);
         this.ClrBtns.genBtns(this.ctx);
-        this.Picker.genBubl(this.ctx, this.pointerX, this.pointerY, this.clickedColor);
+        this.Picker.genBubl(
+            this.ctx,
+            this.pointerX,
+            this.pointerY,
+            this.clickedColor
+        );
     }
 
     onDown(e) {
         this.pointerX = 2 * e.offsetX;
         this.pointerY = 2 * e.offsetY;
-        if (dist(this.pointerX, this.pointerY, this.centerOfWheelX, this.centerOfWheelY) < this.radiusOfWheel * 0.93) {
+        if (
+            dist(
+                this.pointerX,
+                this.pointerY,
+                this.centerOfWheelX,
+                this.centerOfWheelY
+            ) <
+            this.radiusOfWheel * 0.93
+        ) {
             this.isDownOnWheel = true;
             this.rotate = 0;
         } else {
             let pickColor = 0;
-            this.ctx.getImageData(this.pointerX, this.pointerY, 1, 1).data.slice(0, 3).forEach((RGBs, i) => {
-                pickColor += RGBs * Math.pow(256, 2 - i);
-            });
+            this.ctx
+                .getImageData(this.pointerX, this.pointerY, 1, 1)
+                .data.slice(0, 3)
+                .forEach((RGBs, i) => {
+                    pickColor += RGBs * Math.pow(256, 2 - i);
+                });
             // refuse to select fixed color
             if (GAMEINFO.givenArr.indexOf(ColorD2X(pickColor)) != -1) {
                 pickColor = 0;
@@ -525,8 +602,15 @@ export default class HueGame {
 
     onMove(e) {
         if (this.isDownOnWheel) {
-            this.rotate = Math.atan2(2 * e.offsetY - this.centerOfWheelY, 2 * e.offsetX - this.centerOfWheelX) -
-                Math.atan2(this.pointerY - this.centerOfWheelY, this.pointerX - this.centerOfWheelX);
+            this.rotate =
+                Math.atan2(
+                    2 * e.offsetY - this.centerOfWheelY,
+                    2 * e.offsetX - this.centerOfWheelX
+                ) -
+                Math.atan2(
+                    this.pointerY - this.centerOfWheelY,
+                    this.pointerX - this.centerOfWheelX
+                );
         }
         this.pointerX = 2 * e.offsetX;
         this.pointerY = 2 * e.offsetY;
@@ -540,7 +624,7 @@ export default class HueGame {
                 this.pointerX,
                 this.pointerY,
                 this.clickedColor
-            )
+            );
         }
         this.isDownOnWheel = false;
         this.clickedColor = 0;
@@ -552,11 +636,19 @@ export default class HueGame {
         switch (this.isViewAll % 2) {
             case 1:
                 window.removeEventListener("resize", this.resize.bind(this), false);
-                this.canvas.removeEventListener("pointerdown", this.onDown.bind(this), false);
+                this.canvas.removeEventListener(
+                    "pointerdown",
+                    this.onDown.bind(this),
+                    false
+                );
                 break;
             case 0:
                 window.addEventListener("resize", this.resize.bind(this), false);
-                this.canvas.addEventListener("pointerdown", this.onDown.bind(this), false);
+                this.canvas.addEventListener(
+                    "pointerdown",
+                    this.onDown.bind(this),
+                    false
+                );
                 break;
             default:
                 break;
@@ -566,43 +658,45 @@ export default class HueGame {
     viewAllAnimate() {
         const req = window.requestAnimationFrame(this.viewAllAnimate.bind(this));
         const VALOCITY = 1;
-        const curve = 1 + (this.t_veiwAll - 30) * (this.t_veiwAll - 30) * (this.t_veiwAll - 30) / 27000; // 0~1
-        const curveInverse = this.t_veiwAll * this.t_veiwAll * this.t_veiwAll / 27000;
+        const curve =
+            1 +
+            ((this.t_veiwAll - 30) * (this.t_veiwAll - 30) * (this.t_veiwAll - 30)) /
+            27000; // 0~1
+        const curveInverse =
+            (this.t_veiwAll * this.t_veiwAll * this.t_veiwAll) / 27000;
         if (this.isViewAll % 2 == 1) {
             this.t_veiwAll += VALOCITY;
-            this.Wheel.x = this.centerOfWheelX * (1 - curve) + this.stageWidth / 2 * curve;
-            this.Wheel.rad = this.radiusOfWheel * (1 - curve) + (this.stageWidth / 2 - 100) * curve;
+            this.Wheel.x =
+                this.centerOfWheelX * (1 - curve) + (this.stageWidth / 2) * curve;
+            this.Wheel.rad =
+                this.radiusOfWheel * (1 - curve) + (this.stageWidth / 2 - 100) * curve;
             this.ClrBtns.x = this.btnOffsetX * (1 - curve) + this.stageWidth * curve;
         } else {
             this.t_veiwAll -= VALOCITY;
-            this.Wheel.x = this.centerOfWheelX * (1 - curveInverse) + this.stageWidth / 2 * curveInverse;
-            this.Wheel.rad = this.radiusOfWheel * (1 - curveInverse) + (this.stageWidth / 2 - 100) * curveInverse;
-            this.ClrBtns.x = this.btnOffsetX * (1 - curveInverse) + this.stageWidth * curveInverse;
+            this.Wheel.x =
+                this.centerOfWheelX * (1 - curveInverse) +
+                (this.stageWidth / 2) * curveInverse;
+            this.Wheel.rad =
+                this.radiusOfWheel * (1 - curveInverse) +
+                (this.stageWidth / 2 - 100) * curveInverse;
+            this.ClrBtns.x =
+                this.btnOffsetX * (1 - curveInverse) + this.stageWidth * curveInverse;
         }
-        this.t_veiwAll = (this.t_veiwAll >= 30) ? 30 :
-            (this.t_veiwAll >= 0) ? this.t_veiwAll : 0;
-        if (this.t_veiwAll == 0 || this.t_veiwAll == 30) window.cancelAnimationFrame(req);
+        this.t_veiwAll =
+            this.t_veiwAll >= 30 ? 30 : this.t_veiwAll >= 0 ? this.t_veiwAll : 0;
+        if (this.t_veiwAll == 0 || this.t_veiwAll == 30)
+            window.cancelAnimationFrame(req);
     }
 
-    reset(btn) {
-        this.sure4Reset += 1;
-        switch (this.sure4Reset % 2) {
-            case 1:
-                $(btn).text("정말 리셋할까요?");
-                break;
-            case 0:
-                GAMEINFO.initCurrentGame("hue", this.currentStage);
-                $(btn).text("리셋");
-                break;
-            default:
-                break;
-        }
+    reset() {
+        GAMEINFO.initCurrentGame("hue", this.currentStage);
     }
 
     gradeHueGame() {
         if (!this.isWide && !(this.isViewAll % 2)) {
-            $(`#test-${GAMEINFO.currentGame}-${GAMEINFO.currentStage} .menu`)
-                .fadeOut(120);
+            $(`#test-${GAMEINFO.currentGame}-${GAMEINFO.currentStage} .menu`).fadeOut(
+                120
+            );
             this.viewAll();
             setTimeout(() => {
                 this.viewAll();
@@ -620,16 +714,29 @@ export default class HueGame {
                 }
             }
         });
-        // this.Wheel.showWhatWasWrong(this.ctx, this.wrongIndex); 
+        // this.Wheel.showWhatWasWrong(this.ctx, this.wrongIndex);
         // 함수를 사용하지 않음 : 오답을 알려주지 않는 방향으로 게임 설계.
-        if (corrAns == (GAMEINFO.answerArr.length - GAMEINFO.givenArr.filter(el => el != false).length)) return true;
+        if (
+            corrAns ==
+            GAMEINFO.answerArr.length -
+            GAMEINFO.givenArr.filter((el) => el != false).length
+        )
+            return true;
         else return false;
     }
 
     delAllReq() {
         window.removeEventListener("resize", this.resize.bind(this), false);
-        this.canvas.removeEventListener("pointerdown", this.onDown.bind(this), false);
-        this.canvas.removeEventListener("pointermove", this.onMove.bind(this), false);
+        this.canvas.removeEventListener(
+            "pointerdown",
+            this.onDown.bind(this),
+            false
+        );
+        this.canvas.removeEventListener(
+            "pointermove",
+            this.onMove.bind(this),
+            false
+        );
         this.canvas.removeEventListener("pointerup", this.onUp.bind(this), false);
         window.cancelAnimationFrame(this.animateRQ);
     }
