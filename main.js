@@ -154,7 +154,6 @@ function showNextArticle(e) {
                         break;
 
                     case "test-value-1":
-                        changeBGColor();
                         currentContext = new ValueGame(
                             document.querySelector("#canvasValue1"),
                             10
@@ -163,7 +162,6 @@ function showNextArticle(e) {
                         break;
 
                     case "test-value-2":
-                        changeBGColor();
                         currentContext = new ValueGame(
                             document.querySelector("#canvasValue2"),
                             20
@@ -176,7 +174,6 @@ function showNextArticle(e) {
                         break;
 
                     case "test-chroma-1":
-                        changeBGColor();
                         currentContext = new ChromaGame(
                             document.querySelector("#canvasChroma1"),
                             10
@@ -185,7 +182,6 @@ function showNextArticle(e) {
                         break;
 
                     case "test-chroma-2":
-                        // changeBGColor();
                         currentContext = new ChromaGame(
                             document.querySelector("#canvasChroma2"),
                             10
@@ -194,7 +190,6 @@ function showNextArticle(e) {
                         break;
 
                     case "test-chroma-3":
-                        // changeBGColor();
                         currentContext = new ChromaGame(
                             document.querySelector("#canvasChroma3"),
                             12
@@ -203,7 +198,6 @@ function showNextArticle(e) {
                         break;
 
                     case "test-chroma-4":
-                        // changeBGColor();
                         currentContext = new ChromaGame(
                             document.querySelector("#canvasChroma4"),
                             12
