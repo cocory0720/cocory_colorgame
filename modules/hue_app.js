@@ -78,50 +78,81 @@ class Wheel {
     /** 색상 휠 그리기 */
     genWhl(ctx, rotate) {
         ctx.save();
+        ctx.strokeStyle = "#888";
+
         ctx.translate(this.x, this.y);
         this.rotate += rotate;
         ctx.rotate(this.rotate);
-
-        // 큰 배경 원
-        ctx.strokeStyle = "#888";
         ctx.beginPath();
         ctx.arc(0, 0, this.rad, 0, PI2, false);
         ctx.stroke();
         ctx.closePath();
-
-        // 작은 원형자리
         for (let i = 0; i < this.N; i++) {
-            /** 현재 자리의 중심의 x좌표 */
             const x = this.rad * Math.cos(GAMEINFO.getColorWheelAngles[i]);
-            /** 현재 자리의 중심의 y좌표 */
             const y = this.rad * Math.sin(GAMEINFO.getColorWheelAngles[i]);
-            /** 현재 자리의 반지름 */
-            const r = this.rad * Math.sin(GAMEINFO.givenArr[i] ? GAMEINFO.getLargeCircle / 2 : GAMEINFO.getCommonCircle / 2);
-
-            // 막대사탕모양 그리기
+            const r =
+                this.rad *
+                Math.sin(
+                    GAMEINFO.givenArr[i] ?
+                    GAMEINFO.getLargeCircle / 2 :
+                    GAMEINFO.getCommonCircle / 2
+                );
             ctx.beginPath();
             ctx.moveTo(0, 0);
             ctx.lineTo(x * (1 - r / this.rad), y * (1 - r / this.rad));
             ctx.stroke();
             ctx.beginPath();
             ctx.arc(x, y, r, 0, PI2, false);
-
-            // 원형 자리 채우기
             if (GAMEINFO.selectedArr[i]) {
                 ctx.save();
-                ctx.fillStyle = GAMEINFO.selectedArr[i];
-                ctx.fill();
-                ctx.restore();
-            } else {
-                ctx.save();
-                ctx.fillStyle = "#eee";
-                ctx.fill();
+                ctx.translate(this.x, this.y);
+                this.rotate += rotate;
+                ctx.rotate(this.rotate);
+
+                // 큰 배경 원
+                ctx.strokeStyle = "#888";
+                ctx.beginPath();
+                ctx.arc(0, 0, this.rad, 0, PI2, false);
+                ctx.stroke();
+                ctx.closePath();
+
+                // 작은 원형자리
+                for (let i = 0; i < this.N; i++) {
+                    /** 현재 자리의 중심의 x좌표 */
+                    const x = this.rad * Math.cos(GAMEINFO.getColorWheelAngles[i]);
+                    /** 현재 자리의 중심의 y좌표 */
+                    const y = this.rad * Math.sin(GAMEINFO.getColorWheelAngles[i]);
+                    /** 현재 자리의 반지름 */
+                    const r = this.rad * Math.sin(GAMEINFO.givenArr[i] ? GAMEINFO.getLargeCircle / 2 : GAMEINFO.getCommonCircle / 2);
+
+                    // 막대사탕모양 그리기
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(x * (1 - r / this.rad), y * (1 - r / this.rad));
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.arc(x, y, r, 0, PI2, false);
+
+                    // 원형 자리 채우기
+                    if (GAMEINFO.selectedArr[i]) {
+                        ctx.save();
+                        ctx.fillStyle = GAMEINFO.selectedArr[i];
+                        ctx.fill();
+                        ctx.restore();
+                    } else {
+                        ctx.save();
+                        ctx.fillStyle = "#eee";
+                        ctx.fill();
+                        ctx.restore();
+                        ctx.stroke();
+                    }
+                    ctx.closePath();
+                }
                 ctx.restore();
                 ctx.stroke();
             }
             ctx.closePath();
         }
-        ctx.restore();
     }
 
 
