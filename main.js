@@ -213,15 +213,17 @@ function showNextArticle(e) {
 // class = "action-submit" : Score current result
 let remainTime = 0; /****** 남은 시간 ******/
 function startGame() {
-  showRemainTime();
-  remainTime = 0;
   remainTime += GAMEINFO.timeLimit + FADE_IN_TIME / 1000;
   let timer = setInterval(function () {
-    if (remainTime < 0.01) {
+    showRemainTime();
+    if (remainTime <= 0.01) {
+      remainTime = 0;
+      showRemainTime();
       $(document).off("click", ".action-submit");
-      submit(0);
+      submit(remainTime);
       clearInterval(timer);
     }
+
     remainTime -= 0.01;
   }, 10);
 
@@ -232,11 +234,9 @@ function startGame() {
 }
 
 function showRemainTime() {
-  setInterval(() => {
-    $(`#test-${GAMEINFO.currentGame}-${GAMEINFO.currentStage} .timer`).text(
-      `${remainTime.toFixed(2)}초`
-    );
-  }, 10);
+  $(`#test-${GAMEINFO.currentGame}-${GAMEINFO.currentStage} .timer`).text(
+    `${remainTime.toFixed(2)}초`
+  );
 }
 
 function submit(time) {
