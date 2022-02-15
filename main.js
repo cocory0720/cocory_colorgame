@@ -1,3 +1,10 @@
+// HTML/CSS/JS Code by JaeSuk Lee, Department of Electrical and Electronics Engineering, (https://github.com/jay-sogii)
+//
+// 본 저작물에 대한 저작, 배포, 활용 등에 대한 권리는 (주)코코리색채연구소의 승인을 얻어야 가능합니다.
+//
+//
+//
+
 import GAMEINFO from "./game_dataset.js";
 import HueGame from "./modules/hue_app.js";
 import ValueGame from "./modules/value_app.js";
