@@ -139,7 +139,7 @@ class Wheel {
         const selectedColorCode = ColorD2X(selectedColor);
 
         for (let i = 0; i < this.N; i++) {
-            /** 각 원형자리에 대하여 onUp이벤트가 발생한 위치와의 거리를 측정함 */
+            /** 각 원형자리에 대하여 onUp이벤트가 발생한 위치와의 거리를 측정하여 각각의 경우의 수를 검사함 */
 
             /** 현재 원형자리의 각도(회전값이 포함됨) */
             const targetAngle = this.rotate + GAMEINFO.getColorWheelAngles[i];
@@ -155,7 +155,9 @@ class Wheel {
             const relativeY = posY - this.y;
 
             if (dist(x, y, relativeX, relativeY) < r) { //this area has index of i
-                /** 현재 원형자리의 중심과 이벤트 발생 위치의 거리가 반지름보다 작은 경우 */
+                /** 현재 원형자리의 중심과 이벤트 발생 위치의 거리가 어떤 한 원형자리의 반지름보다 작은 경우
+                 *  이때, 그 원형자리는 i의 인덱스를 갖는다.
+                 */
 
                 /** 현재 색상 버튼에 있는 색상들의 배열 */
                 const onBtnArr = GAMEINFO.optionArr;
@@ -215,16 +217,21 @@ class Wheel {
                         onWheelArr[i] = selectedColorCode;
                     }
                 }
+                return;
+
             }
         }
-        // if the color droped out of wheel
+        // onUp이벤트가 발생한 위치가 그 어떤 원형자리 안에도 위치하지 않는 경우. 
         const colorFromWheel = GAMEINFO.selectedArr.indexOf(selectedColorCode);
         if (colorFromWheel != -1) {
+            // 현재 선택된 색상이 색상 휠의 다른 자리에서 온 색상인 경우
+
+            // 그 색상의 위치를 옮긴다.
             delete GAMEINFO.selectedArr[colorFromWheel];
             GAMEINFO.selectedArr[colorFromWheel] = false;
             GAMEINFO.optionArr.push(selectedColorCode);
         }
-        return;
+        // 그 외의 경우는 아무일도 일어나지 않는다.
     }
 
 
