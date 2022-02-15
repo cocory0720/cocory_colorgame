@@ -326,7 +326,7 @@ export default class ChromaGame {
         this.currentStage = 4;
         break;
     }
-    GAMEINFO.initCurrentGame("chroma", this.currentStage); //채도 테스트에서 사옹할 자체 데이터 가져오기
+    GAMEINFO.initCurrentGame("chroma", this.currentStage); //채도 테스트에서 사용할 자체 데이터 가져오기
     this.n = N; //채도 수
 
     //canvas
