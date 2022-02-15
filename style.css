@@ -50,6 +50,7 @@
     /* end */
     --result-end-background: url("./img/end/result-end/background.png");
     --result-end-element: url("./img/end/result-end/element.png");
+    --result-end-textbox: url("./img/end/result-end/textbox.png");
     /* Color */
     --white-color: #fffeff;
     --bg-color: #717ac6;
@@ -590,4 +591,24 @@ div.bar {
     background-repeat: no-repeat, repeat;
     background-size: contain;
     background-position: center center;
+}
+
+
+/* elements */
+
+#textbox {
+    background-image: var(--result-end-textbox);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    width: 320px;
+    height: 330px;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, 0);
 }

@@ -221,6 +221,37 @@ function showNextArticle(e) {
                         startGame();
                         break;
 
+                    case "result-end":
+                        // 결과 페이지, 점수 보여주기
+
+                        /** 점수가 올라가는 시간 */
+                        const duration = 3000;
+                        /** 점수를 보여주는 속도 */
+                        const valocity = 10;
+                        /** 시간 파라미터 */
+                        let t = 0;
+                        const showScoreID = setInterval(() => {
+
+                            // ease곡선함수의 x축
+                            let x = t * valocity;
+
+                            // 시간이 끝나면 정확한 점수를 보여줌
+                            if (x >= duration) x = duration;
+
+                            // ease곡선함수는 3차함수형태로 구현함.
+                            const upcount = GAMEINFO.TOTAL_SCORE * (1 + (x - duration) * (x - duration) * (x - duration) / (duration * duration * duration));
+
+                            // 표시
+                            $("#total-score").text(upcount.toFixed(2) + "점");
+
+                            t++;
+
+                            if (x >= duration) clearInterval(showScoreID);
+
+                        }, valocity);
+
+                        break;
+
                     default:
                         break;
                 }
@@ -234,9 +265,9 @@ function showNextArticle(e) {
 
     }, delayForSubmit);
 
-    if (delayForSubmit != 0) {
-        showCurrntStage();
-    }
+    // if (delayForSubmit != 0) {
+    //     showCurrntStage();
+    // }
 }
 
 // class = "timer" : Show remaining time
@@ -306,6 +337,7 @@ function changeBGColor() {
     bodyTag.style.backgroundColor = "transparent";
 }
 
+/* 테스트 현재 진행상황을 보여주는 상단바(동작 안함)
 const totalNumberOfStage =
     Object.keys(GAMEINFO.hue).filter(key => key.search(/\d/) != -1).length +
     Object.keys(GAMEINFO.value).filter(key => key.search(/\d/) != -1).length +
@@ -319,6 +351,6 @@ function showCurrntStage() {
     $("#navbar").attr("style", `--navbar-width : ${currentProgress/totalNumberOfStage * 100}`);
 }
 showCurrntStage();
-
+*/
 
 export { submit, remainTime, FADE_OUT_TIME, DELAY_FOR_SUBMITTING };
