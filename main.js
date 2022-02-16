@@ -250,6 +250,8 @@ function showNextArticle(e) {
 
                 initBtns($clickedArticle.next().attr("id")); // 해당 article 내 버튼 활성화
 
+                window.scrollTo(0, 0); // 스크롤 비활성화되었으므로, 강제로 상단에 맟춤
+
                 $clickedArticle.next().fadeIn(FADE_IN_TIME); // 페이드 인
             }
 
