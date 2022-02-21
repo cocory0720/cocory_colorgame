@@ -1,10 +1,3 @@
-/********************** LICENSE TO CODE **********************
- * MIT License
- * Copyright (c) 2022 이재석 건국대학교 전기전자공학부
- *
- * Caution : The contents of. Check LICENSE or README.
- */
-
 import GAMEINFO, { PI2, ColorD2X, ColorX2RGBA, dist } from "../game_dataset.js";
 import { FADE_OUT_TIME, DELAY_FOR_SUBMITTING } from "../main.js";
 
